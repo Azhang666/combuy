@@ -1,0 +1,29 @@
+<section class="productBox row">
+  <% for( let i = 0; i < product.length; i++ ) {%>
+  <div class="col-4">
+    <a
+      class="prodToPItem"
+      title="<%=product[i].prod_name+product[i].spec_name%>"
+    >
+      <div class="product">
+        <img src="..<%=product[i].img_src%>" alt="..<%=product[i].img_src%>" />
+        <p><%=product[i].prod_name%></p>
+        <p><%=product[i].spec_name%></p>
+        <%function toCurrency(num) { var parts = num.toString().split('.')
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        return(parts.join('.')) }; let price=toCurrency(product[i].price); %>
+        <span title="<%=product[i].price%>">NT <%=price%></span>
+        <button class="ctrlBtn" title="加入最愛">
+          <img src="../images/icons/heart.svg" alt="productgocart" />
+        </button>
+        <button class="ctrlBtn" title="加入購物車">
+          <img src="../images/icons/cart.svg" alt="productgocart" />
+        </button>
+        <button class="ctrlBtn" id="prodComparison" title="加入比較">
+          <img src="../images/icons/clipboard2.svg" alt="productgocart" />
+        </button>
+      </div>
+    </a>
+  </div>
+  <% } %>
+</section>
