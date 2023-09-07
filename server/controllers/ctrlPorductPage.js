@@ -1,4 +1,4 @@
-const db = require("../module/productData.js");
+const db = require("../models/productData.js");
 
 //product init
 let firstTime = true;
