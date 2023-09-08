@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ComBuy - <%=title%></title>
+    <link rel="icon" href="/public/favicon.ico" />
+    <link rel="stylesheet" href="/public/stylesheets/style.min.css" />
+
+    <!-- font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="/public/javascripts/jquery-3.6.0.js"></script>
+    <script async src="/public/javascripts/form.js"></script>
+    <script src="/public/javascripts/member_data_send.js"></script>
+  </head>
+  <body>
+    <!-- 插入header的保留位 -->
+    <%- /* include('../header');*/ %>
+    <main>
+      <section class="member container container-L">
+        <%- include('./template/memberList'); %>
+        <div class="subtitle">
+          <div class="group group-left">
+            <h5>修改密碼</h5>
+            <span>請填寫確實資料，避免影響資料核對</span>
+          </div>
+        </div>
+        <div class="content">
+          <div>
+            <h5>
+              <span class="alert" id="alert"></span>
+            </h5>
+          </div>
+          <form id="formPwdChage" action="" method="post">
+            <div class="box">
+              <label for="iptPwd">原始密碼</label>
+              <input
+                type="password"
+                name="o_pwd"
+                id="iptPwd"
+                placeholder="請輸入您的密碼"
+                value=""
+                required
+              />
+            </div>
+            <div class="box">
+              <label for="iptNewPwd">替換密碼</label>
+              <input
+                type="password"
+                name="pwd"
+                id="iptNewPwd"
+                placeholder="請輸入新的密碼"
+                required
+              />
+            </div>
+            <div class="box">
+              <label for="iptNewPwdCheck">再次輸入</label>
+              <input
+                type="password"
+                name="pwdCheck"
+                id="iptNewPwdCheck"
+                placeholder="請再次輸入新的密碼"
+                required
+              />
+            </div>
+
+            <div class="submit">
+              <input type="submit" value="儲 存" />
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+    <!-- 插入footer的保留位 -->
+    <%- /* include('../footer');*/ %>
+
+    <script></script>
+  </body>
+</html>
