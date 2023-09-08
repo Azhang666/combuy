@@ -5,7 +5,7 @@ console.log(globalSpecId);
 // 熱銷商品
 $.ajax({
   type: "get",
-  url: "http://localhost:2047/api/getHotIndexProd",
+  url: "/fontPage/getHotIndexProd",
   success: function (res) {
     var itemData = res;
     var itemsHtml = "";
@@ -17,7 +17,7 @@ $.ajax({
                     <div class="card-item col-4">
                                     <!-- 商品圖片 -->
                                     <div class="card-img">
-                                        <img src="./public${item.img_src}" alt="">
+                                        <img src="../public${item.img_src}" alt="">
                                     </div>
                                     <!-- 商品名稱 -->
                                     <div class="card-title">
@@ -67,7 +67,7 @@ $.ajax({
 // 開學季學生主打
 $.ajax({
   type: "get",
-  url: "http://localhost:2047/api/getStudentIndexProd",
+  url: "/fontPage/getStudentIndexProd",
   success: function (res) {
     // console.log(res);
     var itemData = res;
@@ -114,7 +114,7 @@ $.ajax({
                                         </div>
                                         <!-- 商品照片 -->
                                         <div class="item2-img">
-                                            <img src="./public${item.img_src}" alt="">
+                                            <img src="../public${item.img_src}" alt="">
                                         </div>
 
                                     </div>
@@ -129,7 +129,7 @@ $.ajax({
 // 電競機
 $.ajax({
   type: "get",
-  url: "http://localhost:2047/api/getGamingIndexProd",
+  url: "/fontPage/getGamingIndexProd",
   success: function (res) {
     console.log(res);
     var itemData = res;
@@ -176,7 +176,7 @@ $.ajax({
                                         </div>
                                         <!-- 商品照片 -->
                                         <div class="item2-img">
-                                            <img src="./public${item.img_src}" alt="">
+                                            <img src="../public${item.img_src}" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -205,7 +205,7 @@ $(".card-item-wrap").on("click", ".favorite", function (e) {
 
   // $.ajax({
   //   type: "post",
-  //   url: "http://localhost:2047/api/postFavoriteProd",
+  //   url: "/fontPage/postFavoriteProd",
   //   data: {
   //     user_id: 6,
   //     prod_id: prod_id,
@@ -225,7 +225,7 @@ $(".card-item-wrap").on("click", ".favorite", function (e) {
   if (isFavorite) {
     // $.ajax({
     //   type: "delete",
-    //   url: "http://localhost:2047/api/deleteFavoriteProd",
+    //   url: "/fontPage/deleteFavoriteProd",
     //   data: {
     //     user_id: 6,
     //     prod_id: prod_id,

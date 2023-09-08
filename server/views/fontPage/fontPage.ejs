@@ -28,11 +28,11 @@
             </form>
             <div id="search-result">
               <ul>
-                <li><a href="#">1</a></li>
+                <!-- <li><a href="#">1</a></li>
                 <li>2</li>
                 <li>3</li>
                 <li>4</li>
-                <li>5</li>
+                <li>5</li> -->
               </ul>
             </div>
           </li>
@@ -70,7 +70,10 @@
             <ul>
               <% for( let i = 0; i < brand.length; i++ ) { %>
               <li class="brand">
-                <a value="<%=brand[i].brand_id%>" title="<%=brand[i].brand%>"
+                <a
+                  href="../product"
+                  value="<%=brand[i].brand_id%>"
+                  title="<%=brand[i].brand%>"
                   ><%=brand[i].brand%></a
                 >
               </li>

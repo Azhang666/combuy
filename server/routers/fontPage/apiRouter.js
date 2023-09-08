@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-var db = require("../../models/fontPage/db");
 
 // 獲取熱銷商品
 router.get("/getHotIndexProd", function (req, res) {

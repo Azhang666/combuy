@@ -1,4 +1,4 @@
-const db = require("../models/product/productData");
+const db = require("../models/productPage/productData");
 
 exports.productItem = (req, res) => {
   db.getBrandData([], (bdata) => {
