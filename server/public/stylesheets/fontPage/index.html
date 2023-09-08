@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="./css/resrt.css"> -->
+    <link rel="stylesheet" href="./css/index copy.css">
+    <script src="./js/jquery-3.6.0.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/productJS.js"></script>
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+        <nav class="header">
+            <ul>
+                <li>
+                    <a href="#" title="回首頁"><img src="./img/logo/cambuyLogo.png" alt="cambuyLogo" /></a>
+                </li>
+                <li>
+                    <form action="/search" method="get">
+                        <input type="text" name="search" value="search" /><button type="submit" title="搜尋">
+                            <img src="./img/icons/search.png" alt="search" />
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <label class="switch" title="深/淺色模式">
+                        <input type="checkbox" />
+                        <span class="slider moon">☽</span>
+                        <span class="slider round sun">☼</span>
+                    </label>
+                </li>
+                <li>
+                    <a href="#" title="通知"><img src="./img/icons/advice.png" alt="advice" /></a>
+                </li>
+                <li>
+                    <a href="#" title="會員中心"><img src="./img/icons/member.png" alt="member" /></a>
+                </li>
+                <li>
+                    <a href="#" title="購物車"><img src="./img/icons/buy-cart.png" alt="buy-cart" /></a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container-fluid">
+        <div class="row">
+            <!-- 左邊品牌列表 -->
+            <aside class="col-2">
+                <nav class="navSide">
+                    <ul>
+                        <li>
+                            <img src="./img/icons/prodbrand-apple.svg" alt="prodbrand-apple" /><a href="#">apple</a>
+                        </li>
+                        <li><img src="" alt="" /><a href="#">acer</a></li>
+                        <li><img src="" alt="" /><a href="#">asus</a></li>
+                        <li><img src="" alt="" /><a href="#">msi</a></li>
+                        <li><img src="" alt="" /><a href="#">Lenovo</a></li>
+                        <li><img src="" alt="" /><a href="#">Miscroft</a></li>
+                        <li><img src="" alt="" /><a href="#">Hp</a></li>
+                        <li><img src="" alt="" /><a href="#">DELL</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- container -->
+            <div class="col-10">
+                <div class="row">
+                    <!-- 輪播 -->
+                    <div class="carousel col-12">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                                    class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                                    aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                                    aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="./img/alfonso-ramirez-TQ8RWNM0eBY-unsplash (1).jpg" class="d-block w-100"
+                                        alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="./img/clay-banks-5_gOBOWQmjw-unsplash.jpg" class="d-block w-100"
+                                        alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="./img/dim-hou-e3uAMtW1n6Q-unsplash.jpg" class="d-block w-100" alt="...">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- 商品item -->
+                    <section class="col-12">
+                        <h3 class="m-3">熱銷商品</h3>
+                        <div class="section-container">
+                            <div class="row card-item-wrap">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ads -->
+                    <div class="ads col-12">
+                        <div>
+                        </div>
+                    </div>
+
+                    <!-- 商品item2 -->
+                    <section class="col-12 section2">
+                        <h3 class="m-3">開學季學生主打</h3>
+                        <div class="row card-item-wrap2">
+
+                        </div>
+                    </section>
+
+                    <!-- 商品item3 -->
+                    <section class="col-12 section2">
+                        <h3 class="m-3">電競機</h3>
+                        <div class="row card-item-wrap3">
+
+                        </div>
+                    </section>
+
+
+
+                    <!-- ads -->
+                    <div class="ads col-12">
+                        <div>
+                        </div>
+                    </div>
+
+                    <!-- footer -->
+                    <footer>
+                        <div class="info-href">
+                            <!-- 會員中心 -->
+                            <div class="href">
+                                <h5 class="ms-5">會員中心</h5>
+                                <ul class="ms-5">
+                                    <li><a href="">管理會員資料</a></li>
+                                    <li><a href="">查看訂單</a></li>
+                                    <li><a href="">購物紀錄</a></li>
+                                </ul>
+                            </div>
+                            <!-- 客戶服務 -->
+                            <div class="href">
+                                <h5>客戶服務</h5>
+                                <ul>
+                                    <li><a href="">常見問題</a></li>
+                                    <li><a href="">查看訂單</a></li>
+                                    <li><a href="">退貨政策</a></li>
+                                    <li><a href="">商品保固</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <canvas></canvas>
+
+                        <div class="info">
+                            <ul class="ms-5">
+                                <li><a href="#">隱私權政策</a>|</li>
+                                <li><a href="#">使用條款</a>|</li>
+                                <li><a href="#">銷售及退款</a></li>
+                            </ul>
+                            <p>Copyright © 2023 XXXXXX. All Rights Reserved</p>
+                        </div>
+                    </footer>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+
+        var globalProdId = []
+        var globalSpecId = []
+        console.log(globalProdId);
+        console.log(globalSpecId);
+        // 熱銷商品
+        $.ajax({
+            type: 'get',
+            url: 'http://localhost:2047/api/getHotIndexProd',
+            success: function (res) {
+                var itemData = res
+                var itemsHtml = '';
+                for (var i = 0; i < itemData.length; i++) {
+                    globalProdId.push(itemData[i].prod_id);
+                    globalSpecId.push(itemData[i].spec_id);
+                    var item = itemData[i]
+                    itemsHtml += `
+                    <div class="card-item col-4">
+                                    <!-- 商品圖片 -->
+                                    <div class="card-img">
+                                        <img src="./public${item.img_src}" alt="">
+                                    </div>
+                                    <!-- 商品名稱 -->
+                                    <div class="card-title">
+                                        <p class="prod_name">${item.prod_name}</p>
+                                        <p class="spec_name">${item.spec_name}</p>
+                                        <!-- 商品價格跟icon -->
+                                        <div class="card-text">
+                                            <div class="card-price">
+                                                <p>NT ${item.price}</p>
+                                            </div>
+                                            <div class="card-icon">
+                                                <a class="favorite" href=""><svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" width="38"
+                                                        height="34" viewBox="0 0 38 34" fill="none">
+                                                        <path
+                                                            d="M20.0048 31.8483C19.4318 32.0506 18.488 32.0506 17.9149 31.8483C13.0273 30.1798 2.10596 23.2191 2.10596 11.4213C2.10596 6.21348 6.30258 2 11.4767 2C14.5441 2 17.2576 3.48314 18.9599 5.77528C20.6621 3.48314 23.3925 2 26.443 2C31.6172 2 35.8138 6.21348 35.8138 11.4213C35.8138 23.2191 24.8924 30.1798 20.0048 31.8483Z"
+                                                            stroke="black" stroke-width="3" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg></a>
+                                                <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="39"
+                                                        height="40" viewBox="0 0 39 40" fill="none">
+                                                        <path
+                                                            d="M1.81378 2H4.9458C6.8898 2 8.41978 3.674 8.25778 5.6L6.76378 23.528C6.51178 26.462 8.83376 28.982 11.7858 28.982H30.9558C33.5478 28.982 35.8158 26.858 36.0138 24.284L36.9858 10.784C37.2018 7.796 34.9338 5.366 31.9278 5.366H8.6898"
+                                                            stroke="black" stroke-width="3" stroke-miterlimit="10"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path
+                                                            d="M27.4637 38C28.7065 38 29.7137 36.9927 29.7137 35.75C29.7137 34.5073 28.7065 33.5 27.4637 33.5C26.221 33.5 25.2137 34.5073 25.2137 35.75C25.2137 36.9927 26.221 38 27.4637 38Z"
+                                                            stroke="black" stroke-width="3" stroke-miterlimit="10"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path
+                                                            d="M13.0638 38C14.3064 38 15.3138 36.9927 15.3138 35.75C15.3138 34.5073 14.3064 33.5 13.0638 33.5C11.8211 33.5 10.8138 34.5073 10.8138 35.75C10.8138 36.9927 11.8211 38 13.0638 38Z"
+                                                            stroke="black" stroke-width="3" stroke-miterlimit="10"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M14.4138 12.7999H36.0138" stroke="black"
+                                                            stroke-width="3" stroke-miterlimit="10"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    `
+                }
+                $('.card-item-wrap').html(itemsHtml);
+
+            }
+        })
+
+        // 開學季學生主打
+        $.ajax({
+            type: 'get',
+            url: 'http://localhost:2047/api/getStudentIndexProd',
+            success: function (res) {
+                // console.log(res);
+                var itemData = res
+                var itemsHtml = '';
+                for (var i = 0; i < itemData.length; i++) {
+                    var item = itemData[i]
+                    itemsHtml += `
+                    <div class="frame7 col-4">
+                                <div class="card">
+                                    <h5>${item.prod_name}</h5>
+                                    <!-- icon 價格 照片 -->
+                                    <div class="frame">
+                                        <!-- icon跟價格 -->
+                                        <div class="text">
+                                            <div class="frame1">
+                                                <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="38"
+                                                        height="34" viewBox="0 0 38 34" fill="none">
+                                                        <path
+                                                            d="M19.8989 31.8483C19.3258 32.0506 18.382 32.0506 17.809 31.8483C12.9213 30.1798 2 23.2191 2 11.4213C2 6.21348 6.19662 2 11.3708 2C14.4382 2 17.1517 3.48314 18.8539 5.77528C20.5562 3.48314 23.2865 2 26.3371 2C31.5112 2 35.7078 6.21348 35.7078 11.4213C35.7078 23.2191 24.7865 30.1798 19.8989 31.8483Z"
+                                                            stroke="black" stroke-width="3" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg></a>
+                                                <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="39"
+                                                        height="40" viewBox="0 0 39 40" fill="none">
+                                                        <path
+                                                            d="M1.70782 2H4.83984C6.78384 2 8.31382 3.674 8.15182 5.6L6.65782 23.528C6.40582 26.462 8.72781 28.982 11.6798 28.982H30.8498C33.4418 28.982 35.7098 26.858 35.9078 24.284L36.8798 10.784C37.0958 7.796 34.8278 5.366 31.8218 5.366H8.58384"
+                                                            stroke="black" stroke-width="3" stroke-miterlimit="10"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path
+                                                            d="M27.3578 38C28.6005 38 29.6078 36.9927 29.6078 35.75C29.6078 34.5073 28.6005 33.5 27.3578 33.5C26.1151 33.5 25.1078 34.5073 25.1078 35.75C25.1078 36.9927 26.1151 38 27.3578 38Z"
+                                                            stroke="black" stroke-width="3" stroke-miterlimit="10"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path
+                                                            d="M12.9578 38C14.2005 38 15.2078 36.9927 15.2078 35.75C15.2078 34.5073 14.2005 33.5 12.9578 33.5C11.7152 33.5 10.7078 34.5073 10.7078 35.75C10.7078 36.9927 11.7152 38 12.9578 38Z"
+                                                            stroke="black" stroke-width="3" stroke-miterlimit="10"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M14.3079 12.7999H35.9079" stroke="black"
+                                                            stroke-width="3" stroke-miterlimit="10"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                            <p>NT ${item.price}</p>
+                                        </div>
+                                        <!-- 商品照片 -->
+                                        <div class="item2-img">
+                                            <img src="./public${item.img_src}" alt="">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                    `
+                    $('.card-item-wrap2').html(itemsHtml);
+                }
+
+            }
+        })
+
+        // 電競機
+        $.ajax({
+            type: 'get',
+            url: 'http://localhost:2047/api/getGamingIndexProd',
+            success: function (res) {
+                console.log(res);
+                var itemData = res
+                var itemsHtml = '';
+                for (var i = 0; i < itemData.length; i++) {
+                    var item = itemData[i]
+                    itemsHtml += `
+                    <div class="frame7 col-4">
+                                <div class="card">
+                                    <h5>${item.prod_name}</h5>
+                                    <!-- icon 價格 照片 -->
+                                    <div class="frame">
+                                        <!-- icon跟價格 -->
+                                        <div class="text">
+                                            <div class="frame1">
+                                                <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="38"
+                                                        height="34" viewBox="0 0 38 34" fill="none">
+                                                        <path
+                                                            d="M19.8989 31.8483C19.3258 32.0506 18.382 32.0506 17.809 31.8483C12.9213 30.1798 2 23.2191 2 11.4213C2 6.21348 6.19662 2 11.3708 2C14.4382 2 17.1517 3.48314 18.8539 5.77528C20.5562 3.48314 23.2865 2 26.3371 2C31.5112 2 35.7078 6.21348 35.7078 11.4213C35.7078 23.2191 24.7865 30.1798 19.8989 31.8483Z"
+                                                            stroke="black" stroke-width="3" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg></a>
+                                                <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="39"
+                                                        height="40" viewBox="0 0 39 40" fill="none">
+                                                        <path
+                                                            d="M1.70782 2H4.83984C6.78384 2 8.31382 3.674 8.15182 5.6L6.65782 23.528C6.40582 26.462 8.72781 28.982 11.6798 28.982H30.8498C33.4418 28.982 35.7098 26.858 35.9078 24.284L36.8798 10.784C37.0958 7.796 34.8278 5.366 31.8218 5.366H8.58384"
+                                                            stroke="black" stroke-width="3" stroke-miterlimit="10"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path
+                                                            d="M27.3578 38C28.6005 38 29.6078 36.9927 29.6078 35.75C29.6078 34.5073 28.6005 33.5 27.3578 33.5C26.1151 33.5 25.1078 34.5073 25.1078 35.75C25.1078 36.9927 26.1151 38 27.3578 38Z"
+                                                            stroke="black" stroke-width="3" stroke-miterlimit="10"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path
+                                                            d="M12.9578 38C14.2005 38 15.2078 36.9927 15.2078 35.75C15.2078 34.5073 14.2005 33.5 12.9578 33.5C11.7152 33.5 10.7078 34.5073 10.7078 35.75C10.7078 36.9927 11.7152 38 12.9578 38Z"
+                                                            stroke="black" stroke-width="3" stroke-miterlimit="10"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M14.3079 12.7999H35.9079" stroke="black"
+                                                            stroke-width="3" stroke-miterlimit="10"
+                                                            stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                            <p>NT ${item.price}</p>
+                                        </div>
+                                        <!-- 商品照片 -->
+                                        <div class="item2-img">
+                                            <img src="./public${item.img_src}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                    `
+                }
+                $('.card-item-wrap3').html(itemsHtml);
+            }
+        })
+
+
+        // 加入最愛
+        $('.card-item-wrap').on('click', '.favorite', function (e) {
+            var favoriteIcon = $(this).find('.heart-icon'); 
+            var isFavorite = $(this).hasClass('active'); 
+            $(this).toggleClass('active');
+
+            console.log(favoriteIcon);
+            e.preventDefault()
+
+            var prod_id = globalProdId[$(this).closest('.card-item').index()];
+            var spec_id = globalSpecId[$(this).closest('.card-item').index()];
+
+            console.log(prod_id);
+            console.log(spec_id);
+
+            $.ajax({
+                type: 'post',
+                url: 'http://localhost:2047/api/postFavoriteProd',
+                data: {
+                    user_id: 6,
+                    prod_id: prod_id,
+                    spec_id: spec_id,
+                },
+                success: function (res) {
+                    console.log('收藏成功');
+                    favoriteIcon.css('fill', 'red')
+                    favoriteIcon.css('border', 'none')
+
+                },
+                error: function (error) {
+                    console.error('收藏失敗：', error);
+                    favoriteIcon.css('fill', 'none')
+                },
+            })
+            
+            if(isFavorite){
+                $.ajax({
+                type: 'delete',
+                url: 'http://localhost:2047/api/deleteFavoriteProd',
+                data: {
+                    user_id: 6,
+                    prod_id: prod_id,
+                    spec_id: spec_id,
+                },
+                success: function (res) {
+                    console.log('移除成功');
+                    favoriteIcon.css('fill', 'none')
+                },
+                error: function (error) {
+                    console.error('移除失敗：', error);
+                    favoriteIcon.css('fill', 'none')
+                },
+            })
+            }
+    
+        })
+
+    </script>
+
+</body>
+
+</html>
