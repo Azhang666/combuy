@@ -7,7 +7,7 @@ const {
   notlogin_render,
   notlogin_api,
 } = require("./middlewares/isLogin");
-const product = require("./routers/product/product.js");
+
 const app = express();
 
 const setProt = 2407;
@@ -44,13 +44,13 @@ app.use(
 
 app.use("/public", express.static(__dirname + "/public"));
 
-app.use("/product", product);
-
 app.get("/", (req, res) => {
   res.setHeader("Content-type", "text/html;charset=utf-8");
-
   res.end("root");
 });
+
+const fontPage = require("./routers/fontPage/fontPage.js");
+app.use("/fontPage", fontPage);
 
 const api = require("./routers/api");
 app.use("/api", api);
@@ -65,10 +65,13 @@ const member = require("./routers/member");
 app.use("/member", login_render, member);
 // app.use('/member', member)
 
-app.use(function (req, res) {
-  // res.end('Error 404 Page Not Found')
-  res.redirect("/");
-});
+const product = require("./routers/productPage/product.js");
+app.use("/product", product);
+
+// app.use(function (req, res) {
+// res.end('Error 404 Page Not Found')
+// res.redirect("/");
+// });
 
 //header select tool
 app.get("/search", (req, res) => {
