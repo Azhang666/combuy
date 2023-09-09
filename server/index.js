@@ -44,10 +44,10 @@ app.use(
 
 app.use("/public", express.static(__dirname + "/public"));
 
-app.get("/", (req, res) => {
-  res.setHeader("Content-type", "text/html;charset=utf-8");
-  res.end("root");
-});
+// app.get("/", (req, res) => {
+//   res.setHeader("Content-type", "text/html;charset=utf-8");
+//   res.end("root");
+// });
 
 const fontPage = require("./routers/fontPage/fontPage.js");
 app.use("/fontPage", fontPage);
@@ -65,8 +65,14 @@ const member = require("./routers/member");
 app.use("/member", login_render, member);
 // app.use('/member', member)
 
-const product = require("./routers/productPage/product.js");
+const product = require("./routers/productPage/productPage.js");
 app.use("/product", product);
+
+const commodity = require("./routers/commodityPage/commodityPage.js");
+app.use("/commodity", commodity);
+
+const shopCart = require("./routers/shopCartPage/shopCartPage.js");
+app.use("/shopCart", shopCart);
 
 // app.use(function (req, res) {
 // res.end('Error 404 Page Not Found')
