@@ -91,13 +91,12 @@ exports.ctrlProdPage = (req, res) => {
                       productTagTotalData[0].productTagTotal / productItem
                     );
 
-                    if (firstTime) {
+                    if (true) {
                       res.render("productPage/productPage.ejs", {
                         brand: brandData,
                         product: productData,
                         lastPage: lastPage,
                       });
-                      firstTime = false;
                     } else if (randerProdTag && randerProdItme) {
                       return await res.render(
                         `productPage/chageProduct.ejs`,

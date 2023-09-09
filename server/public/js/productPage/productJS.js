@@ -51,23 +51,29 @@ $(document).ready(function () {
     //req herder select
     $.ajax({
       type: "get",
-      url: "/search",
+      url: "/api/changeProduct/search",
       data: {
         search: $(this).val(),
       },
       success: async function (response) {
-        var values = {};
-        for (index in response) {
-          values[index] = response[index].prod;
-        }
+        // var values = {};
+        // for (index in response) {
+        //   values[index] = response[index].prod;
+        // }
         let result = ``;
-        for (let i = Object.values(values).length - 1; i >= 0; i--) {
-          result += `<li><a href="/${values[i]}">${values[i]}</a></li>`;
-        }
+        // for (let i = Object.values(values).length - 1; i >= 0; i--) {
+        //   result += `<li><a href="/${values[i]}">${values[i]}</a></li>`;
+        // }
+        response.forEach((prod) => {
+          result += `<li><a href="/${(prod.prod_id, prod.spec_id)}">${
+            prod.prod_name
+          }</a></li>`;
+        });
+
         result == ""
-          ? (result = "<li><a href='/'>搜尋無結果</a></li>")
+          ? (result = "<li><p>搜尋無結果</p></li>")
           : (result = result);
-        await $("#search-result>ul").html(result);
+        $("#search-result>ul").html(result);
       },
     });
   });
@@ -79,7 +85,7 @@ $(document).ready(function () {
     console.log();
     $.ajax({
       type: "get",
-      url: "/product/",
+      url: "/api/changeProduct",
       data: {
         brand: $(this).attr("value"),
       },
@@ -108,7 +114,7 @@ $(document).ready(function () {
     //req addTime product
     $.ajax({
       type: "get",
-      url: "/product",
+      url: "/api/changeProduct",
       data: {
         getUpdateTime: addTimeIsClick,
       },
@@ -138,11 +144,12 @@ $(document).ready(function () {
     //req PriceDesc product
     $.ajax({
       type: "get",
-      url: "/product",
+      url: "/api/changeProduct",
       data: {
         getPriceDesc: priceDescIsClick,
       },
       success: async function (response) {
+        console.log(response);
         await $(".productBox").remove();
         await $(".contral-product-page").remove();
         await $(".productSlecet").after(`${response}`);
@@ -154,7 +161,7 @@ $(document).ready(function () {
   $("input[pattern='[0-9]{7}']").keyup(function () {
     $.ajax({
       type: "get",
-      url: "/product",
+      url: "/api/changeProduct",
       data: {
         getPriceRange: {
           form: $("input[name='priceFrom']").val()
@@ -180,12 +187,11 @@ $(document).ready(function () {
     //req productItemPage
     $.ajax({
       type: "get",
-      url: "/product",
+      url: "/api/changeProduct",
       data: {
         prodItemPage: $(this).text(),
       },
       success: async function (response) {
-        console.log(response);
         await $(".productBox").remove();
         await $(".productSlecet").after(`${response}`);
       },
@@ -195,7 +201,7 @@ $(document).ready(function () {
   $("select[name='selectItem']").on("change", async function () {
     await $.ajax({
       type: "get",
-      url: "/product",
+      url: "/api/changeProduct",
       data: {
         prodSelTag: $(this).val(),
       },
@@ -231,7 +237,7 @@ $(document).ready(function () {
     //   },
     // });
   });
-  //productItem and this button prevent bubble events防止泡沫事件
+  //api/changeProductItem and this button prevent bubble events防止泡沫事件
   $("body").on("click", ".prodToPItem", function (e) {
     console.log("1");
     e.preventDefault();

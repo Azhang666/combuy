@@ -194,13 +194,16 @@ exports.getAllTagProdItemNumData = (setCondition, callBackData) => {
 //     console.log(data);
 //   }
 // );
-
-// let productModels = {
-//   getAllProduct: async () => {
-//     const sql = "SELECT * FROM vw_products_info";
-//     const result = await sqlConn.queryAsync(sql);
-//     console.log(result[0]);
-//   },
-// };
-// productModels.getAllProduct();
-// exports = productModels;
+exports.productModels = {
+  getAllProduct: async () => {
+    const sql = "SELECT * FROM vw_products_info";
+    const data = await sqlConn.queryAsync(sql);
+    return data;
+  },
+  hdSelProd: async (req, res) => {
+    req = req.concat("%");
+    const sql = `SELECT prod_id,spec_id,prod_name  FROM vw_products_info WHERE prod_name LIKE ?`;
+    const data = await sqlConn.queryAsync(sql, req);
+    return data;
+  },
+};

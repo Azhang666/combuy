@@ -44,13 +44,14 @@ app.use(
 
 app.use("/public", express.static(__dirname + "/public"));
 
-// app.get("/", (req, res) => {
-//   res.setHeader("Content-type", "text/html;charset=utf-8");
-//   res.end("root");
-// });
-
 const fontPage = require("./routers/fontPage/fontPage.js");
 app.use("/fontPage", fontPage);
+
+app.get("/", (req, res) => {
+  res.redirect("/fontPage");
+  // res.setHeader("Content-type", "text/html;charset=utf-8");
+  // res.end("root");
+});
 
 const api = require("./routers/api");
 app.use("/api", api);
@@ -79,21 +80,8 @@ app.use("/shopCart", shopCart);
 // res.redirect("/");
 // });
 
-//header select tool
-app.get("/search", (req, res) => {
-  let search = req.query.search;
-  connection
-    .sql()
-    .queryAsync(
-      `SELECT prod_name as prod FROM vw_products_info WHERE prod_name LIKE "${search}%"`
-    )
-    .then((data) => {
-      res.send(data);
-    });
-});
-
 app.listen(setProt, () => {
   console.log(
-    `http://localhost:${setProt}/  |\nFile :${__filename} |\nTime:${new Date().toLocaleString()}`
+    `-----------------\nhttp://localhost:${setProt}/  |\nFile:${__filename} |\nTime:${new Date().toLocaleString()} |\n-----------------`
   );
 });

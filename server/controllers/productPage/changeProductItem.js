@@ -1,6 +1,5 @@
 const db = require("../../models/productPage/productData");
-//product init
-let firstTime = true;
+
 let getBrand = 2;
 let filter = `ORDER BY ""`;
 let setDESC = false;
@@ -13,7 +12,7 @@ let productItem = 12;
 let offset = (prodItemPage - 1) * productItem;
 let prodSelTag = 3;
 let randerProdTag = false;
-exports.ctrlProdPage = (req, res) => {
+exports.changeProduct = (req, res) => {
   let randerProdItme = false;
   //ctrl req brand
   if (req.query.brand) {
@@ -92,14 +91,7 @@ exports.ctrlProdPage = (req, res) => {
                       productTagTotalData[0].productTagTotal / productItem
                     );
 
-                    if (firstTime) {
-                      res.render("productPage/productPage.ejs", {
-                        brand: brandData,
-                        product: productData,
-                        lastPage: lastPage,
-                      });
-                      firstTime = false;
-                    } else if (randerProdTag && randerProdItme) {
+                    if (randerProdTag && randerProdItme) {
                       return await res.render(
                         `productPage/chageProduct.ejs`,
                         {
