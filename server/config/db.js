@@ -15,20 +15,3 @@ conn.connect(function (err) {
 });
 bluebird.promisifyAll(conn);
 module.exports = conn;
-//not blue bird
-
-var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3307,
-  user: "root",
-  password: "",
-  database: "combuy",
-  multipleStatements: true,
-});
-connection.connect((err) => {
-  if (err) {
-    console.log("sql syntax error");
-    console.log(err);
-  }
-});
-exports = connection;

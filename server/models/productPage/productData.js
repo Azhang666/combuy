@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+const sqlConn = require("../../config/db");
 exports.getBrandData = (setCondition, callBackData) => {
   var connection = mysql.createConnection({
     host: "localhost",
@@ -193,31 +194,13 @@ exports.getAllTagProdItemNumData = (setCondition, callBackData) => {
 //     console.log(data);
 //   }
 // );
-exports.getAllProduct = (setCondition, callBackData) => {
-  var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3307,
-    user: "root",
-    password: "",
-    database: "combuy",
-    multipleStatements: true,
-  });
-  connection.connect((err) => {
-    if (err) {
-      console.log("sql syntax error");
-      console.log(err);
-    }
-  });
-  connection.query(
-    `SELECT * FROM vw_products_info`,
-    setCondition,
-    (err, data) => {
-      if (err) {
-        console.log(err);
-      } else {
-        callBackData(data);
-      }
-    }
-  );
-  connection.end();
-};
+
+// let productModels = {
+//   getAllProduct: async () => {
+//     const sql = "SELECT * FROM vw_products_info";
+//     const result = await sqlConn.queryAsync(sql);
+//     console.log(result[0]);
+//   },
+// };
+// productModels.getAllProduct();
+// exports = productModels;

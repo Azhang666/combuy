@@ -1,5 +1,6 @@
-const db = require("../../models/productPage/productData.js");
+const db = require("../../models/productPage/productData");
 //product init
+let firstTime = true;
 let getBrand = 2;
 let filter = `ORDER BY ""`;
 let setDESC = false;

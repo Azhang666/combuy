@@ -1,7 +1,7 @@
 const express = require("express");
 
-const prodItem = require("../../controllers/productItem");
-const fontPage = require("../../controllers/fontPage/fontPageController");
+const prodItem = require("../../controllers/productPage/changeProductItem");
+const fontPage = require("../../controllers/fontPage/ctrlFontPage");
 var db = require("../../models/fontPage/db");
 
 const router = express.Router();
