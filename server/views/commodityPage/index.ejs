@@ -31,10 +31,10 @@
                     <h2><strong>
                             <%= nameData[0].prod_name %>
                         </strong></h2>
+                    <hr>
                     <p><b>
                             <%= brandData[0].brand %>
                         </b></p>
-                    <hr>
                     <h4 class="dollar"><strong>NT <%= priceData[0].price %></strong></h4>
 
                     <div class="purchaseNumber">
@@ -44,13 +44,13 @@
                         <button id="plus" onclick="plus()">+</button>
                     </div>
                     <div class="mt-4">
-                        <button class="btn btn bg-white btn-lg me-2" id="collect" data-user_id="<%= session.user_id %>"
-                            data-prod_id="<%= prodId %>" data-spec_id="<%= specId %>">
+                        <button class="btn btn bg-white btn-lg me-2" id="collect" data-prod_id="<%= prodId %>"
+                            data-spec_id="<%= specId %>">
                             <i class="bi bi-heart"></i>
                             加入收藏
                         </button>
-                        <button class="cart btn bg-white btn-lg me-2" id="cart" data-user_id="<%= session.user_id %>"
-                            data-prod_id="<%= prodId %>" data-spec_id="<%= specId %>">
+                        <button class="cart btn bg-white btn-lg me-2" id="cart" data-prod_id="<%= prodId %>"
+                            data-spec_id="<%= specId %>">
                             <i class="bi bi-cart-plus"></i>
                             加入購物車
                         </button>
@@ -63,51 +63,34 @@
             <section class="bg-white container mt-5">
 
                 <ul class="nav nav-pills justify-content-center pt-4">
-                    <li class="nav-item"><a data-bs-toggle="pill" class="nav-link active" href="#information">商品資訊</a>
-                    </li>
-                    <li class="nav-item"><a data-bs-toggle="pill" class="nav-link" href="#specification">商品規格</a></li>
+                    <% if (imageDataT1.length> 0) { %>
+                        <li class="nav-item"><a data-bs-toggle="pill" class="nav-link active"
+                                href="#information">商品資訊</a></li>
+                        <li class="nav-item"><a data-bs-toggle="pill" class="nav-link" href="#specification">商品規格</a>
+                        </li>
+                        <% } else { %>
+                            <%- include('table.ejs') %>
+                                <% } %>
                 </ul>
-
                 <div class="tab-content container mt-5 ">
-                    <div class="tab-pane active show center" id="information">
-                        <img src="<%= imageDataT1.dir %>/<%= imageDataT1.filename %>" alt="產品資訊" class="mb-5">
-                    </div>
-                    <div class="tab-pane" id="specification">
-                        <table class="center-table">
-                            <thead>
-                                <% nameData.forEach(function(product) { %>
-                                    <th colspan="2">
-                                        <%= product.prod_name %>
-                                    </th>
-                                    <% }); %>
-                            </thead>
-                            <tbody>
-                                <% attributes.forEach(attr=> { %>
-                                    <tr>
-                                        <td><b>
-                                                <%= attr %>
-                                            </b></td>
-                                        <% data.forEach(item=> { %>
-                                            <td>
-                                                <%= item[attr] %>
-                                            </td>
-                                            <% }); %>
-                                    </tr>
-                                    <% }); %>
-                            </tbody>
-                        </table>
-                    </div>
+                    <% if (imageDataT1.length> 0) { %>
+                        <div class="tab-pane active show center" id="information">
+                            <img src="<%= imageDataT1[0].dir %>/<%= imageDataT1[0].filename %>" alt="產品資訊" class="mb-5">
+                        </div>
+                        <% } %>
+                            <div class="tab-pane " id="specification">
+                                <%- include('table.ejs') %>
+                            </div>
                 </div>
             </section>
 
             <!-- 商品評價 -->
-            <section class="container bg-white mt-3">
+            <section class="container bg-white mt-3 ">
                 <h2 class="pt-4 evaluate text-center"><strong>商品評價</strong></h2>
                 <hr>
                 <% commentData.forEach(function(comment) { %>
                     <div class="circle"></div>
                     <div class="buyer">
-                        <span class="account">買家帳號</span>
                         <div class="rating mt-1">
                             <% for ( let i=1 ; i <=5; i++ ) { %>
                                 <span class="bi bi-star<%= i <= comment.comment_grade ? '-fill' : '' %>"></span>
@@ -115,7 +98,7 @@
                         </div>
 
                         <p class="mt-2">
-                            <%= comment.comment_time %> | 購入商品規格
+                            <%= comment.comment_time %> | 購入數量 <%= comment.count %>
                         </p>
                     </div>
                     <div class="comment">
@@ -125,64 +108,12 @@
                     </div>
                     <hr>
                     <% }); %>
-                        <div class="center">
-                            <div class="pagination">
-                                <% for(var i=1; i <=4; i++) { %>
-                                    <span><a href="/<%= i%>">
-                                            <%= i%>
-                                        </a></span>
-                                    <% } %>
-                            </div>
-                        </div>
             </section>
 
             <!-- 相關商品 -->
-            <section class="container bg-white mt-3">
-                <h2 class="pt-3 related text-center"><strong>相關商品</strong></h2>
-                <div class="row">
-                    <% relatedProducts.forEach(function(productimg) { %>
-                        <div class="col-3">
-                            <a href="/product/<%= productimg.prod_id %>">
-                                <div class="card">
-                                    <img src="<%= productimg.dir %>/<%= productimg.filename %>" alt="產品圖片"
-                                        class="w-100 rounded">
-                                    <div class="ps-3">
-                                        <h4 class="mt-3"><b>
-                                                <%= productimg.prod_name %>
-                                            </b></h4>
-                                        <p>
-                                            <%= productimg.spec_name %>
-                                        </p>
-                                        <div class="priceIcon">
-                                            <span class="mt-4 priceNT">
-                                                NT <%= productimg.price %>
-                                            </span>
-                                            <a href="">
-                                                <i class="bi bi-cart-plus cartPlus"></i>
-                                            </a>
-                                            <a href="">
-                                                <i class="bi bi-heart heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <% }) %>
-                </div>
+            <%- include('relatedProduct.ejs') %>
 
-                <div class="center mt-5 ">
-                    <div class="pagination">
-                        <% for(var i=1; i <=4; i++) { %>
-                            <span><a href="/<%= i%>">
-                                    <%= i%>
-                                </a></span>
-                            <% } %>
-                    </div>
-                </div>
-
-            </section>
-            <button type="button" id="BackTop" class="toTop-arrow"></button>
+                <button type="button" id="BackTop" class="toTop-arrow"></button>
         </main>
 
         <!-- footer -->
