@@ -45,7 +45,7 @@ exports.getprodItemData = (setCondition, callBackData) => {
   let filter = setCondition[5];
   setCondition.pop();
   connection.query(
-    `SELECT prod_name,spec_name,price,img_src FROM vw_products_info
+    `SELECT * FROM vw_products_info
         WHERE brand_id=? AND price BETWEEN ? AND ?
         ${filter}
         LIMIT ?,?;`,
@@ -126,7 +126,7 @@ exports.getTagprodItemData = (setCondition, callBackData) => {
   let filter = setCondition[5];
   setCondition.pop();
   connection.query(
-    `SELECT prod_name,spec_name,price, img_src FROM product_tag 
+    `SELECT * FROM product_tag 
     LEFT join vw_products_info ON product_tag.prod_id = vw_products_info.prod_id
     WHERE product_tag.tag=? AND vw_products_info.price BETWEEN ? AND ?
    ${filter}

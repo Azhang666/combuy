@@ -1,16 +1,13 @@
 var express = require("express");
 var router = express.Router();
 var mysql = require("mysql");
-var ejs = require("ejs");
-var db = require("../../models/commodityPage/db");
 
 var conn = mysql.createConnection({
-  // ... your connection configuration ...
   host: "localhost",
   user: "root",
-  password: "root",
+  password: "",
   database: "combuy",
-  port: "3306",
+  port: "3307",
 });
 
 // 定義路由處理程式
@@ -18,7 +15,7 @@ router.get("/", async (req, res) => {
   res.redirect("/product/1/0");
 });
 
-router.get("/product/:prodId/:specId", async (req, res) => {
+router.get("/:prodId/:specId", async (req, res) => {
   try {
     var prodId = req.params.prodId;
     var specId = req.params.specId;
@@ -92,7 +89,7 @@ router.get("/product/:prodId/:specId", async (req, res) => {
       })
     );
 
-    res.render("index", {
+    res.render("commodityPage/index", {
       data,
       imageDataT0: imageDataT0[0],
       imageDataT1: imageDataT1,

@@ -56,18 +56,9 @@ $(document).ready(function () {
         search: $(this).val(),
       },
       success: async function (response) {
-        // var values = {};
-        // for (index in response) {
-        //   values[index] = response[index].prod;
-        // }
         let result = ``;
-        // for (let i = Object.values(values).length - 1; i >= 0; i--) {
-        //   result += `<li><a href="/${values[i]}">${values[i]}</a></li>`;
-        // }
         response.forEach((prod) => {
-          result += `<li><a href="/${(prod.prod_id, prod.spec_id)}">${
-            prod.prod_name
-          }</a></li>`;
+          result += `<li><a href="/commodity/${prod.prod_id}/${prod.spec_id}">${prod.prod_name}</a></li>`;
         });
 
         result == ""
