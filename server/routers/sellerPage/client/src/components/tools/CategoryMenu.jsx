@@ -61,7 +61,7 @@ function CategoryMenu(props) {
             props.onCategorySelect(null, null);
         }
     };
-    
+
 
     const handleBrandClick = (brandId, brandName) => {
         props.onBrandSelect(brandId); // 將品牌 ID 傳給父組件
@@ -71,32 +71,33 @@ function CategoryMenu(props) {
 
     };
 
- 
+
 
     return (
         <div className="menu col">
             {!selectedCategory && !selectedBrand && (
-                <button id="main-category" onClick={toggleCategories} className='m-1 btn btn-secondary'>選擇分類</button>
+                <button type='button' id="main-category" onClick={toggleCategories} className='m-1 btn btn-secondary'>選擇分類</button>
             )}
 
             {showCategories && !selectedCategory && (
                 <>
                     {mainCategories.map(category => (
                         <button
+                            type='button'  
                             key={category.category_id}
                             onClick={() => selectMainCategory(category.category, category.category_id)}
                             className='m-1 btn btn-info'>
                             {category.category}
                         </button>
                     ))}
-                    <button onClick={toggleCategories} className='m-1 btn btn-danger'>返回</button>
+                    <button type='button' onClick={toggleCategories} className='m-1 btn btn-danger'>返回</button> 
                 </>
             )}
 
             {selectedCategory && (selectedCategory !== LAPTOP_CATEGORY) && !selectedBrand && (
                 <>
-                    <button className='m-1 btn btn-info'>{selectedCategory}</button>
-                    <button onClick={toggleCategories} className='m-1 btn btn-danger'>返回</button>
+                    <button type='button' className='m-1 btn btn-info'>{selectedCategory}</button>  
+                    <button type='button' onClick={toggleCategories} className='m-1 btn btn-danger'>返回</button>  
                 </>
             )}
 
@@ -104,26 +105,26 @@ function CategoryMenu(props) {
                 <>
                     {brands.map(brand => (
                         <button
+                            type='button'  
                             key={brand.brand_id}
                             onClick={() => handleBrandClick(brand.brand_id, brand.brand)} // 傳遞品牌 ID 和品牌名稱
                             className={`m-1 btn btn-info ${selectedBrand === brand.brand ? 'btn-success' : ''}`}>
                             {brand.brand}
-
                         </button>
                     ))}
-                    <button onClick={toggleCategories} className='m-1 btn btn-danger'>返回</button>
+                    <button type='button' onClick={toggleCategories} className='m-1 btn btn-danger'>返回</button>  
                 </>
             )}
 
             {selectedBrand && (
                 <>
-                    <button className='m-1 btn btn-info'>筆記型電腦 &gt; {selectedBrand}</button>
-                    <button onClick={toggleCategories} className='m-1 btn btn-danger'>返回</button>
+                    <button type='button' className='m-1 btn btn-info'>筆記型電腦 &gt; {selectedBrand}</button>  
+                    <button type='button' onClick={toggleCategories} className='m-1 btn btn-danger'>返回</button>  
                 </>
             )}
-
         </div>
     );
+
 }
 
 CategoryMenu.defaultProps = {

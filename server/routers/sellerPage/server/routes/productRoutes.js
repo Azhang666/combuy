@@ -5,7 +5,11 @@ const multer = require('multer');
 const path = require('path');
 const db = require('./database');  // 注意相對路徑
 
+const logger = require('../public/images/tools/logger');
 
+logger.info('This is an info message');
+logger.warn('This is a warning message');
+logger.error('This is an error message');
 
 app.use(express.json()); // 用於解析JSON請求
 app.use(express.urlencoded({ extended: true })); // 用於解析表單數據 
@@ -70,10 +74,10 @@ router.get('/downproducts', (req, res) => {
 });
 
 router.put('/down/:productId', (req, res) => {
-    const productId = req.params.productId;  
+    const productId = req.params.productId;
     const { publish } = req.body;
 
-    
+
     db.query('UPDATE sellspec1 SET publish = ? WHERE id = ?', [publish, productId], (err, results) => {
         if (err) {
             res.status(500).json({ error: 'Database error' });
@@ -116,66 +120,94 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 function getRelativePath(absolutePath) {
-    console.log("Absolute Path:", absolutePath); 
+    console.log("Absolute Path:", absolutePath);
     let relativePath = path.relative(path.join(__dirname, '..', 'public'), absolutePath);
-    console.log("Generated Relative Path:", relativePath); 
+    console.log("Generated Relative Path:", relativePath);
     return relativePath.replace(/\\/g, '/');
 }
 
+const dbQuery = (query, values) => {
+    return new Promise((resolve, reject) => {
+        db.query(query, values, (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+};
 
-router.post('/createProduct', upload.single('productImage'), (req, res) => {
-    console.log("req.file:", req.file);
-    let relativePath; // 先宣告 relativePath 變數
-
-    if (req.file && req.file.path) {
-        relativePath = getRelativePath(req.file.path); // 在此賦值
+router.post('/createProduct', upload.array('productImage', 5), (req, res, next) => {
+    console.log('Endpoint hit!');
+    console.log('Received body data:', req.body);
+    console.log('Received files:', req.files);
+    // Check and log keys of req.files
+    if (req.files) {
+        console.log(Object.keys(req.files));
+    } else {
+        console.log("req.files is not defined or null");
     }
-
-    if (!req.body || !req.file) {
+    
+    console.log(req.body);
+    
+    next();
+}, async (req, res) => {
+    if (!req.body || !req.files || req.files.length === 0) {
         return res.status(400).json({ message: '請求數據不完整' });
     }
 
-
-
-    const productData = req.body;
-    
-    const productId = req.body.product_id;
-
-    const data = {
-        prod_id: productId,
-        originalname: req.file.originalname,
-        stored_name: req.file.filename,
-        upload_date: new Date(),
-        file_size: req.file.size,
-        mime_type: req.file.mimetype,
-        img_src: relativePath,
-        
-    };
-    console.log(req.file.originalname);
-    console.log(relativePath);
-
-    // 插入到 product table
-    db.query('INSERT INTO product SET ?', productData, (error, results) => {
-        if (error) {
-            console.error("Database error:", error);
-            return res.json({ success: false, message: 'Database insertion failed' });
-        }
-
-        // 新插入的商品ID
+    const productData = {
+        user_id: req.body.productData.user_id,
+        prod_name: req.body.productData.prod_name,
+        brand_id: req.body.productData.brand_id,
+        category_id: req.body.productData.category_id,
+        transport: req.body.productData.transport,
+        payment: req.body.productData.payment,
+        // ... 其他字段
+      };
+    try {
+        // 插入到 product table
+        const results = await dbQuery('INSERT INTO product SET ?', productData);
         const prodId = results.insertId;
 
-        data.prod_id = prodId; // 將 data 的 product_id 設定為新的商品ID
-
-        // 插入到 product_images_test 表
-        db.query('INSERT INTO product_images_test SET ?', data, (imgError) => {
-            if (imgError) {
-                console.error("Image insertion error:", imgError);
-                return res.json({ success: false, message: 'Image insertion failed' });
+        let imagesData = req.files.map(file => {
+            let relativePath;
+            if (file.path) {
+                relativePath = getRelativePath(file.path);
             }
-            res.json({ success: true, message: 'Product and image added successfully!' });
+            return {
+                prod_id: prodId,
+                originalname: file.originalname,
+                stored_name: file.filename,
+                upload_date: new Date(),
+                file_size: file.size,
+                mime_type: file.mimetype,
+                img_src: relativePath,
+            };
         });
-    });
+
+        const imgInsertPromises = imagesData.map(imgData => {
+            return dbQuery('INSERT INTO product_images_test SET ?', imgData);
+        });
+
+        await Promise.all(imgInsertPromises);
+        res.json({ success: true, message: 'Product and images added successfully!' });
+
+    } catch (error) {
+        console.error("Error:", error);
+
+        if (error.code === 'ER_DUP_ENTRY') {
+            res.status(400).json({ success: false, message: 'Duplicate entry detected!' });
+        } else {
+            res.status(500).json({ success: false, message: 'Server error.' });
+        }
+    }
 });
 
 
+
 module.exports = router;
+
+
+
