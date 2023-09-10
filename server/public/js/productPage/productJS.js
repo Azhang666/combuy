@@ -231,7 +231,7 @@ $(document).ready(function () {
   //api/changeProductItem and this button prevent bubble events防止泡沫事件
   $("body").on("click", ".prodToPItem", function (e) {
     console.log("1");
-    e.preventDefault();
+
     e.stopPropagation();
   });
   $("body").on("click", ".ctrlBtn", function (e) {

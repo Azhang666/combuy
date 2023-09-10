@@ -1,7 +1,8 @@
 <section class="productBox row">
   <% for( let i = 0; i < product.length; i++ ) {%>
   <div class="col-4">
-    <a 
+    <a
+      href="/commodity/<%=product[i].prod_id%>/<%=product[i].spec_id%>"
       class="prodToPItem"
       title="<%=product[i].prod_name+product[i].spec_name%>"
     >
