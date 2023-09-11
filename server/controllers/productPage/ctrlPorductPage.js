@@ -8,7 +8,7 @@ let getPriceRange = {
   to: 999999,
 };
 let prodItemPage = 1;
-let productItem = 12;
+let productItem = 6;
 let offset = (prodItemPage - 1) * productItem;
 let prodSelTag = 3;
 let randerProdTag = false;
@@ -157,3 +157,30 @@ exports.ctrlProdPage = (req, res) => {
     );
   });
 };
+
+// router.post("/addcart", async (req, res) => {
+//   try {
+//     var { user_id, prod_id, spec_id } = req.body;
+//     var spl =
+//       "INSERT INTO shopcart (user_id, prod_id, spec_id) VALUES (?, ?, ?)";
+//     await queryDatabase(spl, [user_id, prod_id, spec_id]);
+
+//     res.status(200).send("成功加入購物車");
+//   } catch (error) {
+//     console.error("加入購物車失敗", error);
+//     res.status(500).send("內部伺服器錯誤");
+//   }
+// });
+
+// router.post("/addcollect", async (req, res) => {
+//   try {
+//     var { user_id, prod_id, spec_id } = req.body;
+//     var sql =
+//       "INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)";
+//     await queryDatabase(sql, [user_id, prod_id, spec_id]);
+//     res.status(200).send("成功加入收藏");
+//   } catch (error) {
+//     console.error("加入收藏失敗", error);
+//     res.status(500).send("內部伺服器錯誤");
+//   }
+// });
