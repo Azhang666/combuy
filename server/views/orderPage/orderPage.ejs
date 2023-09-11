@@ -8,10 +8,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link rel="stylesheet" href="./css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./css/order.css" />
-    <script src="./js/jquery-3.6.0.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/public/stylesheets/bootstrap.css" />
+    <link rel="stylesheet" href="/public/stylesheets/shopCartPage/order.css" />
+    <script src="/public/js/jquery-3.6.0.js"></script>
+    <script src="/public/js/bootstrap.min.js"></script>
   </head>
 
   <body>
@@ -21,18 +21,27 @@
         <ul>
           <li>
             <a href="#" title="回首頁"
-              ><img src="./img/logo/cambuyLogo.png" alt="cambuyLogo"
+              ><img src="/public/images/logo/cambuyLogo.png" alt="cambuyLogo"
             /></a>
           </li>
           <li>
-            <form action="/search" method="get">
-              <input type="text" name="search" value="search" /><button
+            <form>
+              <input type="text" name="search" placeholder="搜尋商品" /><button
                 type="submit"
                 title="搜尋"
               >
-                <img src="./img/icons/search.png" alt="search" />
+                <img src="/public/images/icons/search.png" alt="search" />
               </button>
             </form>
+            <div id="search-result">
+              <ul>
+                <li><a href="#">1</a></li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+              </ul>
+            </div>
           </li>
           <li>
             <label class="switch" title="深/淺色模式">
@@ -43,17 +52,17 @@
           </li>
           <li>
             <a href="#" title="通知"
-              ><img src="./img/icons/advice.png" alt="advice"
+              ><img src="/public/images/icons/advice.png" alt="advice"
             /></a>
           </li>
           <li>
-            <a href="#" title="會員中心"
-              ><img src="./img/icons/member.png" alt="member"
+            <a href="/login" title="會員中心"
+              ><img src="/public/images/icons/member.png" alt="member"
             /></a>
           </li>
           <li>
-            <a href="#" title="購物車"
-              ><img src="./img/icons/buy-cart.png" alt="buy-cart"
+            <a href="/shopCart" title="購物車"
+              ><img src="/public/images/icons/buy-cart.png" alt="buy-cart"
             /></a>
           </li>
         </ul>
@@ -92,7 +101,7 @@
                             <div class="d-flex justify-content-around checkbox-product-bar ">
                                 <p class="my-auto">訂單完成</p>
                                 <div class="product-img ms-5">
-                                    <img src="./img/橫版logo.png" alt="">
+                                    <img src="/public/images/橫版logo.png" alt="">
                                 </div>
                                 <div class="product-name">
                                     <p class="my-auto">商品名稱</p>
@@ -324,76 +333,38 @@
     </div>
 
     <script>
+      //req herder select & herder select display block
+      $('input[name="search"]').on("keyup", function () {
+        //herder select display block
+        $("#search-result").css("display", "block");
+        //req herder select
+        $.ajax({
+          type: "get",
+          url: "/api/changeProduct/search",
+          data: {
+            search: $(this).val(),
+          },
+          success: async function (response) {
+            let result = ``;
+            response.forEach((prod) => {
+              result += `<li><a href="/commodity/${prod.prod_id}/${prod.spec_id}">${prod.prod_name}</a></li>`;
+            });
+
+            result == ""
+              ? (result = "<li><p>搜尋無結果</p></li>")
+              : (result = result);
+            $("#search-result>ul").html(result);
+          },
+        });
+      });
+      $("body").on("click", function () {
+        $("#search-result").css("display", "none");
+      });
       // 購物車功能
       $(function () {
-        // 1.全選框
-        // 全部選擇功能
-        $(".checkall").on("change", function () {
-          $(".j-checkbox,.checkall").prop("checked", $(this).prop("checked"));
-        });
-
-        // 2.複選框
-        $(".j-checkbox").on("change", function () {
-          if ($(".j-checkbox:checked").length === $(".j-checkbox").length) {
-            $(".checkall").prop("checked", true);
-          } else {
-            $(".checkall").prop("checked", false);
-          }
-        });
-
-        //3. +商品數量
-        $(".increment").on("click", function () {
-          // i = 商品數量
-          var i = $(this).siblings(".itxt").val();
-          i++;
-          // 點一次+就給itxt
-          $(this).siblings(".itxt").val(i);
-          // j = 商品單價
-          var j = $(this).parents(".num-bar").siblings(".price").html();
-          // 總計
-          $(this)
-            .parents(".num-bar")
-            .siblings(".total")
-            .html(i * j);
-          getSum();
-        });
-
-        //4. -商品數量
-        $(".decrement").on("click", function () {
-          var i = $(this).siblings(".itxt").val();
-          console.log(i);
-          if (i == 0) {
-            return false;
-          }
-          i--;
-          $(this).siblings(".itxt").val(i);
-          var j = $(this).parents(".num-bar").siblings(".price").html();
-          $(this)
-            .parents(".num-bar")
-            .siblings(".total")
-            .html(i * j);
-          getSum();
-        });
-
-        // 刪除
-        $(".del a").click(function () {
-          $(this).parents(".shop-car-item-bar").remove();
-          $(".j-checkbox:checked").parents(".shop-car-item-bar").remove();
-          getSum();
-        });
-
-        // 刪除選到的商品
-        $(".del-all a").click(function () {
-          // 刪除的是小複選框被選中的商品
-          // 取得小複選框j-checkbox 的選中狀態checked
-          $(".j-checkbox:checked").parents(".shop-car-item-bar").remove();
-          // 當我刪除商品之後要重新計算件數跟總金額
-          getSum();
-        });
-
         // 因為一打開頁面, 下面就要計算件數跟總價
         // 所以一開始就要呼叫一次函式
-        getSum();
+        // getSum();
         function getSum() {
           var count = 0; // 計算總件數
           var money = 0; // 計算總價錢
@@ -408,7 +379,7 @@
           });
           // 再取得 總件數.amount-sum 的文字em , 把它替換成count
           $(".amount-sum em").html(count);
-          console.log(count);
+
           // 5-3.取得商品價格
           $(".total").each(function (index, ele) {
             // 把 商品單價$(ele) 裡的 文字text() 加到money
@@ -416,8 +387,72 @@
           });
           // 再取得 總價.price-sum 的文字em , 把它替換成money
           $(".price-sum em").text(money);
-          console.log(money);
         }
+      });
+
+      // 1.全選框
+      // 全部選擇功能
+      $(".checkall").on("change", function () {
+        $(".j-checkbox,.checkall").prop("checked", $(this).prop("checked"));
+      });
+
+      // 2.複選框
+      $(".j-checkbox").on("change", function () {
+        if ($(".j-checkbox:checked").length === $(".j-checkbox").length) {
+          $(".checkall").prop("checked", true);
+        } else {
+          $(".checkall").prop("checked", false);
+        }
+      });
+
+      //3. +商品數量
+      $(".increment").on("click", function () {
+        // i = 商品數量
+        var i = $(this).siblings(".itxt").val();
+        i++;
+        // 點一次+就給itxt
+        $(this).siblings(".itxt").val(i);
+        // j = 商品單價
+        var j = $(this).parents(".num-bar").siblings(".price").html();
+        // 總計
+        $(this)
+          .parents(".num-bar")
+          .siblings(".total")
+          .html(i * j);
+        getSum();
+      });
+
+      //4. -商品數量
+      $(".decrement").on("click", function () {
+        var i = $(this).siblings(".itxt").val();
+
+        if (i == 0) {
+          return false;
+        }
+        i--;
+        $(this).siblings(".itxt").val(i);
+        var j = $(this).parents(".num-bar").siblings(".price").html();
+        $(this)
+          .parents(".num-bar")
+          .siblings(".total")
+          .html(i * j);
+        getSum();
+      });
+
+      // 刪除
+      $(".del a").click(function () {
+        $(this).parents(".shop-car-item-bar").remove();
+        $(".j-checkbox:checked").parents(".shop-car-item-bar").remove();
+        getSum();
+      });
+
+      // 刪除選到的商品
+      $(".del-all a").click(function () {
+        // 刪除的是小複選框被選中的商品
+        // 取得小複選框j-checkbox 的選中狀態checked
+        $(".j-checkbox:checked").parents(".shop-car-item-bar").remove();
+        // 當我刪除商品之後要重新計算件數跟總金額
+        getSum();
       });
 
       // 取得付款方式跟配送資訊
@@ -425,9 +460,9 @@
         // 配送資訊
         $.ajax({
           type: "POST",
-          url: "http://localhost:2047/api/getOrderList",
+          url: "/shopCart/getOrderList",
           success: function (data) {
-            console.log(data);
+            // console.log(data);
 
             var delivery = data[0][data[0].length - 1];
             var payMethod = delivery.pay_method;
@@ -452,10 +487,8 @@
       $(function () {
         $.ajax({
           type: "POST",
-          url: "http://localhost:2047/api/getOrderProduct",
+          url: "/shopCart/getOrderProduct",
           success: function (res) {
-            console.log(res);
-
             // var price = res[0][0].price /  res[0][0].count
             // console.log(price);
 
@@ -463,7 +496,7 @@
             var itemsHtml = "";
             for (var i = 0; i < itemsData.length; i++) {
               var price = res[0][i].price / res[0][i].count;
-              console.log(price);
+
               var item = itemsData[i];
               itemsHtml += `
                         <div class="col-12 shop-car-item-bar d-flex justify-content-between mt-3">
@@ -499,9 +532,8 @@
       $("#cardModal").on("show.bs.modal", function () {
         $.ajax({
           type: "GET",
-          url: "http://localhost:2047/api/getUserCards",
+          url: "/shopCart/getUserCards",
           success: function (res) {
-            console.log(res);
             var orderData = res[0][0];
 
             $("#name").val(orderData.name);
@@ -518,7 +550,7 @@
         dataType: "json", //
 
         success: function (data) {
-          console.log(data); //字符串
+          // console.log(data); //字符串
           for (let i = 0; i < data.length; i++) {
             // console.log(data[i].CityName);
             var city = $(

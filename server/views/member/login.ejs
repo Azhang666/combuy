@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ComBuy - <%=title%></title>
-    <link rel="icon" href="/public/favicon.ico" />
+    <link rel="icon" href="/public/images/logo/favicon.ico" />
     <link rel="stylesheet" href="/public/stylesheets/style.min.css" />
 
     <!-- font  -->
@@ -15,10 +15,10 @@
       rel="stylesheet"
     />
 
-    <script src="/public/javascripts/jquery-3.6.0.js"></script>
+    <script src="/public/js/jquery-3.6.0.js"></script>
 
-    <script async src="/public/javascripts/form.js"></script>
-    <script src="/public/javascripts/login_data_send.js"></script>
+    <script async src="/public/js/form.js"></script>
+    <script src="/public/js/login_data_send.js"></script>
   </head>
   <body>
     <!-- 插入header的保留位 -->
@@ -42,11 +42,23 @@
           <form id="formLogin" action="" method="post">
             <div class="spacing">
               <label for="iptAcc">帳號</label>
-              <input type="text" name="acc" id="iptAcc" placeholder="請輸入您的帳號" required />
+              <input
+                type="text"
+                name="acc"
+                id="iptAcc"
+                placeholder="請輸入您的帳號"
+                required
+              />
             </div>
             <div class="spacing">
               <label for="iptPwd">密碼</label>
-              <input type="password" name="pwd" id="iptPwd" placeholder="請輸入您的密碼" required />
+              <input
+                type="password"
+                name="pwd"
+                id="iptPwd"
+                placeholder="請輸入您的密碼"
+                required
+              />
             </div>
             <div class="submit">
               <input type="submit" value="登 入" />

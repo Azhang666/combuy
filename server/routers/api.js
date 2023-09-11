@@ -6,7 +6,7 @@ const bodyparse = require("body-parser");
 var bp_json = bodyparse.json({ limit: "10mb" });
 var bp_uncode = bodyparse.urlencoded({ extended: true, limit: "10mb" });
 
-const loginController = require("../controllers/loginController");
+const loginController = require("../controllers/memberPage/loginController");
 
 const {
   login_render,

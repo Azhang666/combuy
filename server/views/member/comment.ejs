@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ComBuy - <%=title%></title>
-    <link rel="icon" href="/public/favicon.ico" />
+    <link rel="icon" href="/public/images/logo/favicon.ico" />
     <link rel="stylesheet" href="/public/stylesheets/style.min.css" />
 
     <link
@@ -20,8 +20,8 @@
       rel="stylesheet"
     />
 
-    <script src="/public/javascripts/jquery-3.6.0.js"></script>
-    <script async src="/public/javascripts/form.js"></script>
+    <script src="/public/js/jquery-3.6.0.js"></script>
+    <script async src="/public/js/form.js"></script>
   </head>
 
   <body>
@@ -50,7 +50,12 @@
               <% for(data of comments){%>
               <tr>
                 <td>
-                  <img src="/public/<%= data.img_src %>" alt="" srcset="" style="width: 100%" />
+                  <img
+                    src="/public/<%= data.img_src %>"
+                    alt=""
+                    srcset=""
+                    style="width: 100%"
+                  />
                 </td>
                 <td colspan="2">
                   <%=data.prod_name %>
@@ -75,7 +80,11 @@
                   <a
                     href="/member/comment/edit/<%=parseInt(data.order_id)%>/<%=data.prod_id%>/<%=data.spec_id%>"
                   >
-                    <input type="button" class="button button-S" value="修改評論" />
+                    <input
+                      type="button"
+                      class="button button-S"
+                      value="修改評論"
+                    />
                   </a>
                 </td>
               </tr>

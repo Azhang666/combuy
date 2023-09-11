@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
-const conn = require("../config/db");
-const { MemberData } = require("../config/user_data");
-const { Success, Error } = require("../config/response");
+const conn = require("../../config/db");
+const { MemberData } = require("../../config/user_data");
+const { Success, Error } = require("../../config/response");
 const LoginModel = {
   loginAPI: async (data) => {
     const { acc, pwd } = data;

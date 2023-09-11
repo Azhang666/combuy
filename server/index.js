@@ -56,13 +56,13 @@ app.get("/", (req, res) => {
 const api = require("./routers/api");
 app.use("/api", api);
 
-const login = require("./routers/login");
+const login = require("./routers/memberPage/login");
 app.use("/login", login);
 
-const register = require("./routers/register");
+const register = require("./routers/memberPage/register");
 app.use("/register", notlogin_render, register);
 
-const member = require("./routers/member");
+const member = require("./routers/memberPage/member");
 app.use("/member", login_render, member);
 // app.use('/member', member)
 

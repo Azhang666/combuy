@@ -2,6 +2,10 @@ var express = require("express");
 var router = express.Router();
 var db = require("../../models/shopCartPage/db");
 
+router.get("/", (req, res) => {
+  res.render("shopCartPage/shopCart");
+});
+
 router.delete("/delProd", function (req, res) {
   var prod_id = req.query.prod_id;
   var query = "DELETE FROM user_shopcart WHERE prod_id = ?";
@@ -140,23 +144,29 @@ router.post("/getOrderProduct", function (req, res) {
 });
 
 // 刪除購物車的商品
-router.get('/delProd', function (req, res) {
+router.get("/delProd", function (req, res) {
   var prod_id = req.query.prod_id;
   var user_id = req.query.user_id;
   var spec_id = req.query.spec_id;
-  console.log('Received delete request for prod_id:', prod_id, 'user_id:', user_id, 'spec_id:', spec_id);
+  console.log(
+    "Received delete request for prod_id:",
+    prod_id,
+    "user_id:",
+    user_id,
+    "spec_id:",
+    spec_id
+  );
 
-  var query = 'DELETE FROM shopcart WHERE prod_id = ? and user_id = ? and spec_id = ?'
-  db.query(query,[prod_id,user_id,spec_id], function (err, result) {
-      if (err) {
-          console.error(err);
-          res.status(500).json({ error: "資料讀取失敗。" });
-      } else {
-          res.status(200).json(result);
-      }
-  })
-})
-
-
+  var query =
+    "DELETE FROM shopcart WHERE prod_id = ? and user_id = ? and spec_id = ?";
+  db.query(query, [prod_id, user_id, spec_id], function (err, result) {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: "資料讀取失敗。" });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
 
 module.exports = router;
