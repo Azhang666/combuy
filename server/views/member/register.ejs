@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant-TW">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,7 +21,7 @@
   </head>
   <body>
     <!-- 插入header的保留位 -->
-    <%- /* include('../header');*/ %>
+    <%- await include('./header_test'); %>
     <main>
       <section class="member container container-S">
         <div class="subtitle">
@@ -33,8 +33,8 @@
         <div class="content">
           <form id="formRegister" action="" method="post">
             <div class="spacing box">
+              <label>我是</label>
               <div>
-                <label>我是</label>
                 <input type="radio" name="right" id="seller" value="1" />
                 <label for="seller">賣家</label>
                 <input type="radio" name="right" id="buyer" value="2" checked />
@@ -43,33 +43,15 @@
             </div>
             <div class="box">
               <label for="iptName">設定姓名</label>
-              <input
-                type="text"
-                name="name"
-                id="iptName"
-                placeholder="請輸入您的姓名"
-                required
-              />
+              <input type="text" name="name" id="iptName" placeholder="請輸入您的姓名" required />
             </div>
             <div class="box">
               <label for="iptAcc">設定帳號</label>
-              <input
-                type="text"
-                name="acc"
-                id="iptAcc"
-                placeholder="請輸入您的帳號"
-                required
-              />
+              <input type="text" name="acc" id="iptAcc" placeholder="請輸入您的帳號" required />
             </div>
             <div class="box">
               <label for="iptPwd">設定密碼</label>
-              <input
-                type="password"
-                name="pwd"
-                id="iptPwd"
-                placeholder="請輸入您的密碼"
-                required
-              />
+              <input type="password" name="pwd" id="iptPwd" placeholder="請輸入您的密碼" required />
             </div>
             <div class="box">
               <label for="iptPwdCheck">確認密碼</label>
@@ -82,8 +64,8 @@
               />
             </div>
             <div class="box">
+              <label for="iptYear">生日日期</label>
               <div>
-                <label for="iptYear">生日日期</label>
                 <input
                   type="text"
                   class="num input-S"
@@ -138,7 +120,7 @@
               />
             </div>
             <div class="box">
-              <input type="checkbox" name="terms" id="terms" required />
+              <input type="checkbox" name="terms" id="terms" />
               <label for="terms"
                 >我同意客戶
                 <a href="#" target="_blank">隱私權政策</a>
@@ -154,6 +136,6 @@
       </section>
     </main>
     <!-- 插入footer的保留位 -->
-    <%- /* include('../footer');*/ %>
+    <%- /* await include('../footer');*/ %>
   </body>
 </html>

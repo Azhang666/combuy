@@ -74,6 +74,7 @@ $(document).ready(function () {
     }
   })
 
+  let dataPhoto
   $('#formData').on('submit', async function (e) {
     e.preventDefault()
     var data = $('#formData').serializeArray()
@@ -88,45 +89,39 @@ $(document).ready(function () {
 
     var values = toJson(result)
 
-    const reader = new FileReader()
-    reader.onload = async function (e) {
-      let imgBase64 = e.target.result
-      // return
-      try {
-        const res = await $.ajax({
-          type: 'POST',
-          url: '/api/member/dataUpdate',
-          data: {
-            ...values,
-            photo: imgBase64,
-          },
-          dataType: 'json',
-        })
-        if (res.err == 0) {
-          $(this).off('submit')
-          $(this).submit()
+    try {
+      const res = await $.ajax({
+        type: 'PUT',
+        url: '/api/member/dataUpdate',
+        data: {
+          ...values,
+          photo: dataPhoto || '',
+        },
+        dataType: 'json',
+      })
+      if (res.err == 0) {
+        $(this).off('submit')
+        $(this).submit()
+      } else {
+        if (res.message == undefined) {
+          showErrorInput(res.data)
+          console.log(res)
         } else {
-          if (res.message == undefined) {
-            showErrorInput(res.data)
-            console.log(res)
-          } else {
-            alert(res.message)
-            location.reload()
-          }
+          alert(res.message)
+          location.reload()
         }
-      } catch (err) {
-        throw err
-        console.log(err)
       }
+    } catch (err) {
+      throw err
+      console.log(err)
     }
-
-    reader.readAsDataURL($('#iptPhoto')[0].files[0])
   })
 
   $('#iptPhoto').on('change', function () {
     const reader = new FileReader()
     reader.onload = async function (e) {
-      $('label[for=iptPhoto]').find('img').prop('src', e.target.result)
+      dataPhoto = e.target.result
+      $('label[for=iptPhoto]').find('img').prop('src', dataPhoto)
     }
     reader.readAsDataURL($('#iptPhoto')[0].files[0])
   })
@@ -275,17 +270,14 @@ $(document).ready(function () {
   //
   $('.star').on('click', function (e) {
     let grade = $(this).attr('value')
-    const stars = $(this).closest('#stars')
+    const stars = $(this).closest('.stars')
     stars.attr('value', grade)
-    $(this)
-      .closest('#stars')
-      .find('.star')
-      .each((index, element) => {
-        $(element).find('i').removeClass('fa-star fa-star-o')
-        $(element)
-          .find('i')
-          .addClass(index < grade ? 'fa-star' : 'fa-star-o')
-      })
+    stars.find('.star').each((index, element) => {
+      $(element).find('i').removeClass('fa-star fa-star-o')
+      $(element)
+        .find('i')
+        .addClass(index < grade ? 'fa-star' : 'fa-star-o')
+    })
   })
   $('#formComment').on('submit', async function (e) {
     e.preventDefault()
@@ -300,7 +292,7 @@ $(document).ready(function () {
           order_id: $(this).attr('order'),
           prod_id: $(this).attr('prod'),
           spec_id: $(this).attr('spec'),
-          grade: $('#stars').attr('value'),
+          grade: $(this).find('.stars').attr('value'),
           ...values,
         },
         dataType: 'json',

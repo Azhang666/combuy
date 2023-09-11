@@ -10,11 +10,17 @@ class ComparisonList {
   constructor(prod_id, spec_id) {
     this.compares.push({ prod_id: prod_id, spec_id: spec_id })
   }
-  addCompare(prod_id, spec_id) {
-    this.compares.push({ prod_id: prod_id, spec_id: spec_id })
+  // addCompare(prod_id, spec_id) {
+  //   this.compares.push({ prod_id: prod_id, spec_id: spec_id })
+  // }
+}
+class UserSetting {
+  constructor(darkmode = false) {
+    this.darkmode = darkmode
   }
 }
 module.exports = {
   MemberData,
   ComparisonList,
+  UserSetting,
 }

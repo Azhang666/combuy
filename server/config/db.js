@@ -1,17 +1,17 @@
-const mysql = require("mysql");
-const bluebird = require("bluebird");
+const mysql = require('mysql')
+const bluebird = require('bluebird')
 
 var conn = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "combuy",
-  port: 3307,
-});
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'combuy',
+  port: 3306,
+})
 conn.connect(function (err) {
   if (err) {
-    return;
+    return
   }
-});
-bluebird.promisifyAll(conn);
-module.exports = conn;
+})
+bluebird.promisifyAll(conn)
+module.exports = conn

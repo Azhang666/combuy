@@ -44,12 +44,10 @@
             </label>
           </li>
           <li>
-            <a href="#" title="通知"
-              ><img src="/public/images/icons/advice.png" alt="advice"
-            /></a>
+            <a href="#" title="通知"><img src="/public/images/icons/advice.png" alt="advice" /></a>
           </li>
           <li>
-            <a href="/login" title="會員中心"
+            <a href="/member" title="會員中心"
               ><img src="/public/images/icons/member.png" alt="member"
             /></a>
           </li>
@@ -70,10 +68,7 @@
             <ul>
               <% for( let i = 0; i < brand.length; i++ ) { %>
               <li class="brand">
-                <a
-                  href="../product"
-                  value="<%=brand[i].brand_id%>"
-                  title="<%=brand[i].brand%>"
+                <a href="../product" value="<%=brand[i].brand_id%>" title="<%=brand[i].brand%>"
                   ><%=brand[i].brand%></a
                 >
               </li>
@@ -87,11 +82,7 @@
           <div class="row">
             <!-- 輪播 -->
             <div class="carousel col-12">
-              <div
-                id="carouselExampleIndicators"
-                class="carousel slide"
-                data-bs-ride="carousel"
-              >
+              <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                   <button
                     type="button"
@@ -143,10 +134,7 @@
                   data-bs-target="#carouselExampleIndicators"
                   data-bs-slide="prev"
                 >
-                  <span
-                    class="carousel-control-prev-icon"
-                    aria-hidden="true"
-                  ></span>
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="visually-hidden">Previous</span>
                 </button>
                 <button
@@ -155,10 +143,7 @@
                   data-bs-target="#carouselExampleIndicators"
                   data-bs-slide="next"
                 >
-                  <span
-                    class="carousel-control-next-icon"
-                    aria-hidden="true"
-                  ></span>
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="visually-hidden">Next</span>
                 </button>
               </div>

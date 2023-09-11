@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant-TW">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,10 +27,10 @@
 
   <body>
     <!-- 插入header的保留位 -->
-    <%- /* include('../header');*/ %>
+    <%- await include('./header_test'); %>
     <main>
       <section class="member container container-L">
-        <%- include('./template/memberList'); %>
+        <%- await await include('./template/memberList'); %>
         <div class="subtitle">
           <div class="group group-left">
             <h5>留言紀錄</h5>
@@ -52,7 +52,7 @@
             <%if(data.comment_grade != 0){%>
             <div class=""><p>評論時間 : <%-data.comment_time%></p></div>
             <%}%>
-            <div class="spacing" id="stars" value=" <%=data.comment_grade%>">
+            <div class="spacing stars" value=" <%=data.comment_grade%>">
               <%for(let i = 0 ; i < 5 ; i++){%>
 
               <div class="star" id="grade_<%=parseInt(i)+1%>" value=" <%=parseInt(i)+1%>">
