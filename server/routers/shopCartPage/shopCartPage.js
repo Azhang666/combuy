@@ -1,8 +1,14 @@
 var express = require("express");
 var router = express.Router();
 var db = require("../../models/shopCartPage/db");
+const {
+  login_render,
+  login_api,
+  notlogin_render,
+  notlogin_api,
+} = require("../../middlewares/isLogin");
 
-router.get("/", (req, res) => {
+router.get("/", login_render, (req, res) => {
   res.render("shopCartPage/shopCart");
 });
 

@@ -2,14 +2,18 @@ const express = require("express");
 
 const prodItem = require("../../controllers/productPage/changeProductItem");
 const fontPage = require("../../controllers/fontPage/ctrlFontPage");
+const {
+  login_render,
+  login_api,
+  notlogin_render,
+  notlogin_api,
+} = require("../../middlewares/isLogin");
 var db = require("../../models/fontPage/db");
 
 const router = express.Router();
 
 //font page
 router.get("/", (req, res) => {
-  const uid = req.session.member;
-  console.log(uid);
   fontPage.fontPage(req, res);
 });
 
