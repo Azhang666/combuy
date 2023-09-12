@@ -16,7 +16,7 @@
   --color_6: #eee;
 }
 
-section.member.container > div.content > form > div.submit, section.member.container > div.content > div, section.member.container > div.content, section.member.container > div.subtitle > div.group, section.member.container div.memberList ul, main, div.pages .page {
+section.member.container > div.content > form > div.submit > div, section.member.container > div.content > form > div.submit, section.member.container > div.content > div, section.member.container > div.content, section.member.container > div.subtitle > div.group, section.member.container div.memberList ul, main, div.pages .page {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -67,44 +67,44 @@ section.member.container > div.content div.table table table td {
 
 :root {
   color: var(--color_6);
-  font-size: 15px;
+  font-size: 14px;
   font-family: "Noto Sans TC", sans-serif;
 }
 
 h1 {
-  font-size: 43px;
+  font-size: 42px;
   line-height: 60px;
 }
 
 h2 {
-  font-size: 35px;
+  font-size: 34px;
   line-height: 48px;
 }
 
 h3 {
-  font-size: 31px;
-  line-height: 48px;
+  font-size: 30px;
+  line-height: 36px;
 }
 
 h4 {
-  font-size: 27px;
+  font-size: 26px;
   line-height: 36px;
 }
 
 h5 {
-  font-size: 23px;
+  font-size: 22px;
   line-height: 36px;
 }
 
 h6 {
-  font-size: 19px;
+  font-size: 18px;
   line-height: 24px;
 }
 
 label,
 input,
 p {
-  font-size: 19px;
+  font-size: 18px;
   line-height: 24px;
 }
 
@@ -115,33 +115,33 @@ span {
 
 @media all and (max-width: 768px) {
   h1 {
-    font-size: 39px;
+    font-size: 38px;
     line-height: 48px;
   }
   h2 {
-    font-size: 31px;
-    line-height: 48px;
+    font-size: 30px;
+    line-height: 36px;
   }
   h3 {
-    font-size: 27px;
+    font-size: 26px;
     line-height: 36px;
   }
   h4 {
-    font-size: 23px;
+    font-size: 22px;
     line-height: 36px;
   }
   h5 {
-    font-size: 19px;
+    font-size: 18px;
     line-height: 24px;
   }
   h6 {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 24px;
   }
   p,
   label,
   input {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 24px;
   }
 }
@@ -156,27 +156,27 @@ input {
   position: relative;
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  font-size: 19px;
+  font-size: 18px;
   line-height: 24px;
 }
 input::-webkit-input-placeholder {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 24px;
 }
 input::-moz-placeholder {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 24px;
 }
 input:-ms-input-placeholder {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 24px;
 }
 input::-ms-input-placeholder {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 24px;
 }
 input::placeholder {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 24px;
 }
 input.input-L {
@@ -196,6 +196,11 @@ input.input-S {
   width: 4em;
   text-align: center;
   margin-right: 1em;
+}
+@media all and (max-width: 576px) {
+  input.input-S {
+    margin-right: 0.25em;
+  }
 }
 
 label {
@@ -331,18 +336,18 @@ button:active,
 select {
   padding: 0.5em 0.5em;
   border-color: var(--color_5);
-  font-size: 19px;
+  font-size: 18px;
   line-height: 24px;
 }
 select option {
-  font-size: 19px;
+  font-size: 18px;
   line-height: 24px;
 }
 
 textarea {
   width: 100%;
   padding: 1em 1em;
-  font-size: 19px;
+  font-size: 18px;
   line-height: 24px;
   resize: none;
 }
@@ -540,7 +545,7 @@ section.member.container div.memberList li {
 section.member.container div.memberList li a {
   display: inline-block;
   width: 100%;
-  font-size: 23px;
+  font-size: 22px;
   line-height: 36px;
   font-weight: bold;
   text-align: center;
@@ -572,7 +577,7 @@ section.member.container > div.subtitle {
 section.member.container > div.subtitle > div.group {
   color: var(--color_1);
 }
-@media all and (max-width: 375px) {
+@media all and (max-width: 768px) {
   section.member.container > div.subtitle > div.group {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -665,6 +670,11 @@ section.member.container > div.content > form > div a {
 section.member.container > div.content > form > div.submit {
   padding: 36px 0;
 }
+section.member.container > div.content > form > div.submit > div {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  row-gap: 12px;
+}
 section.member.container > div.content > form > div.spacing label {
   margin-right: 2em;
   letter-spacing: 1em;
@@ -718,7 +728,7 @@ section.member.container > div.content div.table table {
 section.member.container > div.content div.table table th,
 section.member.container > div.content div.table table td {
   padding: 24px 12px;
-  font-size: 19px;
+  font-size: 18px;
   line-height: 24px;
   text-align: center;
 }
@@ -742,7 +752,7 @@ section.member.container > div.content div.table table img {
 section.member.container > div.content .collapse th,
 section.member.container > div.content .collapse td {
   padding: 12px 0;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 24px;
 }
 section.member.container > div.content .stars {

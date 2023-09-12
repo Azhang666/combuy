@@ -279,10 +279,18 @@ $(document).ready(function () {
         .addClass(index < grade ? 'fa-star' : 'fa-star-o')
     })
   })
-  $('#formComment').on('submit', async function (e) {
+  $('[id^=formComment]').on('submit', async function (e) {
     e.preventDefault()
+
     var data = $(this).serializeArray()
     var values = toJson(data)
+
+    if (values.content.length >= 250) {
+      let check = confirm('字數設超過上限，多於文字將自動刪除\n確定上傳?')
+      if (!check) {
+        return
+      }
+    }
 
     try {
       const res = await $.ajax({

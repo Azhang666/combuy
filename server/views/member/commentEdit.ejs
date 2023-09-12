@@ -39,7 +39,7 @@
         <div class="content">
           <%comments.forEach((data,index)=>{%>
           <form
-            id="formComment"
+            id="formComment_<%=index%>"
             action=""
             method="post"
             order="<%=data.order_id%>"
