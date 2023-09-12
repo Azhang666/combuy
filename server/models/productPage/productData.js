@@ -30,7 +30,7 @@ exports.getBrandData = (setCondition, callBackData) => {
 exports.getprodItemData = (setCondition, callBackData) => {
   var connection = mysql.createConnection({
     host: 'localhost',
-    port: 3307,
+    port: 3306,
     user: 'root',
     password: '',
     database: 'combuy',
@@ -76,7 +76,7 @@ exports.getprodItemData = (setCondition, callBackData) => {
 exports.getAllProdItemNumData = (setCondition, callBackData) => {
   const connection = mysql.createConnection({
     host: 'localhost',
-    port: 3307,
+    port: 3306,
     user: 'root',
     password: '',
     database: 'combuy',
@@ -111,7 +111,7 @@ exports.getAllProdItemNumData = (setCondition, callBackData) => {
 exports.getTagprodItemData = (setCondition, callBackData) => {
   var connection = mysql.createConnection({
     host: 'localhost',
-    port: 3307,
+    port: 3306,
     user: 'root',
     password: '',
     database: 'combuy',
@@ -158,7 +158,7 @@ exports.getTagprodItemData = (setCondition, callBackData) => {
 exports.getAllTagProdItemNumData = (setCondition, callBackData) => {
   var connection = mysql.createConnection({
     host: 'localhost',
-    port: 3307,
+    port: 3306,
     user: 'root',
     password: '',
     database: 'combuy',

@@ -5,7 +5,7 @@ var router = express.Router()
 const MemberController = require('../../controllers/memberPage/memberController')
 
 // 會員資料更新
-router.post('/dataUpdate', MemberController.dataUpdateAPI)
+router.put('/dataUpdate', MemberController.dataUpdateAPI)
 // 密碼更新
 router.put('/pwdChange', MemberController.pwdChangeAPI)
 // 卡片資料

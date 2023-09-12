@@ -43,14 +43,14 @@ section.member.container > div.content {
   border-radius: 0 0 10px 10px;
 }
 
-section.member.container > div.content .collapse tr:not(tr:last-child), section.member.container > div.content > div.table > table tr.underLine {
+section.member.container > div.content .collapse tr:not(tr:last-child), section.member.container > div.content div.table table tr.underLine {
   border-width: 0 0 1px 0;
   border-style: solid;
   border-color: var(--color_5);
 }
 
-section.member.container > div.content > div.table > table table th,
-section.member.container > div.content > div.table > table table td {
+section.member.container > div.content div.table table table th,
+section.member.container > div.content div.table table table td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -493,20 +493,10 @@ div.pages .page {
 
 body {
   background-color: var(--color_2);
-}
-body:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -99;
-  width: 100%;
-  height: 100vh;
-  background-color: var(--color_2);
   background-image: linear-gradient(0deg, rgba(145, 75, 0, 0.05) 1px, transparent 0), linear-gradient(90deg, rgba(145, 75, 0, 0.05) 1px, transparent 0), linear-gradient(0deg, rgba(100, 50, 0, 0.05) 1px, transparent 0), linear-gradient(90deg, rgba(100, 50, 0, 0.05) 1px, transparent 0), linear-gradient(0deg, rgba(0, 0, 0, 0.05) 1px, transparent 0), linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 0);
   background-size: 10px 10px, 10px 10px, 100px 100px, 100px 100px, 300px 300px, 300px 300px;
 }
-body:has(#mode:checked):after {
+body:has(#mode:checked) {
   background-image: linear-gradient(0deg, rgba(100, 128, 128, 0.05) 1px, transparent 0), linear-gradient(90deg, rgba(100, 128, 128, 0.05) 1px, transparent 0), linear-gradient(0deg, rgba(100, 200, 255, 0.05) 1px, transparent 0), linear-gradient(90deg, rgba(100, 200, 255, 0.05) 1px, transparent 0), linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1px, transparent 0), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 0);
   background-size: 10px 10px, 10px 10px, 100px 100px, 100px 100px, 300px 300px, 300px 300px;
 }
@@ -705,7 +695,12 @@ section.member.container > div.content > form > div.photoFrame > label > img {
     position: initial;
   }
 }
-section.member.container > div.content > div.table {
+section.member.container > div.content > form.center {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+section.member.container > div.content div.table {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -714,30 +709,31 @@ section.member.container > div.content > div.table {
       -ms-flex-pack: start;
           justify-content: flex-start;
 }
-section.member.container > div.content > div.table > table {
+section.member.container > div.content div.table table {
   table-layout: fixed;
+  width: 100%;
   min-width: 960px;
   border-collapse: collapse;
 }
-section.member.container > div.content > div.table > table th,
-section.member.container > div.content > div.table > table td {
+section.member.container > div.content div.table table th,
+section.member.container > div.content div.table table td {
   padding: 24px 12px;
   font-size: 19px;
   line-height: 24px;
   text-align: center;
 }
-section.member.container > div.content > div.table > table p {
+section.member.container > div.content div.table table p {
   text-align: justify;
 }
-section.member.container > div.content > div.table > table table {
+section.member.container > div.content div.table table table {
   margin: 0 auto;
   width: 90%;
 }
-section.member.container > div.content > div.table > table table th,
-section.member.container > div.content > div.table > table table td {
+section.member.container > div.content div.table table table th,
+section.member.container > div.content div.table table table td {
   padding: 12px 12px;
 }
-section.member.container > div.content > div.table > table img {
+section.member.container > div.content div.table table img {
   width: 200px;
   height: 200px;
   -o-object-fit: contain;

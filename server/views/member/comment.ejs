@@ -72,11 +72,16 @@
                     </div>
                     <p><%-data.comment %></p>
                   </td>
-                  <td colspan="2">
+                  <td>
                     <a
                       href="/member/comment/edit/<%=parseInt(data.order_id)%>/<%=data.prod_id%>/<%=data.spec_id%>"
                     >
                       <input type="button" class="button button-S" value="修改評論" />
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/commodity/<%=data.prod_id%>/<%=data.spec_id%>">
+                      <input type="button" class="button button-S" value="查看商品" />
                     </a>
                   </td>
                 </tr>

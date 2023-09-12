@@ -372,7 +372,7 @@ const MemberModel = {
   commentRender: async (uid, page) => {
     try {
       const sql1 =
-        'SELECT COUNT(*) AS total FROM vw_comment WHERE user_id = ? AND comment_time IS NULL '
+        'SELECT COUNT(*) AS total FROM vw_comment WHERE user_id = ? AND comment_time IS NOT NULL '
       const result1 = await conn.queryAsync(sql1, [uid])
       const result2 = await MemberModel.getCommentDetail(uid, page - 1)
       return new Success({

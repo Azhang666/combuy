@@ -23,7 +23,8 @@ const LoginController = {
   logoutAPI: (req, res) => {
     res.setHeader('Content-type', 'text/html;charset=utf-8')
     const result = LoginModel.logoutAPI(req.session.member)
-    req.session.destroy()
+    // req.session.destroy()
+    delete req.session.member
     res.end(JSON.stringify(result))
   },
 }

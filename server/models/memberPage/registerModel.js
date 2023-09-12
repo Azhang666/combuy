@@ -26,9 +26,9 @@ const RegisterModel = {
   },
   registerAPI: async data => {
     let errorInputs = []
-    if (Object.keys(data).length != 11) {
-      return new Error('input wrong')
-    }
+    // if (Object.keys(data).length != 11) {
+    //   return new Error('input wrong')
+    // }
     const { right, acc, pwd, pwdCheck, name, year, month, day, phone, mail, terms } = data
 
     if (!terms || terms == 'false') {
