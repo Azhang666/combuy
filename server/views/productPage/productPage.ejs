@@ -1,56 +1,74 @@
-<%-await include('./header') %>
-<main class="row">
-  <aside class="col-2">
-    <nav class="navSide">
-      <ul>
-        <% for( let i = 0; i < brand.length; i++ ) { %>
-        <li class="brand">
-          <a value="<%=brand[i].brand_id%>" title="<%=brand[i].brand%>"
-            ><%=brand[i].brand%></a
-          >
-        </li>
-        <% } %>
-      </ul>
-    </nav>
-  </aside>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="AZhang" />
+    <title>ComBuy - 產品</title>
+    <link rel="icon" href="/public/images/logo/favicon.ico" />
+    <link rel="stylesheet" href="/public/stylesheets/bootstrap.css" />
+    <link
+      rel="stylesheet"
+      href="/public/stylesheets/productPage/productStyle.css"
+    />
+  </head>
+  <body>
+    <%-await include('../header'); %>
+    <main class="row">
+      <%-await include('../brand'); %>
+      <section class="info col-10">
+        <form class="productSlecet">
+          <select name="selectItem">
+            <option value="">使用需求</option>
+            <option value="1">CP值</option>
+            <option value="5">極度輕薄</option>
+            <option value="6">開學季學生必推</option>
+            <option value="2">文書機</option>
+            <option value="3">電競機</option>
+            <option value="4">繪圖高效能機</option>
+          </select>
+          <span>上架時間</span>
+          <button id="addTime" type="button">
+            <img
+              src="/public/images/icons/chevron-down.svg"
+              alt="chevron-down"
+            />
+          </button>
+          <span>金額</span>
+          <button id="priceDesc" type="button">
+            <img
+              src="/public/images/icons/chevron-down.svg"
+              alt="chevron-down"
+            />
+          </button>
+          <label for="price"> 金額 </label>
+          <input
+            id="price"
+            type="text"
+            name="priceFrom"
+            placeholder="0"
+            pattern="[0-9]{7}"
+          />
+          <label for="priceTo"> 到 </label>
+          <input
+            id="priceTo"
+            type="text"
+            name="priceTo"
+            placeholder="9999999"
+            pattern="[0-9]{7}"
+          />
+        </form>
+        <%-await include('./chageProdAndPage.ejs') %> <%-await
+        include('../footer.ejs') %>
+        
+      </section>
+    </main>
 
-  <section class="info col-10">
-    <form class="productSlecet">
-      <select name="selectItem">
-        <option value="">使用需求</option>
-        <option value="1">CP值</option>
-        <option value="5">極度輕薄</option>
-        <option value="6">開學季學生必推</option>
-        <option value="2">文書機</option>
-        <option value="3">電競機</option>
-        <option value="4">繪圖高效能機</option>
-      </select>
-      <span>上架時間</span>
-      <button id="addTime" type="button">
-        <img src="/public/images/icons/chevron-down.svg" alt="chevron-down" />
-      </button>
-      <span>金額</span>
-      <button id="priceDesc" type="button">
-        <img src="/public/images/icons/chevron-down.svg" alt="chevron-down" />
-      </button>
-      <label for="price"> 金額 </label>
-      <input
-        id="price"
-        type="text"
-        name="priceFrom"
-        placeholder="0"
-        pattern="[0-9]{7}"
-      />
-      <label for="priceTo"> 到 </label>
-      <input
-        id="priceTo"
-        type="text"
-        name="priceTo"
-        placeholder="9999999"
-        pattern="[0-9]{7}"
-      />
-    </form>
-    <%-await include('./chageProdAndPage.ejs') %> <%-await
-    include('./footer.ejs') %>
-  </section>
-</main>
+    <button class="top-btn" id="topScreenBtn" title="返回頂部">
+      <img src="/public/images/icons/top-btn.svg" alt="top-btn" />
+    </button>
+
+    <script src="/public/js/jquery-3.6.0.js"></script>
+    <script src="/public/js/productPage/productJS.js"></script>
+  </body>
+</html>

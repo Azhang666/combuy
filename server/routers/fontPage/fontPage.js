@@ -8,6 +8,8 @@ const router = express.Router();
 
 //font page
 router.get("/", (req, res) => {
+  const uid = req.session.member;
+  console.log(uid);
   fontPage.fontPage(req, res);
 });
 

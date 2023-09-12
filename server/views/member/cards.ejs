@@ -22,10 +22,10 @@
 
   <body>
     <!-- 插入header的保留位 -->
-    <%- /* include('../header');*/ %>
+    <%-await include('../header'); %>
     <main>
       <section class="member container container-L">
-        <%- include('./template/memberList'); %>
+        <%-await include('./template/memberList'); %>
         <div class="subtitle">
           <div class="group group-left">
             <h5>付款設定</h5>
