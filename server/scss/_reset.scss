@@ -6,8 +6,8 @@
   box-sizing: border-box;
 }
 
-* {
-  // color: $color_000000;
+:root {
+  color: var(--color_6);
   font-size: font(2);
   font-family: 'Noto Sans TC', sans-serif;
 }

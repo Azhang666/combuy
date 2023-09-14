@@ -7,8 +7,8 @@ div.pages {
     height: 2.5em;
     margin: 0 0.5em;
 
-    color: $color_ffffff;
-    background-color: $color_808180;
+    color: var(--color_1);
+    background-color: var(--color_5);
     @extend %roundAll;
   }
 }
