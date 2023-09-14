@@ -5,7 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const db = require('./database');  // 注意相對路徑
 
-const logger = require('../public/images/tools/logger');
+const logger = require('../../../../public/images/tools/logger');
 
 logger.info('This is an info message');
 logger.warn('This is a warning message');
