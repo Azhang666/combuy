@@ -57,7 +57,7 @@ body {
               border: 1px solid $gray;
               padding: 0.25rem 0.5rem;
               width: 30vw;
-              outline: none
+              outline: none;
             }
 
             button[type="submit"] {
@@ -84,15 +84,15 @@ body {
               width: 0;
               height: 0;
 
-              &:checked+.slider {
+              &:checked + .slider {
                 background-color: $black;
               }
 
-              &:focus+.slider {
+              &:focus + .slider {
                 box-shadow: 0 0 1px $black;
               }
 
-              &:checked+.slider:before {
+              &:checked + .slider:before {
                 -webkit-transform: translateX(26px);
                 -ms-transform: translateX(26px);
                 transform: translateX(26px);
@@ -128,22 +128,20 @@ body {
             border-radius: 34px;
             padding-left: 36px;
             padding-top: 4px;
-            
+
             &:before {
               border-radius: 50%;
-              
             }
           }
-          
+
           span.slider.moon {
             border-radius: 34px;
             padding-left: 12px;
             padding-top: 4px;
             color: $white;
-            
+
             &:before {
               border-radius: 50%;
-              
             }
           }
 
@@ -231,7 +229,7 @@ main {
   // 輪播
   .my-carousel {
     .custom-carousel {
-      height: 100%; 
+      height: 100%;
       img {
         object-fit: cover;
         height: 50vh;
@@ -396,12 +394,12 @@ main {
     justify-content: center;
     align-items: center;
     gap: 10px;
-      img{
-        width: 100%;
-      }
+    img {
+      width: 100%;
+    }
   }
   @media (max-width: 1600px) {
-    .ads{
+    .ads {
       width: 100%;
       height: auto;
       padding: 10px 30px;
@@ -450,8 +448,8 @@ main {
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        border-radius: 10px; 
-        border: 0px solid var(--808180, #808180); 
+        border-radius: 10px;
+        border: 0px solid var(--808180, #808180);
         background: var(--ffffff, #fff);
 
         // 商品名稱
@@ -495,7 +493,7 @@ main {
             align-items: flex-start;
             gap: 10px;
             align-self: stretch;
-          
+
             .frame1 {
               display: flex;
               align-items: center;
@@ -521,7 +519,7 @@ main {
           // 商品照片
           .item2-img {
             display: flex;
-            width: 300px; 
+            width: 300px;
             // flex: 1 0 0;
             align-self: stretch;
             border-radius: 5px 0px;
@@ -529,7 +527,7 @@ main {
             // 放照片
             // @media (max-width:1600px) {
             //   background-color: red;
-            // } 
+            // }
             img {
               width: 100%;
             }
@@ -551,9 +549,9 @@ main {
       div.href {
         // padding-right: 2rem;
         width: 250px;
-        @media (max-width:474px) {
-          &.href:nth-of-type(2){
-            margin-top:3em;
+        @media (max-width: 474px) {
+          &.href:nth-of-type(2) {
+            margin-top: 3em;
           }
         }
         h5 {
@@ -615,7 +613,7 @@ main {
         flex-grow: 1;
         text-align: end;
         color: $white;
-        @media (max-width:687px) {
+        @media (max-width: 687px) {
           display: flex;
           justify-content: center;
           flex-wrap: wrap;
@@ -623,5 +621,4 @@ main {
       }
     }
   }
-
 }
