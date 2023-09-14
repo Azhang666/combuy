@@ -5,7 +5,7 @@ exports.getBrandData = (setCondition, callBackData) => {
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'combuy',
     multipleStatements: true,
   })
@@ -126,7 +126,7 @@ exports.getTagprodItemData = (setCondition, callBackData) => {
   let filter = setCondition[5]
   setCondition.pop()
   connection.query(
-    `SELECT * FROM product_tag 
+    `SELECT * FROM product_tag
     LEFT join vw_products_info ON product_tag.prod_id = vw_products_info.prod_id
     WHERE product_tag.tag=? AND vw_products_info.price BETWEEN ? AND ?
    ${filter}
@@ -171,7 +171,7 @@ exports.getAllTagProdItemNumData = (setCondition, callBackData) => {
     }
   })
   connection.query(
-    `SELECT COUNT(*) as productTagTotal FROM product_tag 
+    `SELECT COUNT(*) as productTagTotal FROM product_tag
                 RIGHT JOIN tag on tag.tag =product_tag.tag
                 RIGHT JOIN product on product.prod_id =product_tag.prod_id
                 LEFT JOIN sellspec on sellspec.prod_id  = product.prod_id
