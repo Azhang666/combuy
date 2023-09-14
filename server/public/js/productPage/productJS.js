@@ -149,6 +149,11 @@ $(document).ready(function () {
     });
   });
   //req PriceRange product
+  $("input[pattern='[0-9]{7}']").on("keypress", function (e) {
+    if (e.keyCode < 48 || e.keyCode > 57) {
+      e.preventDefault();
+    }
+  });
   $("input[pattern='[0-9]{7}']").keyup(function () {
     $.ajax({
       type: "get",

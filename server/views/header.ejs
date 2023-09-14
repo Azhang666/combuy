@@ -1,83 +1,90 @@
 <header>
-      <nav class="header">
-        <ul>
-          <li>
-            <a href="/" title="回首頁"
-              ><img src="/public/images/logo/cambuyLogo.png" alt="cambuyLogo"
-            /></a>
-          </li>
-          <li>
-            <form>
-              <input type="text" name="search" placeholder="搜尋商品" /><button
-                type="submit"
-                title="搜尋"
-              >
-                <img src="/public/images/icons/search.png" alt="search" />
-              </button>
-            </form>
-            <div id="search-result">
-              <ul>
-                <li><a href="#">1</a></li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-              </ul>
-            </div>
-          </li>
-          <li class="d-none d-lg-none d-xl-block">
-            <label class="switch" title="深/淺色模式">
-              <input type="checkbox" />
-              <span class="slider moon">☽</span>
-              <span class="slider round sun">☼</span>
-            </label>
-          </li>
-          <li class="d-none d-lg-none d-xl-block">
-            <a href="#" title="通知"
-              ><img src="/public/images/icons/advice.png" alt="advice"
-            /></a>
-          </li>
-          <li>
-            <a href="/login" title="會員中心"
-              ><img src="/public/images/icons/member.png" alt="member"
-            /></a>
-          </li>
+  <nav class="header">
+    <ul>
+      <li>
+        <a href="/" title="回首頁"
+          ><img src="/public/images/logo/cambuyLogo.png" alt="cambuyLogo"
+        /></a>
+      </li>
+      <li>
+        <form>
+          <input type="text" name="search" placeholder="搜尋商品" /><button
+            type="submit"
+            title="搜尋"
+          >
+            <img src="/public/images/icons/search.png" alt="search" />
+          </button>
+        </form>
+        <div id="search-result">
+          <ul>
+            <li><a href="#">1</a></li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+          </ul>
+        </div>
+      </li>
+      <li class="d-none d-lg-none d-xl-block">
+        <label class="switch" title="深/淺色模式">
+          <input type="checkbox" />
+          <span class="slider moon">☽</span>
+          <span class="slider round sun">☼</span>
+        </label>
+      </li>
+      <li class="d-none d-lg-none d-xl-block">
+        <a href="#" title="通知"
+          ><img src="/public/images/icons/advice.png" alt="advice"
+        /></a>
+      </li>
+      <li>
+        <a href="/login" title="會員中心"
+          ><img src="/public/images/icons/member.png" alt="member"
+        /></a>
+      </li>
 
-          <li class="icon-bar d-none d-lg-none d-xl-block notification" >
-            <a href="#" title="會員中心" id="notification-link" ><svg xmlns="http://www.w3.org/2000/svg" width="23"
-                    height="23" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                    <path fill-rule="evenodd"
-                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                </svg></a>
-            <div class="hidden" id="notification-content" >
-                <a href="#" class="text-black">
-                    <div class="individual-notification">
-                        <a href="">
-                            <h5><b>會員中心</b></h5>
-                        </a>
-                    </div>
-                </a>
-                <a href="#" class="text-black">
-                    <div class="individual-notification ">
-                        <a href="">
-                            <h5><b>登出</b></h5>
-                        </a>
-                    </div>
-                </a>
+      <li class="icon-bar d-none d-lg-none d-xl-block notification">
+        <a href="#" title="會員中心" id="notification-link"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="23"
+            height="23"
+            fill="currentColor"
+            class="bi bi-person-circle"
+            viewBox="0 0 16 16"
+          >
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path
+              fill-rule="evenodd"
+              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+            /></svg
+        ></a>
+        <div class="hidden" id="notification-content">
+          <a href="#" class="text-black">
+            <div class="individual-notification">
+              <a href="">
+                <h5><b>會員中心</b></h5>
+              </a>
             </div>
-        </li>
+          </a>
+          <a href="#" class="text-black">
+            <div class="individual-notification">
+              <a href="">
+                <h5><b>登出</b></h5>
+              </a>
+            </div>
+          </a>
+        </div>
+      </li>
 
-          <li>
-            <a href="/shopCart" title="購物車"
-              ><img src="/public/images/icons/buy-cart.png" alt="buy-cart"
-            /></a>
-          </li>
-        </ul>
-      </nav>
+      <li>
+        <a href="/shopCart" title="購物車"
+          ><img src="/public/images/icons/buy-cart.png" alt="buy-cart"
+        /></a>
+      </li>
+    </ul>
+  </nav>
 </header>
-
-
  <!-- RWD-側邊Nav -->
  <div id="mySidenav" class="sidenav">
   <nav class="navSide">
@@ -128,4 +135,3 @@
       </ul>
   </nav>
 </div>
-
