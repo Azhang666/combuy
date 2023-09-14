@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant-TW">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,9 +24,10 @@
   <body>
     <!-- 插入header的保留位 -->
     <%-await include('../header'); %>
+    <%- await include('./header_test'); %>
     <main>
       <section class="member container container-L">
-        <%-await include('./template/memberList'); %>
+        <%- await include('./template/memberList'); %>
         <div class="subtitle">
           <div class="group group-left">
             <h5>會員資料</h5>
@@ -78,7 +79,8 @@
                   required
                 />
                 <label for="iptYear">年</label>
-
+              </div>
+              <div>
                 <input
                   type="text"
                   class="input-S num"
@@ -88,8 +90,9 @@
                   value="<%= month%>"
                   required
                 />
-                <label for="iptYear">月</label>
-
+                <label for="iptMonth">月</label>
+              </div>
+              <div>
                 <input
                   type="text"
                   class="input-S num"
@@ -100,8 +103,8 @@
                   required
                 />
                 <label for="iptDay">日</label>
+                </div>
               </div>
-            </div>
             <div class="spacing box">
               <label for="">地址</label>
               <select name="address_city" id="address_city" city="<%=city%>" required>
@@ -147,6 +150,7 @@
       </section>
     </main>
     <!-- 插入footer的保留位 -->
-    <%- /* include('../footer');*/ %>
+    <%- /* await include('../footer');*/ %>
   </body>
 </html>
+

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant-TW">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,7 +22,7 @@
 
   <body>
     <!-- 插入header的保留位 -->
-    <%-await include('../header'); %>
+    <%-await include('../header'); %> <%- await include('./header_test'); %>
     <main>
       <section class="member container container-L">
         <%-await include('./template/memberList'); %>
@@ -33,58 +33,50 @@
         </div>
         <div class="content">
           <% if(total != 0){ %>
-          <table>
-            <thead>
-              <tr class="underLine">
-                <th>商品圖片</th>
-                <th colspan="2">商品名稱</th>
-                <th>收藏日期</th>
-                <th>售 價</th>
-                <th>狀 態</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% for(data of collects){%>
-              <tr>
-                <td>
-                  <img
-                    src="/public/<%= data.img_src %>"
-                    alt=""
-                    srcset=""
-                    style="width: 100%"
-                  />
-                </td>
-                <td colspan="2">
-                  <%=data.prod_name%> <br /><%=data.spec_name%>
-                </td>
-                <td><%=data.update_time %></td>
-                <td><%=data.price%></td>
-                <td
-                  style="<%= data.public==0 || data.inventory == 0 ? 'color:red' :'' %>"
-                >
-                  <%= data.public==0 ? '已下架' : data.inventory==0 ? '缺貨中':
-                  '正常'%>
-                </td>
-              </tr>
-              <tr class="underLine">
-                <td colspan="3">
-                  <a href="<%=/* 補商品連結 */%>">
-                    <input type="button" class="button" value="查看商品" />
-                  </a>
-                </td>
-                <td colspan="3">
-                  <input
-                    type="button"
-                    class="button btnCollect"
-                    value="取消收藏"
-                    prod="<%=data.prod_id%>"
-                    spec="<%=data.spec_id%>"
-                  />
-                </td>
-              </tr>
-              <%}%>
-            </tbody>
-          </table>
+          <div class="table">
+            <table>
+              <thead>
+                <tr class="underLine">
+                  <th>商品圖片</th>
+                  <th colspan="2">商品名稱</th>
+                  <th>收藏日期</th>
+                  <th>售 價</th>
+                  <th>狀 態</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for(data of collects){%>
+                <tr>
+                  <td>
+                    <img src="/public/<%= data.img_src %>" alt="" srcset="" style="width: 100%" />
+                  </td>
+                  <td colspan="2"><%=data.prod_name%> <br /><%=data.spec_name%></td>
+                  <td><%=data.update_time %></td>
+                  <td><%=data.price%></td>
+                  <td style="<%= data.public==0 || data.inventory == 0 ? 'color:red' :'' %>">
+                    <%= data.public==0 ? '已下架' : data.inventory==0 ? '缺貨中': '正常'%>
+                  </td>
+                </tr>
+                <tr class="underLine">
+                  <td colspan="3">
+                    <a href="/commodity/<%=data.prod_id%>/<%=data.spec_id%>">
+                      <input type="button" class="button" value="查看商品" />
+                    </a>
+                  </td>
+                  <td colspan="3">
+                    <input
+                      type="button"
+                      class="button btnCollect"
+                      value="取消收藏"
+                      prod="<%=data.prod_id%>"
+                      spec="<%=data.spec_id%>"
+                    />
+                  </td>
+                </tr>
+                <%}%>
+              </tbody>
+            </table>
+          </div>
           <%-await include('./template/pages'); %> <%}else{%>
           <h4>尚未有任何收藏</h4>
           <%}%>
@@ -92,6 +84,6 @@
       </section>
     </main>
     <!-- 插入footer的保留位 -->
-    <%- /* include('../footer');*/ %>
+    <%- /* await include('../footer');*/ %>
   </body>
 </html>

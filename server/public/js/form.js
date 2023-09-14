@@ -1,12 +1,5 @@
 $(document).ready(function () {
-  //-------- 測試用
-  // $('*').on('submit', 'form', function (e) {
-  //   console.log('form action')
-  //   e.preventDefault()
-  // })
-  //--------
   $('form.lock').find(':input:not(:button)').prop('disabled', true)
-  // $('form.lock').find('select').prop('disabled', true)
 
   $('#formEdit').on('click', 'input', function () {
     $(this).parent().hide()
