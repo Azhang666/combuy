@@ -75,14 +75,12 @@
                         <table>
                           <tr>
                             <th>品項</th>
-                            <th>樣式</th>
                             <th>價格</th>
                             <th>數量</th>
                           </tr>
                           <% for(data of element.order_detail){ %>
                           <tr>
-                            <td><%= data.prod_name %></td>
-                            <td><%= data.spec_name %></td>
+                            <td><%= data.prod_name %> &nbsp;<%= data.spec_name %></td>
                             <td><%= data.price %></td>
                             <td><%= data.count %></td>
                           </tr>

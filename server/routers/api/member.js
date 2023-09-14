@@ -12,6 +12,8 @@ router.put('/pwdChange', MemberController.pwdChangeAPI)
 router.post('/addCard', MemberController.addCradAPI)
 router.put('/editCard', MemberController.editCardAPI)
 router.delete('/deleteCard', MemberController.deleteCardAPI)
+//
+router.put('/cancelOrder', MemberController.cancelOrderAPI)
 // 收藏、取消收藏
 router.post('/collectProd', MemberController.collectProdAPI)
 // 評論

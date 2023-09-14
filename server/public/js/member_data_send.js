@@ -321,7 +321,38 @@ $(document).ready(function () {
       console.log(err)
     }
   })
+  //
+  $('#cancelOrder').on('click', async function (e) {
+    let check = confirm('確定取消訂單?')
+    if (!check) {
+      return
+    }
 
+    try {
+      const res = await $.ajax({
+        type: 'PUT',
+        url: '/api/member/cancelOrder',
+        data: {
+          order_id: $(this).attr('order'),
+        },
+        dataType: 'json',
+      })
+
+      if (res.err == 0) {
+        location.reload()
+      } else {
+        if (res.message == undefined) {
+          showErrorInput(res.data)
+          console.log(res)
+        } else {
+          alert(res.message)
+          location.reload()
+        }
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  })
   //---------------------------
 
   function toJson(data) {

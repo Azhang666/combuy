@@ -153,6 +153,17 @@ const MemberController = {
       })
     }
   },
+  cancelOrderAPI: async (req, res) => {
+    try {
+      const uid = req.session.member.u_id
+      const order_id = req.body.order_id
+      const result = await MemberModel.cancelOrderAPI(uid, order_id)
+
+      res.end(JSON.stringify(result))
+    } catch (err) {
+      throw err
+    }
+  },
 
   collectRender: async (req, res) => {
     const uid = req.session.member.u_id

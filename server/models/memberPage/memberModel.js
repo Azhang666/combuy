@@ -324,6 +324,12 @@ const MemberModel = {
       throw err
     }
   },
+  cancelOrderAPI: async (uid, order_id) => {
+    const sql = 'UPDATE orders SET state = 0   WHERE user_id = ? AND order_id = ?'
+    const result = await conn.queryAsync(sql, [uid, order_id])
+    console.log(result)
+    return new Success(result[0])
+  },
   collectRender: async (uid, page) => {
     try {
       const sql1 = 'SELECT COUNT(*) AS total FROM collect WHERE collect.user_id = ?'

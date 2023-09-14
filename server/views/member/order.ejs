@@ -22,8 +22,7 @@
 
   <body>
     <!-- 插入header的保留位 -->
-    <%-await include('../header'); %>
-    <%- await include('./header_test'); %>
+    <%-await include('../header'); %> <%- await include('./header_test'); %>
     <main>
       <section class="member container container-L">
         <%- await include('./template/memberList'); %>
@@ -104,7 +103,13 @@
           </div>
           <div>
             <% if(orders[0].state != 0){ %> <% if(orders[0].state != 2){ %>
-            <input type="button" class="button-S" value="訂單取消" />
+            <input
+              type="button"
+              id="cancelOrder"
+              class="button-S"
+              order="<%=parseInt(orders[0].order_id)%>"
+              value="訂單取消"
+            />
             <%}else{%>
             <a href="/member/comment/edit/<%=parseInt(orders[0].order_id)%>">
               <input type="button" class="button-S" value="我要評論" />

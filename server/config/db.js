@@ -1,13 +1,8 @@
 const mysql = require('mysql')
 const bluebird = require('bluebird')
+const Setting = require('./config')
 
-var conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'combuy',
-  port: 3306,
-})
+var conn = mysql.createConnection(Setting.db_setting)
 conn.connect(function (err) {
   if (err) {
     return

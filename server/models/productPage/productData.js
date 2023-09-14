@@ -1,14 +1,10 @@
 const mysql = require('mysql')
 const sqlConn = require('../../config/db')
+
+const Setting = require('../../config/config')
+
 exports.getBrandData = (setCondition, callBackData) => {
-  var connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: 'root',
-    database: 'combuy',
-    multipleStatements: true,
-  })
+  var connection = mysql.createConnection(Setting.db_setting)
   connection.connect(err => {
     if (err) {
       console.log('sql syntax error')
@@ -28,14 +24,7 @@ exports.getBrandData = (setCondition, callBackData) => {
 //   console.log(data);
 // });
 exports.getprodItemData = (setCondition, callBackData) => {
-  var connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: '',
-    database: 'combuy',
-    multipleStatements: true,
-  })
+  var connection = mysql.createConnection(Setting.db_setting)
   connection.connect(err => {
     if (err) {
       console.log('sql syntax error')
@@ -74,14 +63,7 @@ exports.getprodItemData = (setCondition, callBackData) => {
 //   }
 // );
 exports.getAllProdItemNumData = (setCondition, callBackData) => {
-  const connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: '',
-    database: 'combuy',
-    multipleStatements: true,
-  })
+  const connection = mysql.createConnection(Setting.db_setting)
   connection.connect(err => {
     if (err) {
       console.log('sql syntax error')
@@ -109,14 +91,7 @@ exports.getAllProdItemNumData = (setCondition, callBackData) => {
 //   }
 // );
 exports.getTagprodItemData = (setCondition, callBackData) => {
-  var connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: '',
-    database: 'combuy',
-    multipleStatements: true,
-  })
+  var connection = mysql.createConnection(Setting.db_setting)
   connection.connect(err => {
     if (err) {
       console.log('sql syntax error')
@@ -156,14 +131,7 @@ exports.getTagprodItemData = (setCondition, callBackData) => {
 //   }
 // );
 exports.getAllTagProdItemNumData = (setCondition, callBackData) => {
-  var connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: '',
-    database: 'combuy',
-    multipleStatements: true,
-  })
+  var connection = mysql.createConnection(Setting.db_setting)
   connection.connect(err => {
     if (err) {
       console.log('sql syntax error')

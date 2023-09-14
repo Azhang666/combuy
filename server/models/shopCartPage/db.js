@@ -1,12 +1,7 @@
 var mysql = require('mysql')
+const Setting = require('../../config/config')
 
-var db = mysql.createPool({
-  host: '127.0.0.1',
-  user: 'root',
-  password: 'root',
-  port: '3306',
-  database: 'combuy',
-})
+var db = mysql.createPool(Setting.db_setting)
 // 3.測試 mysql模組 能否正常工作
 // 'SELECT 1' 是測試語句, 用來測試能否正常運作
 // 只要能在console 看到代表能夠正常運作

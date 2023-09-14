@@ -1,14 +1,9 @@
 var express = require('express')
 var router = express.Router()
 var mysql = require('mysql')
+const Setting = require('../../config/config')
 
-var conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'combuy',
-  port: '3306',
-})
+var conn = mysql.createConnection(Setting.db_setting)
 
 // 定義路由處理程式
 router.get('/', async (req, res) => {
@@ -21,7 +16,7 @@ router.get('/:prodId/:specId', async (req, res) => {
     var specId = req.params.specId
     var brandId = req.params.brandId
     var productData = {}
-    var userId = 7;
+    var userId = 7
 
     var data = await queryDatabase('SELECT * FROM sellspec WHERE prod_id = ? AND spec_id = ?', [
       prodId,
@@ -56,11 +51,14 @@ router.get('/:prodId/:specId', async (req, res) => {
     })
 
     // 通知
-    var orderDate = await queryDatabase('SELECT orders.order_date,order_product.prod_id, orders.order_id , product.prod_name, order_product.count FROM orders JOIN order_product ON orders.order_id = order_product.order_id JOIN product ON order_product.prod_id = product.prod_id WHERE orders.state = 2 AND orders.pay = 1 AND orders.user_id = ?;', [userId]);
+    var orderDate = await queryDatabase(
+      'SELECT orders.order_date,order_product.prod_id, orders.order_id , product.prod_name, order_product.count FROM orders JOIN order_product ON orders.order_id = order_product.order_id JOIN product ON order_product.prod_id = product.prod_id WHERE orders.state = 2 AND orders.pay = 1 AND orders.user_id = ?;',
+      [userId]
+    )
     orderDate.forEach(date => {
-      date.order_date = new Date(date.order_date).toLocaleString();
-      date.order_id = String(date.order_id).padStart(8, "0");
-    });
+      date.order_date = new Date(date.order_date).toLocaleString()
+      date.order_id = String(date.order_id).padStart(8, '0')
+    })
 
     // 排列相關產品
     // 使用 Promise.all 處理所有資料庫的查詢
@@ -120,7 +118,7 @@ router.get('/:prodId/:specId', async (req, res) => {
       prodId,
       specId,
       orderDate,
-      userId
+      userId,
     })
   } catch (err) {
     console.error('Error:', err)
@@ -130,6 +128,8 @@ router.get('/:prodId/:specId', async (req, res) => {
 
 // 加入購物車
 router.post('/addcart', async (req, res) => {
+  console.log(req.body)
+  console.log(req.body)
   try {
     var { user_id, prod_id, spec_id } = req.body
     var spl = 'INSERT INTO shopcart (user_id, prod_id, spec_id) VALUES (?, ?, ?)'
@@ -158,47 +158,48 @@ router.post('/addcollect', async (req, res) => {
 // 相關加入購物車
 router.post('/addCart', async (req, res) => {
   try {
-    var { user_id, prod_id, spec_id } = req.body;
-    var spl = 'INSERT INTO shopcart (user_id, prod_id, spec_id) VALUES (?, ?, ?)';
-    await queryDatabase(spl, [user_id, prod_id, spec_id]);
+    var { user_id, prod_id, spec_id } = req.body
+    var spl = 'INSERT INTO shopcart (user_id, prod_id, spec_id) VALUES (?, ?, ?)'
+    await queryDatabase(spl, [user_id, prod_id, spec_id])
 
-    res.status(200).send('成功加入購物車');
+    res.status(200).send('成功加入購物車')
   } catch (error) {
-    console.error('加入購物車失敗', error);
-    res.status(500).send('內部伺服器錯誤');
+    console.error('加入購物車失敗', error)
+    res.status(500).send('內部伺服器錯誤')
   }
-});
+})
 
 // 相關加入收藏
 router.post('/addCollect', async (req, res) => {
   try {
-    var { user_id, prod_id, spec_id } = req.body;
-    var sql = 'INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)';
-    await queryDatabase(sql, [user_id, prod_id, spec_id]);
-    res.status(200).send('成功加入收藏');
+    var { user_id, prod_id, spec_id } = req.body
+    var sql = 'INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)'
+    await queryDatabase(sql, [user_id, prod_id, spec_id])
+    res.status(200).send('成功加入收藏')
   } catch (error) {
-    console.error('加入收藏失敗', error);
-    res.status(500).send('內部伺服器錯誤');
+    console.error('加入收藏失敗', error)
+    res.status(500).send('內部伺服器錯誤')
   }
-});
+})
 
 // 直接購買 檢查購物車紀錄是否存在
 router.post('/checkcart', async (req, res) => {
   try {
-    var { user_id, prod_id, spec_id } = req.body;
-    var spl = 'SELECT COUNT(*) AS count FROM shopcart WHERE user_id = ? AND prod_id = ? AND spec_id = ?';
-    var result = await queryDatabase(spl, [user_id, prod_id, spec_id]);
+    var { user_id, prod_id, spec_id } = req.body
+    var spl =
+      'SELECT COUNT(*) AS count FROM shopcart WHERE user_id = ? AND prod_id = ? AND spec_id = ?'
+    var result = await queryDatabase(spl, [user_id, prod_id, spec_id])
 
     if (result[0].count > 0) {
-      res.status(200).json({ exists: true });
+      res.status(200).json({ exists: true })
     } else {
-      res.status(200).json({ exists: false });
+      res.status(200).json({ exists: false })
     }
   } catch (error) {
-    console.error('檢查購物車失敗', error);
-    res.status(500).send('內部伺服器錯誤');
+    console.error('檢查購物車失敗', error)
+    res.status(500).send('內部伺服器錯誤')
   }
-});
+})
 
 // 封裝資料庫查詢為 Promise
 function queryDatabase(sql, params) {

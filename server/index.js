@@ -1,5 +1,6 @@
 const express = require('express')
 const session = require('express-session')
+const bodyparse = require('body-parser')
 const ejs = require('ejs')
 const { login_render, login_api, notlogin_render, notlogin_api } = require('./middlewares/isLogin')
 const { UserSetting } = require('./config/user_data')
@@ -37,6 +38,9 @@ app.use(
     },
   })
 )
+
+var bp_json = bodyparse.json({ limit: '10mb' })
+var bp_uncode = bodyparse.urlencoded({ extended: true, limit: '10mb' })
 
 app.use('/public', express.static(__dirname + '/public'))
 
@@ -76,7 +80,7 @@ const product = require('./routers/productPage/productPage.js')
 app.use('/product', product)
 
 const commodity = require('./routers/commodityPage/commodityPage.js')
-app.use('/commodity', commodity)
+app.use('/commodity', bp_uncode, commodity)
 
 const shopCart = require('./routers/shopCartPage/shopCartPage.js')
 app.use('/shopCart', shopCart)
