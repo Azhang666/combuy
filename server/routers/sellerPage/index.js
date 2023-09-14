@@ -18,11 +18,11 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-const PORT = 2407;
-app.listen(PORT, () => {
-  console.log(`伺服器啟動中 ${PORT} ${new Date().toLocaleTimeString()}`);
-  console.log("------------------------------------");
-  console.log("------------------------------------");
-  console.log("------------------------------------");
-  console.log("------------------------------------");
-});
+// const PORT = 2407;
+// app.listen(PORT, () => {
+//   console.log(`伺服器啟動中 ${PORT} ${new Date().toLocaleTimeString()}`);
+//   console.log("------------------------------------");
+//   console.log("------------------------------------");
+//   console.log("------------------------------------");
+//   console.log("------------------------------------");
+// });
