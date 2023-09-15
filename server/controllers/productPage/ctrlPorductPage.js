@@ -96,6 +96,7 @@ exports.ctrlProdPage = (req, res) => {
                         brand: brandData,
                         product: productData,
                         lastPage: lastPage,
+                        setting: req.session.setting,
                       });
                     } else if (randerProdTag && randerProdItme) {
                       return await res.render(

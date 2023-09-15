@@ -40,6 +40,7 @@ $.ajax({
       var item = itemData[i];
       itemsHtml += `
           <div class="card-item col-3">
+          <a href="/commodity/${item.prod_id}/${item.spec_id}">
                           <!-- 商品圖片 -->
                           <div class="card-img">
                               <img src="./public${item.img_src}" alt="">
@@ -82,6 +83,7 @@ $.ajax({
                                   </div>
                               </div>
                           </div>
+                          </a>
                       </div>
           `;
     }
@@ -214,68 +216,78 @@ $.ajax({
 // 渲染加入最愛的商品
 $(document).ready(function () {
   $.ajax({
-      type: 'get',
-      url: 'http://localhost:2047/api/getFavoriteProd',
-      success: function (res) {
-          for (var i = 0; i < res.length; i++) {
-              var favoriteProdId = res[i].prod_id;
-              var favoriteSpecId = res[i].spec_id;
-              var $matchingItem = $('.favorite[data-prod-id="' + favoriteProdId + '"][data-spec-id="' + favoriteSpecId + '"]');
+    type: "get",
+    url: "/fontPage/getFavoriteProd",
+    success: function (res) {
+      for (var i = 0; i < res.length; i++) {
+        var favoriteProdId = res[i].prod_id;
+        var favoriteSpecId = res[i].spec_id;
+        var $matchingItem = $(
+          '.favorite[data-prod-id="' +
+            favoriteProdId +
+            '"][data-spec-id="' +
+            favoriteSpecId +
+            '"]'
+        );
 
-              $matchingItem.addClass('active');
-              $matchingItem.find('.heart-icon').css('fill', 'red');
-          }
+        $matchingItem.addClass("active");
+        $matchingItem.find(".heart-icon").css("fill", "red");
       }
+    },
   });
 });
 
 // 加入最愛 | 移除最愛
-$('.card-item-wrap, .card-item-wrap2, .card-item-wrap3').on('click', '.favorite', function (e) {
-  e.preventDefault();
+$(".card-item-wrap, .card-item-wrap2, .card-item-wrap3").on(
+  "click",
+  ".favorite",
+  function (e) {
+    e.preventDefault();
 
-  var favoriteIcon = $(this).find('.heart-icon');
-  var isFavorite = $(this).hasClass('active');
-  var prod_id = $(this).data('prod-id'); // 當前點擊的 prod_id
-  var spec_id = $(this).data('spec-id'); // 當前點擊的 spec_id
+    var favoriteIcon = $(this).find(".heart-icon");
+    var isFavorite = $(this).hasClass("active");
+    var prod_id = $(this).data("prod-id"); // 當前點擊的 prod_id
+    var spec_id = $(this).data("spec-id"); // 當前點擊的 spec_id
 
-  function updateFavoriteState() {
+    function updateFavoriteState() {
       if (isFavorite) {
-          // 如果已經收藏了就移除
-          $.ajax({
-              type: 'delete',
-              url: 'http://localhost:2047/api/deleteFavoriteProd',
-              data: {
-                  user_id: 6,
-                  prod_id: prod_id,
-                  spec_id: spec_id,
-              },
-              success: function (res) {
-                  console.log('移除成功');
-                  favoriteIcon.css('fill', 'none');
-              },
-          });
+        // 如果已經收藏了就移除
+        $.ajax({
+          type: "delete",
+          url: "/fontPage/deleteFavoriteProd",
+          data: {
+            user_id: 6,
+            prod_id: prod_id,
+            spec_id: spec_id,
+          },
+          success: function (res) {
+            console.log("移除成功");
+            favoriteIcon.css("fill", "none");
+          },
+        });
       } else {
-          // 如果還沒收藏就執行收藏
-          $.ajax({
-              type: 'post',
-              url: 'http://localhost:2047/api/postFavoriteProd',
-              data: {
-                  user_id: 6,
-                  prod_id: prod_id,
-                  spec_id: spec_id,
-              },
-              success: function (res) {
-                  console.log('收藏成功');
-                  favoriteIcon.css('fill', 'red');
-              },
-          });
+        // 如果還沒收藏就執行收藏
+        $.ajax({
+          type: "post",
+          url: "/fontPage/postFavoriteProd",
+          data: {
+            user_id: 6,
+            prod_id: prod_id,
+            spec_id: spec_id,
+          },
+          success: function (res) {
+            console.log("收藏成功");
+            favoriteIcon.css("fill", "red");
+          },
+        });
       }
-      $(this).toggleClass('active');
-  }
+      $(this).toggleClass("active");
+    }
 
-  // 點擊後更新收藏狀態
-  updateFavoriteState();
-});
+    // 點擊後更新收藏狀態
+    updateFavoriteState();
+  }
+);
 
 $(document).ready(function () {
   //change header navber sun and moon
