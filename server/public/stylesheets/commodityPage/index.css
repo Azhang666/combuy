@@ -632,27 +632,29 @@ a {
 /* 通知 */
 #notification-content {
   background-color: #cacaca;
-  display: none;
+  visibility: hidden;
   position: absolute;
   z-index: 1;
-  width: 30%;
+  width: 25%;
   border-radius: 5px;
   max-height: 40em;
   overflow-y: auto;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s;
 }
 
 .notification:hover #notification-content {
-  display: block;
-  transition: background-color 0.3s;
+  visibility: visible;
+  opacity: 1;
 }
 
 .individual-notification {
   background-color: #ececec;
   padding: 1%;
-  transition: background-color 0.3s;
   border-radius: 5px;
   width: 90%;
   margin: 5%;
+  transition: background-color 0.3s;
 }
 
 .individual-notification:hover {

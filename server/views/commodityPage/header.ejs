@@ -28,24 +28,22 @@
         </label>
       </li>
       <li>
-        <a href="#" title="通知" id="notification-link"><img src="/public/images/icons/advice.png" alt="advice" /></a>
-        <div class="hidden" id="notification-content">
-          <a href="#" class="text-black">
+        <div class="notification">
+          <a href="#" title="通知" id="notification-link"><img src="/public/images/icons/advice.png" alt="advice" /></a>
+          <div id="notification-content">
             <% for (let i=0; i < orderDate.length; i++) { %>
-              <div class="individual-notification container">
-                <h5><b>訂單通知</b></h5>
-                <p>已收到你的訂單 <%= orderDate[i].order_id %>
-                </p>
-                <p>商品名稱: <%= orderDate[i].prod_name %>
-                </p>
-                <p>數量: <%= orderDate[i].count %>
-                </p>
-                <span><i class="bi bi-clock"></i>
-                  <%= orderDate[i].order_date %>
-                </span>
-              </div>
+              <a href="/member/order/<%= orderDate[i].order_id %>" class="text-black">
+                <div class="individual-notification container">
+                  <h5><b>訂單通知</b></h5>
+                  <p>已收到你的訂單 <%= orderDate[i].order_id %>
+                  </p>
+                  <span><i class="bi bi-clock"></i>
+                    <%= orderDate[i].order_date %>
+                  </span>
+                </div>
+              </a>
               <% } %>
-          </a>
+          </div>
         </div>
       </li>
       <li>

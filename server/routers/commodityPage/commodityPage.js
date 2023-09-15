@@ -5,18 +5,33 @@ const Setting = require('../../config/config')
 
 var conn = mysql.createConnection(Setting.db_setting)
 
+// 封裝資料庫查詢為 Promise
+function queryDatabase(sql, params) {
+  return new Promise((resolve, reject) => {
+    conn.query(sql, params, (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
+
 // 定義路由處理程式
 router.get('/', async (req, res) => {
-  res.redirect('/product/1/0')
+  res.redirect('/product/:prodId/:specId')
 })
 
+// 商品詳細頁面
 router.get('/:prodId/:specId', async (req, res) => {
   try {
     var prodId = req.params.prodId
     var specId = req.params.specId
     var brandId = req.params.brandId
     var productData = {}
-    var userId = 7
+    var userId = req.session.member ? req.session.member.u_id : null
+    console.log(userId)
 
     var data = await queryDatabase('SELECT * FROM sellspec WHERE prod_id = ? AND spec_id = ?', [
       prodId,
@@ -52,7 +67,7 @@ router.get('/:prodId/:specId', async (req, res) => {
 
     // 通知
     var orderDate = await queryDatabase(
-      'SELECT orders.order_date,order_product.prod_id, orders.order_id , product.prod_name, order_product.count FROM orders JOIN order_product ON orders.order_id = order_product.order_id JOIN product ON order_product.prod_id = product.prod_id WHERE orders.state = 2 AND orders.pay = 1 AND orders.user_id = ?;',
+      'SELECT order_id, order_date FROM `vw_order_info` WHERE state = 2 AND pay = 1 AND user_id = ?',
       [userId]
     )
     orderDate.forEach(date => {
@@ -132,6 +147,12 @@ router.post('/addcart', async (req, res) => {
   console.log(req.body)
   try {
     var { user_id, prod_id, spec_id } = req.body
+
+    // 判斷使用者是否登入
+    if (!user_id) {
+      return res.redirect('/login')
+    }
+
     var spl = 'INSERT INTO shopcart (user_id, prod_id, spec_id) VALUES (?, ?, ?)'
     await queryDatabase(spl, [user_id, prod_id, spec_id])
 
@@ -146,6 +167,10 @@ router.post('/addcart', async (req, res) => {
 router.post('/addcollect', async (req, res) => {
   try {
     var { user_id, prod_id, spec_id } = req.body
+    // 判斷使用者是否登入
+    if (!user_id) {
+      return res.redirect('/login')
+    }
     var sql = 'INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)'
     await queryDatabase(sql, [user_id, prod_id, spec_id])
     res.status(200).send('成功加入收藏')
@@ -159,6 +184,11 @@ router.post('/addcollect', async (req, res) => {
 router.post('/addCart', async (req, res) => {
   try {
     var { user_id, prod_id, spec_id } = req.body
+
+    // 判斷使用者是否登入
+    if (!user_id) {
+      return res.redirect('/login')
+    }
     var spl = 'INSERT INTO shopcart (user_id, prod_id, spec_id) VALUES (?, ?, ?)'
     await queryDatabase(spl, [user_id, prod_id, spec_id])
 
@@ -173,6 +203,10 @@ router.post('/addCart', async (req, res) => {
 router.post('/addCollect', async (req, res) => {
   try {
     var { user_id, prod_id, spec_id } = req.body
+    // 判斷使用者是否登入
+    if (!user_id) {
+      return res.redirect('/login')
+    }
     var sql = 'INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)'
     await queryDatabase(sql, [user_id, prod_id, spec_id])
     res.status(200).send('成功加入收藏')
@@ -186,6 +220,10 @@ router.post('/addCollect', async (req, res) => {
 router.post('/checkcart', async (req, res) => {
   try {
     var { user_id, prod_id, spec_id } = req.body
+    // 判斷使用者是否登入
+    if (!user_id) {
+      return res.redirect('/login')
+    }
     var spl =
       'SELECT COUNT(*) AS count FROM shopcart WHERE user_id = ? AND prod_id = ? AND spec_id = ?'
     var result = await queryDatabase(spl, [user_id, prod_id, spec_id])
@@ -201,17 +239,5 @@ router.post('/checkcart', async (req, res) => {
   }
 })
 
-// 封裝資料庫查詢為 Promise
-function queryDatabase(sql, params) {
-  return new Promise((resolve, reject) => {
-    conn.query(sql, params, (err, results) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(results)
-      }
-    })
-  })
-}
 
 module.exports = router
