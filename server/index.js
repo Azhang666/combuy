@@ -55,13 +55,8 @@ app.use(function (req, res, next) {
   next()
 })
 
-<<<<<<< HEAD
-const fontPage = require("./routers/fontPage/fontPage.js");
-app.use("/fontPage",bp_uncode, fontPage);
-=======
 const fontPage = require('./routers/fontPage/fontPage.js')
 app.use('/fontPage', bp_uncode, fontPage)
->>>>>>> 81d0a160920946ac25c9ff540145f775eb79d02b
 
 app.get('/', (req, res) => {
   res.redirect('/fontPage')

@@ -64,14 +64,9 @@ router.get('/getGamingIndexProd', function (req, res) {
 })
 
 // 加入最愛
-<<<<<<< HEAD
-router.post('/postFavoriteProd', function (req, res) {
-  var user_id = req.session.member ? req.session.member.u_id : null;
-=======
 router.post('/postFavoriteProd', login_api, function (req, res) {
   // var user_id = req.body.user_id
   var user_id = req.session.member.u_id
->>>>>>> 81d0a160920946ac25c9ff540145f775eb79d02b
   var prod_id = req.body.prod_id
   var spec_id = req.body.spec_id
   var query = 'INSERT INTO collect (user_id,prod_id, spec_id)VALUES(?,?,?)'
@@ -86,14 +81,9 @@ router.post('/postFavoriteProd', login_api, function (req, res) {
 })
 
 // 移除最愛
-<<<<<<< HEAD
-router.delete('/deleteFavoriteProd', function (req, res) {
-  var user_id = req.session.member ? req.session.member.u_id : null;
-=======
 router.delete('/deleteFavoriteProd', login_api, function (req, res) {
   // var user_id = req.body.user_id
   var user_id = req.session.member.u_id
->>>>>>> 81d0a160920946ac25c9ff540145f775eb79d02b
   var prod_id = req.body.prod_id
   var spec_id = req.body.spec_id
   var query = 'DELETE FROM collect WHERE user_id = ? AND prod_id = ? AND spec_id = ?'
