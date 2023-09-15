@@ -26,11 +26,9 @@
         </div>
       </li>
       <li class="d-none d-lg-none d-xl-block">
-        <label class="switch" title="深/淺色模式">
-          <input type="checkbox" />
-          <span class="slider moon">☽</span>
-          <span class="slider round sun">☼</span>
-        </label>
+      <input type="checkbox" name="" id="mode" <%= setting.darkmode? 'checked': ''%>>
+  <label for="mode"><span></span></label>
+        
       </li>
       <li class="d-none d-lg-none d-xl-block">
         <a href="#" title="通知"
