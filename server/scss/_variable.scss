@@ -1,10 +1,19 @@
-$color_ffffff: #fff;
-$color_f2f2f2: #f2f2f2;
-$color_cccccc: #ccc;
-$color_a5a5a5: #a5a5a5;
-$color_808180: #808180;
-$color_000000: #000;
-
+:root {
+  --color_1: #fff;
+  --color_2: #f2f2f2;
+  --color_3: #ccc;
+  --color_4: #a5a5a5;
+  --color_5: #808180;
+  --color_6: #000;
+  &:has(#mode:checked) {
+    --color_1: #222;
+    --color_2: #333;
+    --color_3: #555;
+    --color_4: #666;
+    --color_5: #777;
+    --color_6: #eee;
+  }
+}
 // -----------------
 %displayFlexCenter {
   display: flex;
@@ -28,7 +37,7 @@ $color_000000: #000;
   border : {
     width: 0 0 1px 0;
     style: solid;
-    color: $color_808180;
+    color: var(--color_5);
   }
 }
 %overflow-text {

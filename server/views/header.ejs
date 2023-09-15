@@ -24,6 +24,7 @@
           </ul>
         </div>
       </li>
+<<<<<<< HEAD
       <li class="icon-bar d-none d-lg-none d-xl-block">
         <label class="switch" title="深/淺色模式">
           <input class="switch-ipt" type="checkbox" />
@@ -41,6 +42,23 @@
       <!-- <li>
         <a href="/login" title="會員中心"><img src="/public/images/icons/member.png" alt="member" /></a>
       </li> -->
+=======
+      <li class="d-none d-lg-none d-xl-block">
+      <input type="checkbox" name="" id="mode" <%= setting.darkmode? 'checked': ''%>>
+  <label for="mode"><span></span></label>
+        
+      </li>
+      <li class="d-none d-lg-none d-xl-block">
+        <a href="#" title="通知"
+          ><img src="/public/images/icons/advice.png" alt="advice"
+        /></a>
+      </li>
+      <li>
+        <a href="/member" title="會員中心"
+          ><img src="/public/images/icons/member.png" alt="member"
+        /></a>
+      </li>
+>>>>>>> 7218504bef963d6dd0690fdca93d4b88ef9096ac
 
       <li class="icon-bar d-none d-lg-none d-xl-block notification">
         <a href="#" title="會員中心" id="notification-link"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23"
@@ -80,6 +98,7 @@
 <!-- RWD-側邊Nav -->
 <div id="mySidenav" class="sidenav">
   <nav class="navSide">
+<<<<<<< HEAD
     <ul>
       <li>
         <form action="/search" method="get">
@@ -88,6 +107,16 @@
           </button>
         </form>
       </li>
+=======
+      <ul>
+          <li>
+              <form>
+                  <input type="text" name="search" value="search" /><button type="submit" title="搜尋">
+                      <img src="/public/images/icons/search.png" alt="search" />
+                  </button>
+              </form>
+          </li>
+>>>>>>> 7218504bef963d6dd0690fdca93d4b88ef9096ac
 
       <li class="icon">
         <a href="#" title="會員中心">

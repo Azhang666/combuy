@@ -17,6 +17,11 @@ $(document).ready(function () {
       });
     }
   });
+  $(document).ready(function () {
+    $("#mode").on("change", function (e) {
+      $.get("/api/userSetting/darkMode");
+    });
+  });
   //top-screen-button
   function blkTopScrBtn(elem) {
     if (
@@ -176,7 +181,7 @@ $(document).ready(function () {
     });
   });
   //req productItemPage & ctrl product page css
-  $("body").on("click", ".changePage", function () {
+  $("body").on("click", ".changePage", async function () {
     //ctrl product page css
     $(".contral-product-page>button").removeClass("active");
     $(this).addClass("active");
