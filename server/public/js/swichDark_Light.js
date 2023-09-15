@@ -1,7 +1,5 @@
 $('.switch-ipt').on('click', function () {
-    console.log(this.checked);
     if (this.checked == true) {
-        console.log($('.card-item'));
         //背景
         $('body').addClass('dark-body')
         // header
