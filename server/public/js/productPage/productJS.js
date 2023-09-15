@@ -17,6 +17,11 @@ $(document).ready(function () {
       });
     }
   });
+  $(document).ready(function () {
+    $("#mode").on("change", function (e) {
+      $.get("/api/userSetting/darkMode");
+    });
+  });
   //top-screen-button
   function blkTopScrBtn(elem) {
     if (
