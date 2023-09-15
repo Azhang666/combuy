@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const express = require('express');
 const app = express();
 const router = express.Router();
@@ -209,5 +210,18 @@ router.post('/createProduct', upload.array('productImage', 5), (req, res, next) 
 
 module.exports = router;
 
+=======
+const express = require('express')
+const router = express.Router()
+const productController = require('./productController')
+>>>>>>> 81d0a160920946ac25c9ff540145f775eb79d02b
 
+router.get('/products', productController.getProducts)
+router.get('/image', productController.getImage)
+router.get('/downproducts', productController.getDownProducts)
+router.put('/down/:productId', productController.updateProduct)
+router.post('/createProduct', productController.createProduct)
+router.get('/getProductsAllData/:prod_id', productController.getProductsAllData)
+router.patch('/updateProductPartially/:prod_id', productController.partiallyUpdateProduct)
 
+module.exports = router

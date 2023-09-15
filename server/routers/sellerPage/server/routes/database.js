@@ -1,13 +1,10 @@
-const mysql = require("mysql");
-const db = require("../../../../config/config");
-var connection = mysql.createConnection(db.db_setting);
-connection.connect((err) => {
-  if (err) {
-    console.error("無法連接到資料庫:", err.stack);
-    return;
-  }
+const mysql = require('mysql');
 
-  // console.log("已成功連接到資料庫");
+const db = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'root',
+  database: 'combuy'
 });
 
-module.exports = connection;
+module.exports = db;

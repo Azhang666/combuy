@@ -25,7 +25,8 @@ router.get('/product', (req, res) => {})
 
 // 獲取熱銷商品
 router.get('/getHotIndexProd', function (req, res) {
-  var query = 'SELECT * FROM vw_products_info ORDER BY sales DESC LIMIT 8'
+  var query =
+    'SELECT * FROM vw_products_info WHERE publish != 0 ORDER BY sales DESC ,update_time desc  LIMIT 8'
   db.query(query, function (err, result) {
     if (err) {
       console.error(err)
@@ -63,8 +64,14 @@ router.get('/getGamingIndexProd', function (req, res) {
 })
 
 // 加入最愛
+<<<<<<< HEAD
 router.post('/postFavoriteProd', function (req, res) {
   var user_id = req.session.member ? req.session.member.u_id : null;
+=======
+router.post('/postFavoriteProd', login_api, function (req, res) {
+  // var user_id = req.body.user_id
+  var user_id = req.session.member.u_id
+>>>>>>> 81d0a160920946ac25c9ff540145f775eb79d02b
   var prod_id = req.body.prod_id
   var spec_id = req.body.spec_id
   var query = 'INSERT INTO collect (user_id,prod_id, spec_id)VALUES(?,?,?)'
@@ -79,8 +86,14 @@ router.post('/postFavoriteProd', function (req, res) {
 })
 
 // 移除最愛
+<<<<<<< HEAD
 router.delete('/deleteFavoriteProd', function (req, res) {
   var user_id = req.session.member ? req.session.member.u_id : null;
+=======
+router.delete('/deleteFavoriteProd', login_api, function (req, res) {
+  // var user_id = req.body.user_id
+  var user_id = req.session.member.u_id
+>>>>>>> 81d0a160920946ac25c9ff540145f775eb79d02b
   var prod_id = req.body.prod_id
   var spec_id = req.body.spec_id
   var query = 'DELETE FROM collect WHERE user_id = ? AND prod_id = ? AND spec_id = ?'
@@ -95,9 +108,9 @@ router.delete('/deleteFavoriteProd', function (req, res) {
 })
 
 // 渲染已經加入最愛的商品
-router.get('/getFavoriteProd', function (req, res) {
-  var query = 'SELECT * FROM collect'
-  db.query(query, function (err, result) {
+router.get('/getFavoriteProd', login_api, function (req, res) {
+  var query = 'SELECT * FROM collect WHERE	user_id = ?'
+  db.query(query, [req.session.member.u_id], function (err, result) {
     if (err) {
       console.error(err)
       res.status(500).json({ error: '資料讀取失敗。' })

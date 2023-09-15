@@ -1,43 +1,41 @@
 //req herder select & herder select display block
-$('input[name="search"]').on("keyup", function () {
+$('input[name="search"]').on('keyup', function () {
   //herder select display block
-  $("#search-result").css("display", "block");
+  $('#search-result').css('display', 'block')
   //req herder select
   $.ajax({
-    type: "get",
-    url: "/api/changeProduct/search",
+    type: 'get',
+    url: '/api/changeProduct/search',
     data: {
       search: $(this).val(),
     },
     success: async function (response) {
-      let result = ``;
-      response.forEach((prod) => {
-        result += `<li><a href="/commodity/${prod.prod_id}/${prod.spec_id}">${prod.prod_name}</a></li>`;
-      });
+      let result = ``
+      response.forEach(prod => {
+        result += `<li><a href="/commodity/${prod.prod_id}/${prod.spec_id}">${prod.prod_name}</a></li>`
+      })
 
-      result == ""
-        ? (result = "<li><p>搜尋無結果</p></li>")
-        : (result = result);
-      $("#search-result>ul").html(result);
+      result == '' ? (result = '<li><p>搜尋無結果</p></li>') : (result = result)
+      $('#search-result>ul').html(result)
     },
-  });
-});
-$("body").on("click", function () {
-  $("#search-result").css("display", "none");
-});
-var globalProdId = [];
-var globalSpecId = [];
+  })
+})
+$('body').on('click', function () {
+  $('#search-result').css('display', 'none')
+})
+var globalProdId = []
+var globalSpecId = []
 // 熱銷商品
 $.ajax({
-  type: "get",
-  url: "/fontPage/getHotIndexProd",
+  type: 'get',
+  url: '/fontPage/getHotIndexProd',
   success: function (res) {
-    var itemData = res;
-    var itemsHtml = "";
+    var itemData = res
+    var itemsHtml = ''
     for (var i = 0; i < itemData.length; i++) {
-      globalProdId.push(itemData[i].prod_id);
-      globalSpecId.push(itemData[i].spec_id);
-      var item = itemData[i];
+      globalProdId.push(itemData[i].prod_id)
+      globalSpecId.push(itemData[i].spec_id)
+      var item = itemData[i]
       itemsHtml += `
           <div class="card-item col-3">
           <a href="/commodity/${item.prod_id}/${item.spec_id}">
@@ -85,21 +83,21 @@ $.ajax({
                           </div>
                           </a>
                       </div>
-          `;
+          `
     }
-    $(".card-item-wrap").html(itemsHtml);
+    $('.card-item-wrap').html(itemsHtml)
   },
-});
+})
 
 // 開學季學生主打
 $.ajax({
-  type: "get",
-  url: "/fontPage/getStudentIndexProd",
+  type: 'get',
+  url: '/fontPage/getStudentIndexProd',
   success: function (res) {
-    var itemData = res;
-    var itemsHtml = "";
+    var itemData = res
+    var itemsHtml = ''
     for (var i = 0; i < itemData.length; i++) {
-      var item = itemData[i];
+      var item = itemData[i]
       itemsHtml += `
           <div class=" card-item col-4">
                       <div class="card">
@@ -146,21 +144,21 @@ $.ajax({
                           </div>
                       </div>
                   </div>
-          `;
-      $(".card-item-wrap2").html(itemsHtml);
+          `
+      $('.card-item-wrap2').html(itemsHtml)
     }
   },
-});
+})
 
 // 電競機
 $.ajax({
-  type: "get",
-  url: "/fontPage/getGamingIndexProd",
+  type: 'get',
+  url: '/fontPage/getGamingIndexProd',
   success: function (res) {
-    var itemData = res;
-    var itemsHtml = "";
+    var itemData = res
+    var itemsHtml = ''
     for (var i = 0; i < itemData.length; i++) {
-      var item = itemData[i];
+      var item = itemData[i]
       itemsHtml += `
           <div class="card-item col-4">
                       <div class="card">
@@ -206,44 +204,52 @@ $.ajax({
                           </div>
                       </div>
                   </div>
+<<<<<<< HEAD
 
           `;
+=======
+          
+          `
+>>>>>>> 81d0a160920946ac25c9ff540145f775eb79d02b
     }
-    $(".card-item-wrap3").html(itemsHtml);
+    $('.card-item-wrap3').html(itemsHtml)
   },
-});
+})
 
 // 渲染加入最愛的商品
 $(document).ready(function () {
   $.ajax({
-    type: "get",
-    url: "/fontPage/getFavoriteProd",
+    type: 'get',
+    url: '/fontPage/getFavoriteProd',
     success: function (res) {
       for (var i = 0; i < res.length; i++) {
-        var favoriteProdId = res[i].prod_id;
-        var favoriteSpecId = res[i].spec_id;
+        var favoriteProdId = res[i].prod_id
+        var favoriteSpecId = res[i].spec_id
         var $matchingItem = $(
+<<<<<<< HEAD
           '.favorite[data-prod-id="' +
           favoriteProdId +
           '"][data-spec-id="' +
           favoriteSpecId +
           '"]'
         );
+=======
+          '.favorite[data-prod-id="' + favoriteProdId + '"][data-spec-id="' + favoriteSpecId + '"]'
+        )
+>>>>>>> 81d0a160920946ac25c9ff540145f775eb79d02b
 
-        $matchingItem.addClass("active");
-        $matchingItem.find(".heart-icon").css("fill", "red");
+        $matchingItem.addClass('active')
+        $matchingItem.find('.heart-icon').css('fill', 'red')
       }
     },
-  });
-});
+  })
+})
 
 // 加入最愛 | 移除最愛
-$(".card-item-wrap, .card-item-wrap2, .card-item-wrap3").on(
-  "click",
-  ".favorite",
-  function (e) {
-    e.preventDefault();
+$('.card-item-wrap, .card-item-wrap2, .card-item-wrap3').on('click', '.favorite', function (e) {
+  e.preventDefault()
 
+<<<<<<< HEAD
     var favoriteIcon = $(this).find(".heart-icon");
     var isFavorite = $(this).hasClass("active");
     var prod_id = $(this).data("prod-id"); // 當前點擊的 prod_id
@@ -284,57 +290,101 @@ $(".card-item-wrap, .card-item-wrap2, .card-item-wrap3").on(
         });
       }
       $(this).toggleClass("active");
-    }
+=======
+  var favoriteIcon = $(this).find('.heart-icon')
+  var isFavorite = $(this).hasClass('active')
+  var prod_id = $(this).data('prod-id') // 當前點擊的 prod_id
+  var spec_id = $(this).data('spec-id') // 當前點擊的 spec_id
 
-    // 點擊後更新收藏狀態
-    updateFavoriteState();
+  function updateFavoriteState() {
+    if (isFavorite) {
+      // 如果已經收藏了就移除
+      $.ajax({
+        type: 'delete',
+        url: '/fontPage/deleteFavoriteProd',
+        data: {
+          prod_id: prod_id,
+          spec_id: spec_id,
+        },
+        success: function (res) {
+          // console.log(res)
+          if (res.err == 0) {
+            console.log('移除成功')
+            favoriteIcon.css('fill', 'none')
+            $(this).toggleClass('active')
+          }
+        },
+      })
+    } else {
+      // 如果還沒收藏就執行收藏
+      $.ajax({
+        type: 'post',
+        url: '/fontPage/postFavoriteProd',
+        data: {
+          prod_id: prod_id,
+          spec_id: spec_id,
+        },
+        success: function (res) {
+          // console.log(res)
+          if (res.err == 0) {
+            console.log('收藏成功')
+            favoriteIcon.css('fill', 'red')
+            $(this).toggleClass('active')
+          } else {
+            location.href = '/login'
+          }
+        },
+      })
+>>>>>>> 81d0a160920946ac25c9ff540145f775eb79d02b
+    }
   }
-);
+
+  // 點擊後更新收藏狀態
+  updateFavoriteState()
+
+  // $(this).toggleClass('active')
+})
 
 $(document).ready(function () {
   //change header navber sun and moon
-  $(".slider").on("click ", function () {
-    if ($(this).hasClass("sun")) {
-      $(".sun").css({
-        display: "none",
-      });
-      $(".moon").css({
-        display: "block",
-      });
+  $('.slider').on('click ', function () {
+    if ($(this).hasClass('sun')) {
+      $('.sun').css({
+        display: 'none',
+      })
+      $('.moon').css({
+        display: 'block',
+      })
     } else {
-      $(".sun").css({
-        display: "block",
-      });
-      $(".moon").css({
-        display: "none",
-      });
+      $('.sun').css({
+        display: 'block',
+      })
+      $('.moon').css({
+        display: 'none',
+      })
     }
-  });
+  })
   //top-screen-button
   function blkTopScrBtn(elem) {
-    if (
-      document.body.scrollTop > 20 ||
-      document.documentElement.scrollTop > 20 ||
-      elem > 20
-    ) {
-      $("#topScreenBtn").css("display", "block");
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20 || elem > 20) {
+      $('#topScreenBtn').css('display', 'block')
     } else {
-      $("#topScreenBtn").css("display", "none");
+      $('#topScreenBtn').css('display', 'none')
     }
   }
   function screenTop() {
-    let [productScreen, elem] = document.getElementsByClassName("info");
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-    productScreen.scrollTop = 0;
+    let [productScreen, elem] = document.getElementsByClassName('info')
+    document.body.scrollTop = 0
+    document.documentElement.scrollTop = 0
+    productScreen.scrollTop = 0
   }
-  $(".info").on("scroll", function (e) {
-    blkTopScrBtn(this.scrollTop);
-  });
-  $(window).on("scroll", function () {
-    blkTopScrBtn();
-  });
-  $("#topScreenBtn").click(function () {
-    screenTop();
-  });
-});
+  $('.info').on('scroll', function (e) {
+    blkTopScrBtn(this.scrollTop)
+  })
+  $(window).on('scroll', function () {
+    blkTopScrBtn()
+  })
+  $('#topScreenBtn').click(function () {
+    screenTop()
+  })
+})
