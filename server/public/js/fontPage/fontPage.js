@@ -206,7 +206,7 @@ $.ajax({
                           </div>
                       </div>
                   </div>
-          
+
           `;
     }
     $(".card-item-wrap3").html(itemsHtml);
@@ -224,10 +224,10 @@ $(document).ready(function () {
         var favoriteSpecId = res[i].spec_id;
         var $matchingItem = $(
           '.favorite[data-prod-id="' +
-            favoriteProdId +
-            '"][data-spec-id="' +
-            favoriteSpecId +
-            '"]'
+          favoriteProdId +
+          '"][data-spec-id="' +
+          favoriteSpecId +
+          '"]'
         );
 
         $matchingItem.addClass("active");
@@ -248,6 +248,8 @@ $(".card-item-wrap, .card-item-wrap2, .card-item-wrap3").on(
     var isFavorite = $(this).hasClass("active");
     var prod_id = $(this).data("prod-id"); // 當前點擊的 prod_id
     var spec_id = $(this).data("spec-id"); // 當前點擊的 spec_id
+    var user_id = $('#userId').data('userId')
+
 
     function updateFavoriteState() {
       if (isFavorite) {
@@ -256,7 +258,7 @@ $(".card-item-wrap, .card-item-wrap2, .card-item-wrap3").on(
           type: "delete",
           url: "/fontPage/deleteFavoriteProd",
           data: {
-            user_id: 6,
+            user_id: user_id,
             prod_id: prod_id,
             spec_id: spec_id,
           },
@@ -271,7 +273,7 @@ $(".card-item-wrap, .card-item-wrap2, .card-item-wrap3").on(
           type: "post",
           url: "/fontPage/postFavoriteProd",
           data: {
-            user_id: 6,
+            user_id: user_id,
             prod_id: prod_id,
             spec_id: spec_id,
           },

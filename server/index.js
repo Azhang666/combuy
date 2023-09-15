@@ -61,7 +61,7 @@ app.use(function (req, res, next) {
 });
 
 const fontPage = require("./routers/fontPage/fontPage.js");
-app.use("/fontPage", fontPage);
+app.use("/fontPage",bp_uncode, fontPage);
 
 app.get("/", (req, res) => {
   res.redirect("/fontPage");

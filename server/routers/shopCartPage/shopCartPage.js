@@ -125,7 +125,6 @@ router.post("/getOrderList", function (req, res) {
 });
 
 // 把已下單的商品放進訂單資訊頁面
-
 router.post("/getOrderProduct", function (req, res) {
   var getLatestOrderQuery =
     "SELECT MAX(order_id) AS latest_order_id FROM order_product";

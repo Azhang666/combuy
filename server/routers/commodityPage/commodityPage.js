@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var mysql = require("mysql");
 const Setting = require("../../config/config");
+const { login_render, login_api } = require('../../middlewares/isLogin')
 
 var conn = mysql.createConnection(Setting.db_setting);
 
@@ -151,12 +152,11 @@ router.get("/:prodId/:specId", async (req, res) => {
 });
 
 // 加入購物車
-router.post("/addcart", async (req, res) => {
+router.post("/addcart" , async (req, res) => {
   console.log(req.body);
   console.log(req.body);
   try {
     var { user_id, prod_id, spec_id } = req.body;
-
     // 判斷使用者是否登入
     if (!user_id) {
       return res.redirect("/login");
@@ -174,13 +174,9 @@ router.post("/addcart", async (req, res) => {
 });
 
 // 加入收藏
-router.post("/addcollect", async (req, res) => {
+router.post("/addcollect", login_api, async (req, res) => {
   try {
     var { user_id, prod_id, spec_id } = req.body;
-    // 判斷使用者是否登入
-    if (!user_id) {
-      return res.redirect("/login");
-    }
     var sql =
       "INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)";
     await queryDatabase(sql, [user_id, prod_id, spec_id]);
@@ -233,10 +229,7 @@ router.post("/addCollect", async (req, res) => {
 router.post("/checkcart", async (req, res) => {
   try {
     var { user_id, prod_id, spec_id } = req.body;
-    // 判斷使用者是否登入
-    if (!user_id) {
-      return res.redirect("/login");
-    }
+
     var spl =
       "SELECT COUNT(*) AS count FROM shopcart WHERE user_id = ? AND prod_id = ? AND spec_id = ?";
     var result = await queryDatabase(spl, [user_id, prod_id, spec_id]);

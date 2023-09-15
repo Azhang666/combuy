@@ -64,7 +64,7 @@ router.get('/getGamingIndexProd', function (req, res) {
 
 // 加入最愛
 router.post('/postFavoriteProd', function (req, res) {
-  var user_id = req.body.user_id
+  var user_id = req.session.member ? req.session.member.u_id : null;
   var prod_id = req.body.prod_id
   var spec_id = req.body.spec_id
   var query = 'INSERT INTO collect (user_id,prod_id, spec_id)VALUES(?,?,?)'
@@ -80,7 +80,7 @@ router.post('/postFavoriteProd', function (req, res) {
 
 // 移除最愛
 router.delete('/deleteFavoriteProd', function (req, res) {
-  var user_id = req.body.user_id
+  var user_id = req.session.member ? req.session.member.u_id : null;
   var prod_id = req.body.prod_id
   var spec_id = req.body.spec_id
   var query = 'DELETE FROM collect WHERE user_id = ? AND prod_id = ? AND spec_id = ?'

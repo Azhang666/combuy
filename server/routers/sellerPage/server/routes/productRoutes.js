@@ -7,12 +7,12 @@ const db = require('./database');  // 注意相對路徑
 
 const logger = require('../../../../public/images/tools/logger');
 
-logger.info('This is an info message');
-logger.warn('This is a warning message');
-logger.error('This is an error message');
+// logger.info('This is an info message');
+// logger.warn('This is a warning message');
+// logger.error('This is an error message');
 
 app.use(express.json()); // 用於解析JSON請求
-app.use(express.urlencoded({ extended: true })); // 用於解析表單數據 
+app.use(express.urlencoded({ extended: true })); // 用於解析表單數據
 
 // 抓品牌的路由
 router.get('/brand', (req, res) => {
@@ -148,9 +148,9 @@ router.post('/createProduct', upload.array('productImage', 5), (req, res, next) 
     } else {
         console.log("req.files is not defined or null");
     }
-    
+
     console.log(req.body);
-    
+
     next();
 }, async (req, res) => {
     if (!req.body || !req.files || req.files.length === 0) {

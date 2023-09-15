@@ -79,98 +79,114 @@ $(document).ready(function () {
 
   // 加入購物車
   $(document).on('click', '#cart', function () {
-    var prod_id = $(this).data('prod_id')
-    var spec_id = $(this).data('spec_id')
+    if (user_id == "") {
+      window.location.href = '/login'
+    } else {
+      var prod_id = $(this).data('prod_id')
+      var spec_id = $(this).data('spec_id')
 
-    $.ajax({
-      url: '/commodity/addcart',
-      type: 'POST',
-      data: {
-        user_id: user_id,
-        prod_id: prod_id,
-        spec_id: spec_id,
-      },
-      success: function (response) {
-        console.log('已成功加入購物車')
-      },
-      error: function (error) {
-        console.error('加入購物車失敗', error)
-      },
-    })
+      $.ajax({
+        url: '/commodity/addcart',
+        type: 'POST',
+        data: {
+          user_id: user_id,
+          prod_id: prod_id,
+          spec_id: spec_id,
+        },
+        success: function (response) {
+          console.log('已成功加入購物車')
+        },
+        error: function (error) {
+          console.error('加入購物車失敗', error)
+        },
+      })
+    }
   })
 
   // 加入收藏
   $(document).on('click', '#collect', function () {
-    var prod_id = $(this).data('prod_id')
-    var spec_id = $(this).data('spec_id')
-    var update_time = $(this).data('update_time')
+    if (user_id == "") {
+      window.location.href = '/login'
+    } else {
+      var prod_id = $(this).data('prod_id')
+      var spec_id = $(this).data('spec_id')
+      var update_time = $(this).data('update_time')
 
-    $.ajax({
-      url: '/commodity/addcollect',
-      type: 'POST',
-      data: {
-        user_id: user_id,
-        prod_id: prod_id,
-        spec_id: spec_id,
-        update_time: update_time,
-      },
-      success: function (response) {
-        console.log('已成功加入收藏')
-      },
-      error: function (error) {
-        console.error('加入收藏失敗', error)
-      },
-    })
+      $.ajax({
+        url: '/commodity/addcollect',
+        type: 'POST',
+        data: {
+          user_id: user_id,
+          prod_id: prod_id,
+          spec_id: spec_id,
+          update_time: update_time,
+        },
+        success: function (response) {
+          console.log('已成功加入收藏')
+        },
+        error: function (error) {
+          console.error('加入收藏失敗', error)
+        },
+      })
+    }
   })
 
   // 相關商品加入購物車
   $(document).on('click', '#addtocart', function () {
-    var prod_id = $(this).data('prod_id')
-    var spec_id = $(this).data('spec_id')
+    if (user_id == "") {
+      window.location.href = '/login'
+    } else {
+      var prod_id = $(this).data('prod_id')
+      var spec_id = $(this).data('spec_id')
 
-    $.ajax({
-      url: '/commodity/addCart',
-      type: 'POST',
-      data: {
-        user_id: user_id,
-        prod_id: prod_id,
-        spec_id: spec_id,
-      },
-      success: function (response) {
-        console.log('已成功加入購物車')
-      },
-      error: function (error) {
-        console.error('加入購物車失敗', error)
-      },
-    })
+      $.ajax({
+        url: '/commodity/addCart',
+        type: 'POST',
+        data: {
+          user_id: user_id,
+          prod_id: prod_id,
+          spec_id: spec_id,
+        },
+        success: function (response) {
+          console.log('已成功加入購物車')
+        },
+        error: function (error) {
+          console.error('加入購物車失敗', error)
+        },
+      })
 
-    console.log('addtocart click event bound:', $('#addtocart').length > 0)
+      console.log('addtocart click event bound:', $('#addtocart').length > 0)
+    }
   })
 
   // 相關商品加入收藏
   $(document).on('click', '#addtocollect', function () {
-    var prod_id = $(this).data('prod_id')
-    var spec_id = $(this).data('spec_id')
-    var update_time = $(this).data('update_time')
+    if (user_id == "") {
+      window.location.href = '/login'
+    } else {
+      var prod_id = $(this).data('prod_id')
+      var spec_id = $(this).data('spec_id')
+      var update_time = $(this).data('update_time')
 
-    $.ajax({
-      url: '/commodity/addCollect',
-      type: 'POST',
-      data: {
-        user_id: user_id,
-        prod_id: prod_id,
-        spec_id: spec_id,
-        update_time: update_time,
-      },
-      success: function (response) {
-        console.log('已成功加入收藏')
-      },
-      error: function (error) {
-        console.error('加入收藏失敗', error)
-      },
-    })
+      $.ajax({
+        url: '/commodity/addCollect',
+        type: 'POST',
+        data: {
+          user_id: user_id,
+          prod_id: prod_id,
+          spec_id: spec_id,
+          update_time: update_time,
+        },
+        success: function (response) {
+          console.log('已成功加入收藏')
+        },
+        error: function (error) {
+          console.error('加入收藏失敗', error)
+        },
+      })
 
-    console.log('addtocollect click event bound:', $('#addtocollect').length > 0)
+      console.log('addtocollect click event bound:', $('#addtocollect').length > 0)
+    }
   })
 
   // 直接購買
