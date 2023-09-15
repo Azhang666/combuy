@@ -66,3 +66,6 @@
 {"level":"error","message":"This is an error message","service":"your-service-name"}
 {"level":"error","message":"This is an error message","service":"your-service-name"}
 >>>>>>> 47c99ca8627eb819e79bc515bcc97c265bbaba24
+{"level":"error","message":"This is an error message","service":"your-service-name"}
+{"level":"error","message":"This is an error message","service":"your-service-name"}
+{"level":"error","message":"This is an error message","service":"your-service-name"}
