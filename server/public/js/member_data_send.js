@@ -173,7 +173,7 @@ $(document).ready(function () {
         dataType: 'json',
       })
       if (res.err == 0) {
-        $(this).val(res.message)
+        $(this).val(res.data.btn_text)
       } else {
         $(this).val('系統錯誤')
       }

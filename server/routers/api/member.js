@@ -16,6 +16,8 @@ router.delete('/deleteCard', MemberController.deleteCardAPI)
 router.put('/cancelOrder', MemberController.cancelOrderAPI)
 // 收藏、取消收藏
 router.post('/collectProd', MemberController.collectProdAPI)
+// 購物車增減
+router.post('/cartProd', MemberController.cartProdAPI)
 // 評論
 router.patch('/commentUpdate', MemberController.commentUpdateAPI)
 

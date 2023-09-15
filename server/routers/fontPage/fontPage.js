@@ -64,9 +64,8 @@ router.get('/getGamingIndexProd', function (req, res) {
 })
 
 // 加入最愛
-router.post('/postFavoriteProd', login_api, function (req, res) {
-  // var user_id = req.body.user_id
-  var user_id = req.session.member.u_id
+router.post('/postFavoriteProd', function (req, res) {
+  var user_id = req.session.member ? req.session.member.u_id : null
   var prod_id = req.body.prod_id
   var spec_id = req.body.spec_id
   var query = 'INSERT INTO collect (user_id,prod_id, spec_id)VALUES(?,?,?)'
@@ -81,9 +80,8 @@ router.post('/postFavoriteProd', login_api, function (req, res) {
 })
 
 // 移除最愛
-router.delete('/deleteFavoriteProd', login_api, function (req, res) {
-  // var user_id = req.body.user_id
-  var user_id = req.session.member.u_id
+router.delete('/deleteFavoriteProd', function (req, res) {
+  var user_id = req.session.member ? req.session.member.u_id : null
   var prod_id = req.body.prod_id
   var spec_id = req.body.spec_id
   var query = 'DELETE FROM collect WHERE user_id = ? AND prod_id = ? AND spec_id = ?'
@@ -99,7 +97,20 @@ router.delete('/deleteFavoriteProd', login_api, function (req, res) {
 
 // 渲染已經加入最愛的商品
 router.get('/getFavoriteProd', login_api, function (req, res) {
-  var query = 'SELECT * FROM collect WHERE	user_id = ?'
+  var query = 'SELECT * FROM collect WHERE user_id = ?'
+  db.query(query, [req.session.member.u_id], function (err, result) {
+    if (err) {
+      console.error(err)
+      res.status(500).json({ error: '資料讀取失敗。' })
+    } else {
+      res.status(200).json(result)
+    }
+  })
+})
+
+// 渲染已經加入購物車的商品
+router.get('/getCartProd', login_api, function (req, res) {
+  var query = 'SELECT * FROM shopcart WHERE user_id = ?'
   db.query(query, [req.session.member.u_id], function (err, result) {
     if (err) {
       console.error(err)

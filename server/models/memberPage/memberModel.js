@@ -363,13 +363,42 @@ const MemberModel = {
         const sql3 = 'INSERT INTO collect( user_id , prod_id , spec_id ) VALUES ( ? , ? , ? )'
         const result3 = await conn.queryAsync(sql3, [uid, prod_id, spec_id])
 
-        return new Success('取消收藏')
+        return new Success({ type: true, message: '成功收藏', btn_text: '取消收藏' })
       } else {
         // 有收藏紀錄，刪除
         const sql3 = 'DELETE FROM collect WHERE user_id = ? AND prod_id = ? AND spec_id = ?'
         const result3 = await conn.queryAsync(sql3, [uid, prod_id, spec_id])
 
-        return new Success('收藏商品')
+        return new Success({ type: false, message: '取消收藏', btn_text: '收藏商品' })
+      }
+    } catch (err) {
+      throw err
+    }
+  },
+  cartProdAPI: async (uid, prod_id, spec_id) => {
+    try {
+      const sql1 = 'SELECT count(*) AS count FROM vw_products_info WHERE prod_id = ? AND spec_id =?'
+      const result1 = await conn.queryAsync(sql1, [prod_id, spec_id])
+
+      if (result1[0].count == 0) {
+        return new Error('查無該商品')
+      }
+      const sql2 =
+        'SELECT count(*) as count FROM shopcart WHERE user_id = ? AND prod_id = ? AND spec_id= ?'
+      const result2 = await conn.queryAsync(sql2, [uid, prod_id, spec_id])
+
+      if (result2[0].count == 0) {
+        // 無收藏紀錄，收藏
+        const sql3 = 'INSERT INTO shopcart( user_id , prod_id , spec_id ) VALUES ( ? , ? , ? )'
+        const result3 = await conn.queryAsync(sql3, [uid, prod_id, spec_id])
+
+        return new Success({ type: true, message: '加入購物車', btn_text: '已加入購物車' })
+      } else {
+        // 有收藏紀錄，刪除
+        const sql3 = 'DELETE FROM shopcart WHERE user_id = ? AND prod_id = ? AND spec_id = ?'
+        const result3 = await conn.queryAsync(sql3, [uid, prod_id, spec_id])
+
+        return new Success({ type: false, message: '移除購物車', btn_text: '加入購物車' })
       }
     } catch (err) {
       throw err
@@ -508,7 +537,7 @@ const MemberModel = {
   getCollectDetail: async (uid, page) => {
     try {
       const sql =
-        'SELECT collect.prod_id, collect.spec_id, prod_name, spec_name, price, collect.update_time, publish, inventory,img_src FROM collect LEFT JOIN vw_products_info ON collect.prod_id = vw_products_info.prod_id AND collect.spec_id = vw_products_info.spec_id WHERE collect.user_id = ? LIMIT 5 OFFSET ?'
+        'SELECT collect.prod_id, collect.spec_id, prod_name, spec_name, price, collect.update_time, publish, inventory,img_src FROM collect LEFT JOIN vw_products_info ON collect.prod_id = vw_products_info.prod_id AND collect.spec_id = vw_products_info.spec_id WHERE collect.user_id = ? ORDER BY collect.update_time DESC LIMIT 5 OFFSET ? '
       const result = await conn.queryAsync(sql, [uid, page * 5])
       for (let data of result) {
         data.price = 'NT $ ' + ToCurrency(data.price)

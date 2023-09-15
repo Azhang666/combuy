@@ -149,10 +149,10 @@ img[alt=cambuyLogo] {
   }
 }
 @media screen and (max-width: 1200px) {
-  input {
+  .sidenav input {
     width: 60%;
   }
-  button[type=submit] {
+  .sidenav button[type=submit] {
     width: 40%;
   }
   .sidenav {

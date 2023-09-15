@@ -85,8 +85,8 @@ app.use('/product', product)
 const commodity = require('./routers/commodityPage/commodityPage.js')
 app.use('/commodity', bp_uncode, commodity)
 
-const shopCart = require('./routers/shopCartPage/shopCartPage.js')
-app.use('/shopCart', shopCart)
+const shopCart = require('./routers/shopCartPage/shopCartPage')
+app.use('/shopCart', bp_uncode, shopCart)
 
 // app.use(function (req, res) {
 // res.end('Error 404 Page Not Found')

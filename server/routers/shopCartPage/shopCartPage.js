@@ -1,28 +1,10 @@
 var express = require('express')
 var router = express.Router()
 var db = require('../../models/shopCartPage/db')
-const {
-  login_render,
-  login_api,
-  notlogin_render,
-  notlogin_api,
-} = require('../../middlewares/isLogin')
+const { login_render, login_api } = require('../../middlewares/isLogin')
 
 router.get('/', login_render, (req, res) => {
   res.render('shopCartPage/shopCart')
-})
-
-router.delete('/delProd', function (req, res) {
-  var prod_id = req.query.prod_id
-  var query = 'DELETE FROM user_shopcart WHERE prod_id = ?'
-  db.query(query, [prod_id], function (err, result) {
-    if (err) {
-      console.error(err)
-      res.status(500).json({ error: '資料讀取失敗。' })
-    } else {
-      res.status(200).json(result)
-    }
-  })
 })
 
 // 獲取商品
@@ -66,24 +48,30 @@ router.get('/getUserCards', function (req, res) {
 router.post('/postorder_product', function (req, res) {
   var prod_id = req.body.prod_id
   var spec_id = req.body.spec_id
-  var price = req.body.price
+  var price
   var count = req.body.count
   var order_id = req.body.order_id
 
-  var query = 'INSERT INTO order_product (order_id,prod_id,spec_id,price,count) VALUES(?,?,?,?,?)'
-  db.query(query, [order_id, prod_id, spec_id, price, count], function (err, result) {
+  const sql = 'SELECT price FROM sellspec WHERE prod_id = ? AND spec_id = ?'
+  db.query(sql, [prod_id, spec_id], function (err, result) {
     if (err) {
-      console.error(err)
-      res.status(500).json({ error: '傳送資料失敗。' })
-    } else {
-      res.status(200).json({ insertId: result.insertId })
+      res.status(500).json({ error: '查無資料' })
     }
+    price = result[0].price
+    var query = 'INSERT INTO order_product (order_id,prod_id,spec_id,price,count) VALUES(?,?,?,?,?)'
+    db.query(query, [order_id, prod_id, spec_id, price, count], function (err, result) {
+      if (err) {
+        console.error(err)
+        res.status(500).json({ error: '傳送資料失敗。' })
+      } else {
+        res.status(200).json({ insertId: result.insertId })
+      }
+    })
   })
 })
 
 // 把購買者的地址傳送回資料庫
 router.post('/postUserAddress', function (req, res) {
-  // var user_id = req.body.user_id
   var user_id = req.session.member.u_id
   var recipient = req.body.recipient
   var recipient_address = req.body.recipient_address

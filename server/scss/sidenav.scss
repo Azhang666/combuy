@@ -1,6 +1,6 @@
 // RWD側邊導覽列
 body {
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 * {
   padding: 0;
@@ -32,7 +32,7 @@ body {
           outline: none;
         }
 
-        button[type="submit"] {
+        button[type='submit'] {
           border-radius: 0px 10px 10px 0px;
           border: none;
           background-color: rgba(128, 129, 128, 1);
@@ -100,7 +100,7 @@ body {
   color: #535353;
 }
 
-img[alt="cambuyLogo"] {
+img[alt='cambuyLogo'] {
   width: 128px;
 }
 
@@ -121,10 +121,10 @@ img[alt="cambuyLogo"] {
   }
 }
 @media screen and (max-width: 1200px) {
-  input {
+  .sidenav input {
     width: 60%;
   }
-  button[type="submit"] {
+  .sidenav button[type='submit'] {
     width: 40%;
   }
   .sidenav {

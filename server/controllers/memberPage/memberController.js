@@ -196,6 +196,16 @@ const MemberController = {
       throw err
     }
   },
+  cartProdAPI: async (req, res) => {
+    try {
+      const uid = req.session.member.u_id
+      const result = await MemberModel.cartProdAPI(uid, req.body.prod_id, req.body.spec_id)
+
+      res.end(JSON.stringify(result))
+    } catch (err) {
+      throw err
+    }
+  },
 
   commentRender: async (req, res) => {
     const uid = req.session.member.u_id

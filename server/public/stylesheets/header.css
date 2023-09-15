@@ -3,7 +3,7 @@ header {
   top: 0;
   z-index: 5;
   background-color: rgb(242, 242, 242);
-  width: 100vw;
+  width: 100%;
   -webkit-box-shadow: 1px 1px 20px 2px rgba(0, 0, 0, 0.204);
   box-shadow: 1px 1px 20px 2px rgba(0, 0, 0, 0.204);
 }
@@ -30,7 +30,7 @@ header nav.header ul {
 header nav.header ul li {
   margin: 0.25rem 2rem;
 }
-header nav.header ul li img[alt="cambuyLogo"] {
+header nav.header ul li img[alt='cambuyLogo'] {
   width: 128px;
 }
 header nav.header ul li form input {
@@ -39,14 +39,14 @@ header nav.header ul li form input {
   padding: 0.25rem 0.5rem;
   width: 30vw;
 }
-header nav.header ul li form button[type="submit"] {
+header nav.header ul li form button[type='submit'] {
   border-radius: 0px 10px 10px 0px;
   border: none;
   background-color: rgb(128, 129, 128);
   padding: 0.25rem;
   width: 108px;
 }
-header nav.header ul li form button[type="submit"] img {
+header nav.header ul li form button[type='submit'] img {
   width: 20px;
 }
 header nav.header ul li div#search-result {
@@ -128,7 +128,7 @@ header nav.header ul li span.slider {
 }
 header nav.header ul li span.slider::before {
   position: absolute;
-  content: "";
+  content: '';
   height: 26px;
   width: 26px;
   left: 4px;
