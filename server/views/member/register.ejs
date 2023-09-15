@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ComBuy - <%=title%></title>
     <link rel="icon" href="/public/images/logo/favicon.ico" />
-    <link rel="stylesheet" href="/public/stylesheets/style.min.css" />
 
     <!-- font  -->
     3
@@ -15,14 +14,17 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="/public/stylesheets/header.css" />
     <link rel="stylesheet" href="/public/stylesheets/sidenav.css" />
     <link rel="stylesheet" href="/public/stylesheets/dark.css" />
     <link rel="stylesheet" href="/public/stylesheets/out.css" />
+    <link rel="stylesheet" href="/public/stylesheets/style.min.css" />
+
     <script src="/public/js/jquery-3.6.0.js"></script>
 
     <script async src="/public/js/form.js"></script>
-    <script src="/public/js/member_data_send.js"></script>
+    <script async src="/public/js/member_data_send.js"></script>
   </head>
   <body>
     <!-- 插入header的保留位 -->
@@ -48,33 +50,15 @@
             </div>
             <div class="box">
               <label for="iptName">設定姓名</label>
-              <input
-                type="text"
-                name="name"
-                id="iptName"
-                placeholder="請輸入您的姓名"
-                required
-              />
+              <input type="text" name="name" id="iptName" placeholder="請輸入您的姓名" required />
             </div>
             <div class="box">
               <label for="iptAcc">設定帳號</label>
-              <input
-                type="text"
-                name="acc"
-                id="iptAcc"
-                placeholder="請輸入您的帳號"
-                required
-              />
+              <input type="text" name="acc" id="iptAcc" placeholder="請輸入您的帳號" required />
             </div>
             <div class="box">
               <label for="iptPwd">設定密碼</label>
-              <input
-                type="password"
-                name="pwd"
-                id="iptPwd"
-                placeholder="請輸入您的密碼"
-                required
-              />
+              <input type="password" name="pwd" id="iptPwd" placeholder="請輸入您的密碼" required />
             </div>
             <div class="box">
               <label for="iptPwdCheck">確認密碼</label>

@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ComBuy - <%=title%></title>
     <link rel="icon" href="/public/images/logo/favicon.ico" />
+
+    <link rel="stylesheet" href="/public/stylesheets/header.css" />
+    <link rel="stylesheet" href="/public/stylesheets/sidenav.css" />
     <link rel="stylesheet" href="/public/stylesheets/style.min.css" />
+
     <!-- font  -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,11 +17,10 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/public/stylesheets/header.css" />
-    <link rel="stylesheet" href="/public/stylesheets/sidenav.css" />
+
     <script src="/public/js/jquery-3.6.0.js"></script>
     <script async src="/public/js/form.js"></script>
-    <script src="/public/js/member_data_send.js"></script>
+    <script async src="/public/js/member_data_send.js"></script>
   </head>
 
   <body>
@@ -108,11 +111,7 @@
                   <input type="submit" class="button-S btnSave" value="儲 存" />
                 </div>
                 <div class="cardRemove">
-                  <input
-                    type="button"
-                    class="button-S btnDelete"
-                    value="刪 除"
-                  />
+                  <input type="button" class="button-S btnDelete" value="刪 除" />
                 </div>
               </div>
             </div>
@@ -131,52 +130,18 @@
             <p>卡號</p>
             <div>
               <div>
-                <input
-                  type="text"
-                  class="input-S num"
-                  name="card_1"
-                  placeholder="XXXX"
-                  required
-                />
-                <input
-                  type="text"
-                  class="input-S num"
-                  name="card_2"
-                  placeholder="XXXX"
-                  required
-                />
-                <input
-                  type="text"
-                  class="input-S num"
-                  name="card_3"
-                  placeholder="XXXX"
-                  required
-                />
-                <input
-                  type="text"
-                  class="input-S num"
-                  name="card_4"
-                  placeholder="XXXX"
-                  required
-                />
+                <input type="text" class="input-S num" name="card_1" placeholder="XXXX" required />
+                <input type="text" class="input-S num" name="card_2" placeholder="XXXX" required />
+                <input type="text" class="input-S num" name="card_3" placeholder="XXXX" required />
+                <input type="text" class="input-S num" name="card_4" placeholder="XXXX" required />
               </div>
             </div>
             <div>
               <div>
                 <label>到期日</label>
-                <input
-                  type="text"
-                  class="num input-S"
-                  name="expiry_date"
-                  placeholder="MMYY"
-                />
+                <input type="text" class="num input-S" name="expiry_date" placeholder="MMYY" />
                 <label>後三碼</label>
-                <input
-                  type="text"
-                  class="num input-S"
-                  name="security_code"
-                  placeholder="XXX"
-                />
+                <input type="text" class="num input-S" name="security_code" placeholder="XXX" />
               </div>
             </div>
 

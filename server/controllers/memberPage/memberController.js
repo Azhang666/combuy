@@ -249,6 +249,14 @@ const MemberController = {
       throw err
     }
   },
+  sellerRender: (req, res) => {
+    res.render('member/seller', {
+      title: '上架中心',
+      right: req.session.member.right,
+      setting: req.session.setting,
+      type: 6,
+    })
+  },
 }
 module.exports = MemberController
 
