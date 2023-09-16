@@ -69,7 +69,7 @@ CREATE TABLE `brand` (
 
 LOCK TABLES `brand` WRITE;
 /*!40000 ALTER TABLE `brand` DISABLE KEYS */;
-INSERT INTO `brand` VALUES (1,'APPLE','apple .inc'),(2,'Acer',NULL),(3,'ASUS',NULL),(4,'Miscroft',NULL),(5,'Lenovo',NULL),(6,'DELL',NULL),(7,'HP',NULL),(8,'LG',NULL),(9,'MSI',NULL);
+INSERT INTO `brand` VALUES (1,'APPLE','apple .inc'),(2,'Acer',NULL),(3,'ASUS',NULL),(4,'Microsoft',NULL),(5,'Lenovo',NULL),(6,'DELL',NULL),(7,'HP',NULL),(8,'LG',NULL),(9,'MSI',NULL);
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 UNLOCK TABLES;
 
