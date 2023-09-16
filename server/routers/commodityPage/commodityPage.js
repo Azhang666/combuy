@@ -55,7 +55,7 @@ router.get("/:prodId/:specId", async (req, res) => {
       [prodId]
     );
     var priceData = await queryDatabase(
-      "SELECT price FROM sellspec WHERE prod_id = ?",
+      "SELECT price, stock FROM sellspec WHERE prod_id = ?",
       [prodId]
     );
     var totalCountData = await queryDatabase(
