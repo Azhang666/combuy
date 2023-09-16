@@ -3,6 +3,11 @@
     <ul>
       <% for( let i = 0; i < brand.length; i++ ) { %>
       <li class="brand">
+        <img
+          style="width: 20px"
+          src="/public/images/brand/<%=brand[i].brand %>.png"
+          alt=""
+        />
         <a value="<%=brand[i].brand_id%>" title="<%=brand[i].brand%>"
           ><%=brand[i].brand%></a
         >

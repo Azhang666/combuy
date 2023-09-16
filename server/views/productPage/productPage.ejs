@@ -9,11 +9,15 @@
     <link rel="stylesheet" href="/public/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/public/stylesheets/sidenav.css" />
     <link rel="stylesheet" href="/public/stylesheets/out.css" />
-    <link rel="stylesheet" href="/public/stylesheets/productPage/productStyle.css" />
+    <link
+      rel="stylesheet"
+      href="/public/stylesheets/productPage/productStyle.css"
+    />
     <link rel="stylesheet" href="/public/stylesheets/darkModeCheckbox.css" />
   </head>
   <body>
     <%-await include('../header'); %>
+    <div style="display: none" id="userId" data-user-id="<%= userId %>"></div>
     <main class="row">
       <%-await include('../brand'); %>
       <section class="info col-10">
@@ -29,18 +33,37 @@
           </select>
           <span>上架時間</span>
           <button id="addTime" type="button">
-            <img src="/public/images/icons/chevron-down.svg" alt="chevron-down" />
+            <img
+              src="/public/images/icons/chevron-down.svg"
+              alt="chevron-down"
+            />
           </button>
           <span>金額</span>
           <button id="priceDesc" type="button">
-            <img src="/public/images/icons/chevron-down.svg" alt="chevron-down" />
+            <img
+              src="/public/images/icons/chevron-down.svg"
+              alt="chevron-down"
+            />
           </button>
           <label for="price"> 金額 </label>
-          <input id="price" type="text" name="priceFrom" placeholder="0" pattern="[0-9]{7}" />
+          <input
+            id="price"
+            type="text"
+            name="priceFrom"
+            placeholder="0"
+            pattern="[0-9]{7}"
+          />
           <label for="priceTo"> 到 </label>
-          <input id="priceTo" type="text" name="priceTo" placeholder="9999999" pattern="[0-9]{7}" />
+          <input
+            id="priceTo"
+            type="text"
+            name="priceTo"
+            placeholder="9999999"
+            pattern="[0-9]{7}"
+          />
         </form>
-        <%-await include('./chageProdAndPage.ejs') %> <%-await include('../footer.ejs') %>
+        <%-await include('./chageProdAndPage.ejs') %> <%-await
+        include('../footer.ejs') %>
       </section>
     </main>
 

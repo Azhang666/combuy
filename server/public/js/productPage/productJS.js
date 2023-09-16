@@ -240,14 +240,52 @@ $(document).ready(function () {
   });
   //api/changeProductItem and this button prevent bubble events防止泡沫事件
   $("body").on("click", ".prodToPItem", function (e) {
-    console.log("1");
-
     e.stopPropagation();
   });
   $("body").on("click", ".ctrlBtn", function (e) {
-    console.log("2");
     e.preventDefault();
     e.stopPropagation();
+  });
+  let user_id = $("#userId").data("userId");
+  //plusProduct
+  $("#plusProd").on("click", async function () {
+    if (user_id == "") {
+      location.replace("http://localhost:2407/login");
+    } else {
+      await $.ajax({
+        type: "post",
+        url: "/commodity/addcart",
+        data: {
+          user_id: user_id,
+          prod_id: $(this).data("prod_id"),
+          spec_id: $(this).data("spec_id"),
+        },
+        success: function (response) {
+          alert("此商品已加入購物車");
+        },
+        error: function (error) {
+          alert("此商品已在購物車");
+        },
+      });
+    }
+  });
+  //collectProduct
+  $("#collectProd").on("click", async function () {
+    await $.ajax({
+      type: "post",
+      url: "/commodity/addcollect",
+      data: {
+        user_id: user_id,
+        prod_id: $(this).data("prod_id"),
+        spec_id: $(this).data("spec_id"),
+      },
+      success: function (response) {
+        alert("此商品已加入購物車");
+      },
+      error: function (error) {
+        alert("此商品已在購物車");
+      },
+    });
   });
   //jq ready bottom
 });

@@ -17,10 +17,10 @@
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
         return(parts.join('.')) }; let price=toCurrency(product[i].price); %>
         <span title="<%=product[i].price%>">NT <%=price%></span>
-        <button class="ctrlBtn" title="加入最愛">
+        <button id="collectProd" class="ctrlBtn" title="加入最愛">
           <img src="/public/images/icons/heart.svg" alt="productgocart" />
         </button>
-        <button class="ctrlBtn" title="加入購物車">
+        <button id="plusProd" class="ctrlBtn" title="加入購物車">
           <img src="/public/images/icons/cart.svg" alt="productgocart" />
         </button>
         <button class="ctrlBtn" id="prodComparison" title="加入比較">
