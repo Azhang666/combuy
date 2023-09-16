@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var mysql = require("mysql");
 const Setting = require("../../config/config");
-const { login_render, login_api } = require('../../middlewares/isLogin')
+const { login_render, login_api } = require("../../middlewares/isLogin");
 
 var conn = mysql.createConnection(Setting.db_setting);
 
@@ -152,7 +152,7 @@ router.get("/:prodId/:specId", async (req, res) => {
 });
 
 // 加入購物車
-router.post("/addcart" , async (req, res) => {
+router.post("/addcart", async (req, res) => {
   console.log(req.body);
   console.log(req.body);
   try {

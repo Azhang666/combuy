@@ -1,8 +1,8 @@
-const express = require('express')
-const cpp = require('../../controllers/productPage/ctrlPorductPage.js')
-const router = express.Router()
+const express = require("express");
+const cpp = require("../../controllers/productPage/ctrlPorductPage.js");
+const router = express.Router();
 
 //product page
-router.get('/', cpp.ctrlProdPage)
+router.get("/:brand", cpp.ctrlProdPage);
 
-module.exports = router
+module.exports = router;
