@@ -491,6 +491,7 @@
           .closest(".shop-car-item-bar")
           .find(".product-name span")
           .attr("id");
+        var user_id = $(this).closest(".shop-car-item-bar").attr("id");
         var isChecked = $(this)
           .parents(".shop-car-item-bar")
           .find(".j-checkbox")
@@ -511,13 +512,13 @@
               user_id: user_id,
             },
             success: function (res) {
-              console.log("已成功刪除資料");
-              $(this).parents(".shop-car-item-bar").remove();
+              // console.log("已成功刪除資料");
+              // $(this).parents(".shop-car-item-bar").remove();
               $itemToRemove.remove();
               getSum();
             },
             error: function (err) {
-              console.log("刪除失敗" + err);
+              // console.log("刪除失敗" + err);
             },
           });
         }

@@ -19,9 +19,11 @@
     <link rel="stylesheet" href="/public/stylesheets/dark.css" />
     <link rel="stylesheet" href="/public/stylesheets/out.css" />
     <link rel="stylesheet" href="/public/stylesheets/style.min.css" />
+    <link rel="stylesheet" href="/public/stylesheets/universal/footer.css" />
 
     <script src="/public/js/jquery-3.6.0.js"></script>
     <script async src="/public/js/form.js"></script>
+    <script src="/public/js/universal/header.js"></script>
   </head>
 
   <body>
@@ -106,6 +108,6 @@
       </section>
     </main>
     <!-- 插入footer的保留位 -->
-    <%- /* await include('../footer');*/ %>
+    <%-await include('../footer.ejs'); %>
   </body>
 </html>
