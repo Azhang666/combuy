@@ -154,9 +154,11 @@ $(document).ready(function () {
         },
         success: function (response) {
           console.log("已成功加入收藏");
+          alert('已成功加入收藏');
         },
         error: function (error) {
           console.error("加入收藏失敗", error);
+          alert('該商品已在收藏清單中');
         },
       });
     }
