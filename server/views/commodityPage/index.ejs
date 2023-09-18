@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/public/stylesheets/sidenav.css" />
     <link rel="stylesheet" href="/public/stylesheets/out.css" />
     <link rel="stylesheet" href="/public/stylesheets/darkModeCheckbox.css" />
+    <link rel="stylesheet" href="/public/stylesheets/header.css" />
 
     <script src="/public/js/jquery-3.6.0.js"></script>
     <script src="/public/js/bootstrap.bundle.js"></script>
@@ -60,7 +61,6 @@
             <!-- 顯示庫存 -->
             <span class="ms-3"><b>剩下<%= priceData[0].stock %>台</b></span>
           </div>
-
 
           <!-- 網頁顯示按鈕 -->
           <div class="d-none d-sm-block">
@@ -146,11 +146,13 @@
         <div class="tab-content container mt-5">
           <% if (imageDataT1.length> 0) { %>
           <div class="tab-pane active show center" id="information">
+            <% for(img of imageDataT1){%>
             <img
-              src="/public/<%= imageDataT1[0].dir %>/<%= imageDataT1[0].filename %>"
+              src="/public/<%= img.dir %>/<%= img.filename %>"
               alt="產品資訊"
               class="mb-5 w-100"
             />
+            <%}%>
           </div>
           <% } %>
           <div class="tab-pane" id="specification"><%-await include('table.ejs') %></div>

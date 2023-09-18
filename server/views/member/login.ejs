@@ -19,11 +19,13 @@
     <link rel="stylesheet" href="/public/stylesheets/dark.css" />
     <link rel="stylesheet" href="/public/stylesheets/out.css" />
     <link rel="stylesheet" href="/public/stylesheets/style.min.css" />
+    <link rel="stylesheet" href="/public/stylesheets/universal/footer.css" />
 
     <script src="/public/js/jquery-3.6.0.js"></script>
 
     <script async src="/public/js/form.js"></script>
     <script async src="/public/js/login_data_send.js"></script>
+    <script src="/public/js/universal/header.js"></script>
   </head>
   <body>
     <!-- 插入header的保留位 -->
@@ -47,11 +49,23 @@
           <form id="formLogin" action="" method="post">
             <div class="spacing">
               <label for="iptAcc">帳號</label>
-              <input type="text" name="acc" id="iptAcc" placeholder="請輸入您的帳號" required />
+              <input
+                type="text"
+                name="acc"
+                id="iptAcc"
+                placeholder="請輸入您的帳號"
+                required
+              />
             </div>
             <div class="spacing">
               <label for="iptPwd">密碼</label>
-              <input type="password" name="pwd" id="iptPwd" placeholder="請輸入您的密碼" required />
+              <input
+                type="password"
+                name="pwd"
+                id="iptPwd"
+                placeholder="請輸入您的密碼"
+                required
+              />
             </div>
             <div class="submit">
               <input type="submit" value="登 入" />
@@ -61,6 +75,6 @@
       </section>
     </main>
     <!-- 插入footer的保留位 -->
-    <%- /* await include('../footer');*/ %>
+    <%-await include('../footer.ejs'); %>
   </body>
 </html>

@@ -24,10 +24,12 @@
     <link rel="stylesheet" href="/public/stylesheets/dark.css" />
     <link rel="stylesheet" href="/public/stylesheets/out.css" />
     <link rel="stylesheet" href="/public/stylesheets/style.min.css" />
+    <link rel="stylesheet" href="/public/stylesheets/universal/footer.css" />
 
     <script src="/public/js/jquery-3.6.0.js"></script>
     <script async src="/public/js/form.js"></script>
     <script async src="/public/js/member_data_send.js"></script>
+    <script src="/public/js/universal/header.js"></script>
   </head>
 
   <body>
@@ -93,6 +95,5 @@
         </div>
       </section>
     </main>
-    <footer></footer>
-  </body>
+    <%-await include('../footer.ejs'); %>
 </html>

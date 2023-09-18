@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const fs = require('fs')
+const path = require('path')
 const conn = require('../../config/db')
 const { Success, Error } = require('../../config/response')
 const {
@@ -348,7 +349,8 @@ const MemberModel = {
   },
   collectProdAPI: async (uid, prod_id, spec_id) => {
     try {
-      const sql1 = 'SELECT count(*) AS count FROM vw_products_info WHERE prod_id = ? AND spec_id =?'
+      const sql1 =
+        'SELECT count(*) AS count FROM vw_products_info WHERE prod_id = ? AND spec_id =? AND publish = 1'
       const result1 = await conn.queryAsync(sql1, [prod_id, spec_id])
 
       if (result1[0].count == 0) {
@@ -377,17 +379,25 @@ const MemberModel = {
   },
   cartProdAPI: async (uid, prod_id, spec_id) => {
     try {
-      const sql1 = 'SELECT count(*) AS count FROM vw_products_info WHERE prod_id = ? AND spec_id =?'
+      const sql1 =
+        'SELECT count(*) AS count FROM vw_products_info WHERE prod_id = ? AND spec_id =? AND publish = 1'
       const result1 = await conn.queryAsync(sql1, [prod_id, spec_id])
 
       if (result1[0].count == 0) {
         return new Error('查無該商品')
       }
       const sql2 =
-        'SELECT count(*) as count FROM shopcart WHERE user_id = ? AND prod_id = ? AND spec_id= ?'
-      const result2 = await conn.queryAsync(sql2, [uid, prod_id, spec_id])
+        'SELECT inventory FROM vw_products_info WHERE prod_id = ? AND spec_id =? AND publish = 1'
+      const result12 = await conn.queryAsync(sql2, [prod_id, spec_id])
 
-      if (result2[0].count == 0) {
+      if (result12[0].inventory == 0) {
+        return new Success({ type: false, message: '缺貨中', btn_text: '缺貨中' })
+      }
+      const sql3 =
+        'SELECT count(*) as count FROM shopcart WHERE user_id = ? AND prod_id = ? AND spec_id= ?'
+      const result3 = await conn.queryAsync(sql3, [uid, prod_id, spec_id])
+
+      if (result3[0].count == 0) {
         // 無收藏紀錄，收藏
         const sql3 = 'INSERT INTO shopcart( user_id , prod_id , spec_id ) VALUES ( ? , ? , ? )'
         const result3 = await conn.queryAsync(sql3, [uid, prod_id, spec_id])

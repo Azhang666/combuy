@@ -214,40 +214,103 @@ $(document).ready(function () {
     });
   });
   //req product comparison
-  $("#prodComparison").on("click", function () {
-    // $.ajax({
-    //   type: "get",
-    //   url: "/search",
-    //   data: {
-    //     search: $(this).val(),
-    //   },
-    //   success: function (response) {
-    //     return;
-    //     var values = {};
-    //     for (index in response) {
-    //       values[index] = response[index].prod;
-    //     }
-    //     let result = ``;
-    //     for (let i = Object.values(values).length - 1; i >= 0; i--) {
-    //       result += `<li><a href="/${values[i]}">${values[i]}</a></li>`;
-    //     }
-    //     result == ""
-    //       ? (result = "<li><a href='/'>搜尋無結果</a></li>")
-    //       : (result = result);
-    //     $("#search-result>ul").html(result);
-    //   },
-    // });
+  $(".prodComparison").on("click", async function () {
+    await $.ajax({
+      type: "get",
+      url: "/api/changeProduct/prodComparison",
+      data: {
+        prod_id: $(this).data("prod_id"),
+        spec_id: $(this).data("spec_id"),
+      },
+      success: function (response) {
+        let arrTemp = [];
+        let objTemp = {
+          pId: response[0].prod_id,
+          sId: response[0].spec_id,
+          pName: response[0].prod_name,
+          sName: response[0].spec_name,
+          brand: response[0].brand,
+          cpu: response[0].cpu,
+          gpu: response[0].gpu,
+          ram: response[0].ram,
+          os: response[0].os,
+          screen: response[0].screen,
+          battery: response[0].battery,
+          size: response[0].size,
+          weight: response[0].weight,
+          warranty: response[0].warranty,
+          imgSrc: response[0].img_src,
+        };
+        if (!localStorage.getItem("product")) {
+          localStorage.setItem("product", JSON.stringify(objTemp));
+          //display btn
+        } else {
+          if (Array.isArray(JSON.parse(localStorage.getItem("product")))) {
+            arrTemp = JSON.parse(localStorage.getItem("product"));
+            if (arrTemp.length == 3) {
+              arrTemp.shift();
+            }
+          } else {
+            arrTemp.push(JSON.parse(localStorage.getItem("product")));
+          }
+          arrTemp.push(objTemp);
+          localStorage.setItem("product", JSON.stringify(arrTemp));
+        }
+        // console.log(JSON.parse(localStorage.getItem("product")));
+      },
+      error: function (error) {
+        alert(error);
+      },
+    });
   });
   //api/changeProductItem and this button prevent bubble events防止泡沫事件
   $("body").on("click", ".prodToPItem", function (e) {
-    console.log("1");
-
     e.stopPropagation();
   });
   $("body").on("click", ".ctrlBtn", function (e) {
-    console.log("2");
     e.preventDefault();
     e.stopPropagation();
+  });
+  let user_id = $("#userId").data("userId");
+  //plusProduct
+  $(".plusProd").on("click", async function () {
+    if (user_id == "") {
+      location.replace("http://localhost:2407/login");
+    } else {
+      await $.ajax({
+        type: "post",
+        url: "/commodity/addcart",
+        data: {
+          user_id: user_id,
+          prod_id: $(this).data("prod_id"),
+          spec_id: $(this).data("spec_id"),
+        },
+        success: function (response) {
+          alert("此商品已加入購物車");
+        },
+        error: function (error) {
+          alert("此商品已在購物車");
+        },
+      });
+    }
+  });
+  //collectProduct
+  $(".collectProd").on("click", async function () {
+    await $.ajax({
+      type: "post",
+      url: "/commodity/addcollect",
+      data: {
+        user_id: user_id,
+        prod_id: $(this).data("prod_id"),
+        spec_id: $(this).data("spec_id"),
+      },
+      success: function (response) {
+        alert("此商品已加入購物車");
+      },
+      error: function (error) {
+        alert("此商品已在購物車");
+      },
+    });
   });
   //jq ready bottom
 });

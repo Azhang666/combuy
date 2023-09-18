@@ -11,6 +11,11 @@
     />
     <link rel="stylesheet" href="/public/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/public/stylesheets/shopCartPage/order.css" />
+    <link rel="stylesheet" href="/public/stylesheets/sidenav.css" />
+    <link rel="stylesheet" href="/public/stylesheets/out.css" />
+    <link rel="stylesheet" href="/public/stylesheets/dark.css" />
+    <link rel="stylesheet" href="/public/stylesheets/header.css" />
+    <link rel="stylesheet" href="/public/stylesheets/darkModeCheckbox.css" />
     <script src="/public/js/jquery-3.6.0.js"></script>
     <script src="/public/js/bootstrap.min.js"></script>
   </head>
@@ -280,7 +285,7 @@
         </div>
       </div>
     </div>
-
+    <script src="/public/js/universal/header.js"></script>
     <script>
       //req herder select & herder select display block
       $('input[name="search"]').on("keyup", function () {
@@ -431,20 +436,17 @@
           },
         });
       });
-
       // 取得購買商品
       $(function () {
         $.ajax({
           type: "POST",
           url: "/shopCart/getOrderProduct",
           success: function (res) {
-            // var price = res[0][0].price /  res[0][0].count
-            // console.log(price);
-
+            console.log(res);
             var itemsData = res[0];
             var itemsHtml = "";
             for (var i = 0; i < itemsData.length; i++) {
-              var price = res[0][i].price / res[0][i].count;
+              // var price = res[0][i].price / res[0][i].count;
 
               var item = itemsData[i];
               itemsHtml += `
@@ -455,7 +457,7 @@
                                     <p class="my-auto">訂單完成</p>
                                 </div>
                                 <div class="product-img ms-5">
-                                    <img src="./public/${item.img_src}" alt="">
+                                    <img src="/public/${item.img_src}" alt="">
                                 </div>
                                 <div class="product-name">
                                     <p class="my-auto">${item.prod_name} <br> <span>${item.spec_name}</span> </p>
@@ -464,9 +466,9 @@
                         </div>
                         <div class="row">
                             <div class="other-bar d-lg-flex d-none">
-                                <p class="my-auto">${price}</p>
-                                <p class="my-auto">${item.count}</p>
                                 <p class="my-auto">${item.price}</p>
+                                <p class="my-auto">${item.count}</p>
+                                <p class="my-auto">${item.amount}</p>
                             </div>
                         </div>
                     </div>

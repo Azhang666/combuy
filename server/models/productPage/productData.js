@@ -11,7 +11,7 @@ exports.getBrandData = (setCondition, callBackData) => {
       console.log(err)
     }
   })
-  connection.query('SELECT brand_id,brand FROM brand', (err, data) => {
+  connection.query('SELECT brand_id,brand,img FROM brand', (err, data) => {
     if (err) {
       console.log(err)
     } else {
