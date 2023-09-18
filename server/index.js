@@ -3,6 +3,7 @@ const session = require('express-session')
 const bodyparse = require('body-parser')
 const ejs = require('ejs')
 const { login_render, login_api, notlogin_render, notlogin_api } = require('./middlewares/isLogin')
+const { seller_api } = require('./middlewares/userRight')
 const { UserSetting } = require('./config/user_data')
 
 const app = express()
@@ -77,7 +78,7 @@ const member = require('./routers/memberPage/member')
 app.use('/member', login_render, member)
 
 const seller = require('./routers/sellerPage/index.js')
-app.use('/seller', seller)
+app.use('/seller', login_api, seller_api, seller)
 
 const product = require('./routers/productPage/productPage.js')
 app.use('/product', product)

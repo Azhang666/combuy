@@ -3,16 +3,18 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
-const db = require('./server/routes/database') // 引入資料庫連接模組
-const productRoutes = require('./server/routes/productRoutes') // 引入路由模組
-// const router = require('../api')
+const db = require('./routes/database') // 引入資料庫連接模組
+const brandRoutes = require('./routes/brandRoutes')
+const categoryRoutes = require('./routes/categoryRoutes')
+const productRoutes = require('./routes/productRoutes') // 引入路由模組
 
 const router = express.Router()
-// const app = express()
 router.use(cors())
 router.use(bodyParser.json())
-router.use(express.static(path.join(__dirname, 'public')))
+// router.use(express.static(path.join(__dirname, 'public')))
 
+router.use('/', brandRoutes)
+router.use('/', categoryRoutes)
 router.use('/', productRoutes) // 使用路由模組
 
 router.use((err, req, res, next) => {

@@ -26,7 +26,7 @@ router.get('/product', (req, res) => {})
 // 獲取熱銷商品
 router.get('/getHotIndexProd', function (req, res) {
   var query =
-    'SELECT * FROM vw_products_info WHERE publish != 0 ORDER BY sales DESC ,update_time desc  LIMIT 8'
+    'SELECT * FROM vw_products_info WHERE publish != 0 AND inventory > 0 ORDER BY sales DESC ,update_time DESC  LIMIT 8'
   db.query(query, function (err, result) {
     if (err) {
       console.error(err)
@@ -39,7 +39,8 @@ router.get('/getHotIndexProd', function (req, res) {
 
 // 獲取學生開學季商品
 router.get('/getStudentIndexProd', function (req, res) {
-  var query = 'SELECT * FROM vw_products_info ORDER BY price LIMIT 3'
+  var query =
+    'SELECT * FROM vw_products_info LEFT JOIN product_tag ON vw_products_info.prod_id = product_tag.prod_id WHERE publish != 0 AND inventory > 0 AND tag = 6 ORDER BY sales DESC LIMIT 3'
   db.query(query, function (err, result) {
     if (err) {
       console.error(err)
@@ -52,7 +53,8 @@ router.get('/getStudentIndexProd', function (req, res) {
 
 // 獲取電競機商品
 router.get('/getGamingIndexProd', function (req, res) {
-  var query = 'SELECT * FROM vw_products_info ORDER BY price DESC LIMIT 3'
+  var query =
+    'SELECT * FROM vw_products_info LEFT JOIN product_tag ON vw_products_info.prod_id = product_tag.prod_id WHERE publish != 0 AND inventory > 0 AND tag = 3 ORDER BY sales DESC LIMIT 3'
   db.query(query, function (err, result) {
     if (err) {
       console.error(err)

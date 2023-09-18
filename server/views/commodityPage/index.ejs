@@ -133,14 +133,10 @@
         <ul class="nav nav-pills justify-content-center pt-4">
           <% if (imageDataT1.length> 0) { %>
           <li class="nav-item">
-            <a data-bs-toggle="pill" class="nav-link active" href="#information"
-              >商品資訊</a
-            >
+            <a data-bs-toggle="pill" class="nav-link active" href="#information">商品資訊</a>
           </li>
           <li class="nav-item">
-            <a data-bs-toggle="pill" class="nav-link" href="#specification"
-              >商品規格</a
-            >
+            <a data-bs-toggle="pill" class="nav-link" href="#specification">商品規格</a>
           </li>
           <% } %>
         </ul>
@@ -150,16 +146,16 @@
         <div class="tab-content container mt-5">
           <% if (imageDataT1.length> 0) { %>
           <div class="tab-pane active show center" id="information">
+            <% for(img of imageDataT1){%>
             <img
-              src="/public/<%= imageDataT1[0].dir %>/<%= imageDataT1[0].filename %>"
+              src="/public/<%= img.dir %>/<%= img.filename %>"
               alt="產品資訊"
               class="mb-5 w-100"
             />
+            <%}%>
           </div>
           <% } %>
-          <div class="tab-pane" id="specification">
-            <%-await include('table.ejs') %>
-          </div>
+          <div class="tab-pane" id="specification"><%-await include('table.ejs') %></div>
         </div>
       </section>
 
@@ -172,15 +168,11 @@
         <div class="buyer">
           <div class="rating mt-1">
             <% for ( let i=1 ; i <=5; i++ ) { %>
-            <span
-              class="bi bi-star<%= i <= comment.comment_grade ? '-fill' : '' %>"
-            ></span>
+            <span class="bi bi-star<%= i <= comment.comment_grade ? '-fill' : '' %>"></span>
             <% } %>
           </div>
 
-          <p class="mt-2">
-            <%= comment.comment_time %> | 購入數量 <%= comment.count %>
-          </p>
+          <p class="mt-2"><%= comment.comment_time %> | 購入數量 <%= comment.count %></p>
         </div>
         <div class="comment">
           <p><%= comment.comment %></p>
