@@ -14,6 +14,7 @@
       href="/public/stylesheets/productPage/productStyle.css"
     />
     <link rel="stylesheet" href="/public/stylesheets/darkModeCheckbox.css" />
+    <link rel="stylesheet" href="/public/stylesheets/header.css" />
   </head>
   <body>
     <%-await include('../header'); %>
@@ -66,12 +67,14 @@
         include('../footer.ejs') %>
       </section>
     </main>
-
+    <div id="watchComparison" title="查看比較">
+      <a target="_blank" href="/product/watchComparison">查看比較</a>
+    </div>
     <button class="top-btn" id="topScreenBtn" title="返回頂部">
       <img src="/public/images/icons/top-btn.svg" alt="top-btn" />
     </button>
-
     <script src="/public/js/jquery-3.6.0.js"></script>
     <script src="/public/js/productPage/productJS.js"></script>
+    <script src="/public/js/universal/header.js"></script>
   </body>
 </html>

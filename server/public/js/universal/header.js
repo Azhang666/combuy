@@ -12,8 +12,10 @@ $(document).ready(function () {
       },
       success: async function (response) {
         let result = ``;
-        response.forEach((prod) => {
-          result += `<li><a href="/commodity/${prod.prod_id}/${prod.spec_id}">${prod.prod_name}</a></li>`;
+        response.forEach((prod, index) => {
+          if (index < 5) {
+            result += `<li><a href="/commodity/${prod.prod_id}/${prod.spec_id}">${prod.prod_name}</a></li>`;
+          }
         });
         result == ""
           ? (result = "<li><p>搜尋無結果</p></li>")
