@@ -170,7 +170,7 @@ exports.productModels = {
   },
   hdSelProd: async (req, res) => {
     req = req.concat("%");
-    const sql = `SELECT prod_id,spec_id,prod_name  FROM vw_products_info WHERE prod_name LIKE ?`;
+    const sql = `SELECT prod_id,spec_id,prod_name,spec_name  FROM vw_products_info WHERE prod_name LIKE ?`;
     const data = await sqlConn.queryAsync(sql, req);
     return data;
   },

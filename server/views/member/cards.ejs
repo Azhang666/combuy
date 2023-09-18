@@ -18,7 +18,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/public/stylesheets/universal/footer.css" />
-    
+
     <script src="/public/js/jquery-3.6.0.js"></script>
     <script async src="/public/js/form.js"></script>
     <script async src="/public/js/member_data_send.js"></script>
@@ -113,7 +113,11 @@
                   <input type="submit" class="button-S btnSave" value="儲 存" />
                 </div>
                 <div class="cardRemove">
-                  <input type="button" class="button-S btnDelete" value="刪 除" />
+                  <input
+                    type="button"
+                    class="button-S btnDelete"
+                    value="刪 除"
+                  />
                 </div>
               </div>
             </div>
@@ -132,18 +136,52 @@
             <p>卡號</p>
             <div>
               <div>
-                <input type="text" class="input-S num" name="card_1" placeholder="XXXX" required />
-                <input type="text" class="input-S num" name="card_2" placeholder="XXXX" required />
-                <input type="text" class="input-S num" name="card_3" placeholder="XXXX" required />
-                <input type="text" class="input-S num" name="card_4" placeholder="XXXX" required />
+                <input
+                  type="text"
+                  class="input-S num"
+                  name="card_1"
+                  placeholder="XXXX"
+                  required
+                />
+                <input
+                  type="text"
+                  class="input-S num"
+                  name="card_2"
+                  placeholder="XXXX"
+                  required
+                />
+                <input
+                  type="text"
+                  class="input-S num"
+                  name="card_3"
+                  placeholder="XXXX"
+                  required
+                />
+                <input
+                  type="text"
+                  class="input-S num"
+                  name="card_4"
+                  placeholder="XXXX"
+                  required
+                />
               </div>
             </div>
             <div>
               <div>
                 <label>到期日</label>
-                <input type="text" class="num input-S" name="expiry_date" placeholder="MMYY" />
+                <input
+                  type="text"
+                  class="num input-S"
+                  name="expiry_date"
+                  placeholder="MMYY"
+                />
                 <label>後三碼</label>
-                <input type="text" class="num input-S" name="security_code" placeholder="XXX" />
+                <input
+                  type="text"
+                  class="num input-S"
+                  name="security_code"
+                  placeholder="XXX"
+                />
               </div>
             </div>
 
@@ -159,6 +197,6 @@
         </div>
       </section>
     </main>
-    <%-await include('../footer.ejs'); %>
+    <%-await include('../footerWidth.ejs'); %>
   </body>
 </html>
