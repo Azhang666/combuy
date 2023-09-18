@@ -81,6 +81,7 @@ router.get("/:prodId/:specId", async (req, res) => {
     orderDate.forEach((date) => {
       date.order_date = new Date(date.order_date).toLocaleString();
       date.order_id = String(date.order_id).padStart(8, "0");
+
     });
 
     // 排列相關產品
