@@ -82,6 +82,7 @@ $(document).ready(function () {
       type: "get",
       url: "/api/changeProduct",
       data: {
+        getBrand: $(this).attr("data-brand"),
         brand: $(this).attr("value"),
       },
       success: async function (response) {
@@ -107,10 +108,12 @@ $(document).ready(function () {
       });
     }
     //req addTime product
+
     $.ajax({
       type: "get",
       url: "/api/changeProduct",
       data: {
+        getBrand: $(this).attr("data-brand"),
         getUpdateTime: addTimeIsClick,
       },
       success: async function (response) {
@@ -162,6 +165,7 @@ $(document).ready(function () {
       type: "get",
       url: "/api/changeProduct",
       data: {
+        getBrand: $(this).attr("data-brand"),
         getPriceRange: {
           form: $("input[name='priceFrom']").val()
             ? $("input[name='priceFrom']").val()
@@ -188,6 +192,7 @@ $(document).ready(function () {
       type: "get",
       url: "/api/changeProduct",
       data: {
+        getBrand: $(this).attr("data-brand"),
         prodItemPage: $(this).text(),
       },
       success: async function (response) {
@@ -202,6 +207,7 @@ $(document).ready(function () {
       type: "get",
       url: "/api/changeProduct",
       data: {
+        getBrand: $(this).attr("data-brand"),
         prodSelTag: $(this).val(),
       },
       success: async function (response) {
