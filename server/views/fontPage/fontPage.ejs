@@ -77,13 +77,25 @@
                 </div>
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img src="/public/images/carousel/1.png" class="d-block w-100" alt="..." />
+                    <img
+                      src="/public/images/carousel/1.png"
+                      class="d-block w-100"
+                      alt="..."
+                    />
                   </div>
                   <div class="carousel-item">
-                    <img src="/public/images/carousel/2.png" class="d-block w-100" alt="..." />
+                    <img
+                      src="/public/images/carousel/2.png"
+                      class="d-block w-100"
+                      alt="..."
+                    />
                   </div>
                   <div class="carousel-item">
-                    <img src="/public/images/carousel/3.png" class="d-block w-100" alt="..." />
+                    <img
+                      src="/public/images/carousel/3.png"
+                      class="d-block w-100"
+                      alt="..."
+                    />
                   </div>
                 </div>
                 <button
@@ -92,7 +104,10 @@
                   data-bs-target="#carouselExampleIndicators"
                   data-bs-slide="prev"
                 >
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
                   <span class="visually-hidden">Previous</span>
                 </button>
                 <button
@@ -101,7 +116,10 @@
                   data-bs-target="#carouselExampleIndicators"
                   data-bs-slide="next"
                 >
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
                   <span class="visually-hidden">Next</span>
                 </button>
               </div>
@@ -135,42 +153,8 @@
               <h3 class="ms-5 mt-5">電競機</h3>
               <div class="row card-item-wrap3"></div>
             </section>
-
             <!-- footer -->
-            <footer>
-              <div class="info-href row">
-                <!-- 會員中心 -->
-                <div class="href col-12 col-sm-12 col-lg-2">
-                  <h5 class="ms-5">會員中心</h5>
-                  <ul class="ms-5">
-                    <li><a href="">管理會員資料</a></li>
-                    <li><a href="">查看訂單</a></li>
-                    <li><a href="">購物紀錄</a></li>
-                  </ul>
-                </div>
-                <!-- 客戶服務 -->
-                <div class="href mt-sm-0 col-12 col-sm-12 col-lg-2">
-                  <h5 class="ms-5">客戶服務</h5>
-                  <ul class="ms-5">
-                    <li><a href="">常見問題</a></li>
-                    <li><a href="">查看訂單</a></li>
-                    <li><a href="">退貨政策</a></li>
-                    <li><a href="">商品保固</a></li>
-                  </ul>
-                </div>
-                <div class="col-lg-8"></div>
-              </div>
-              <canvas></canvas>
-
-              <div class="info">
-                <ul class="ms-5">
-                  <li><a href="#">隱私權政策</a>|</li>
-                  <li><a href="#">使用條款</a>|</li>
-                  <li><a href="#">銷售及退款</a></li>
-                </ul>
-                <p class="me-md-5 me-3">Copyright © 2023 XXXXXX. All Rights Reserved</p>
-              </div>
-            </footer>
+            <%-await include('../footer'); %>
           </div>
         </div>
       </div>
@@ -180,5 +164,6 @@
     <script src="/public/js/fontPage/fontPage.js"></script>
     <script src="/public/js/sidenav.js"></script>
     <script src="/public/js/swichDark_Light.js"></script>
+    <script src="/public/js/universal/header.js"></script>
   </body>
 </html>

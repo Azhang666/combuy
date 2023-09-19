@@ -78,7 +78,6 @@ $(document).ready(function () {
   });
   //req brand product
   $(".brand>a").on("click", function () {
-    console.log();
     $.ajax({
       type: "get",
       url: "/api/changeProduct",
@@ -145,7 +144,6 @@ $(document).ready(function () {
         getPriceDesc: priceDescIsClick,
       },
       success: async function (response) {
-        console.log(response);
         await $(".productBox").remove();
         await $(".contral-product-page").remove();
         await $(".productSlecet").after(`${response}`);
@@ -243,7 +241,6 @@ $(document).ready(function () {
         };
         if (!localStorage.getItem("product")) {
           localStorage.setItem("product", JSON.stringify(objTemp));
-          //display btn
         } else {
           if (Array.isArray(JSON.parse(localStorage.getItem("product")))) {
             arrTemp = JSON.parse(localStorage.getItem("product"));
@@ -256,13 +253,16 @@ $(document).ready(function () {
           arrTemp.push(objTemp);
           localStorage.setItem("product", JSON.stringify(arrTemp));
         }
-        // console.log(JSON.parse(localStorage.getItem("product")));
+        //display btn
+        $("#watchComparison").css("display", "block");
       },
       error: function (error) {
         alert(error);
       },
     });
   });
+  //comparison btn
+
   //api/changeProductItem and this button prevent bubble events防止泡沫事件
   $("body").on("click", ".prodToPItem", function (e) {
     e.stopPropagation();
@@ -296,21 +296,25 @@ $(document).ready(function () {
   });
   //collectProduct
   $(".collectProd").on("click", async function () {
-    await $.ajax({
-      type: "post",
-      url: "/commodity/addcollect",
-      data: {
-        user_id: user_id,
-        prod_id: $(this).data("prod_id"),
-        spec_id: $(this).data("spec_id"),
-      },
-      success: function (response) {
-        alert("此商品已加入購物車");
-      },
-      error: function (error) {
-        alert("此商品已在購物車");
-      },
-    });
+    if (user_id == "") {
+      location.replace("http://localhost:2407/login");
+    } else {
+      await $.ajax({
+        type: "post",
+        url: "/commodity/addcollect",
+        data: {
+          user_id: user_id,
+          prod_id: $(this).data("prod_id"),
+          spec_id: $(this).data("spec_id"),
+        },
+        success: function (response) {
+          alert("此商品已加入購物車");
+        },
+        error: function (error) {
+          alert("此商品已在購物車");
+        },
+      });
+    }
   });
   //jq ready bottom
 });

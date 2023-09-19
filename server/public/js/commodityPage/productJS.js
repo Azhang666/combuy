@@ -121,10 +121,14 @@ $(document).ready(function () {
           spec_id: spec_id,
         },
         success: function (response) {
-          console.log("已成功加入購物車");
+            console.log('已成功加入購物車');
+            alert('已成功加入購物車');
+
         },
         error: function (error) {
-          console.error("加入購物車失敗", error);
+          console.error('加入購物車失敗', error)
+          alert('該商品已在購物車中')
+
         },
       });
     }
@@ -150,9 +154,11 @@ $(document).ready(function () {
         },
         success: function (response) {
           console.log("已成功加入收藏");
+          alert('已成功加入收藏');
         },
         error: function (error) {
           console.error("加入收藏失敗", error);
+          alert('該商品已在收藏清單中');
         },
       });
     }

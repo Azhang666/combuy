@@ -1,38 +1,38 @@
-const mysql = require('mysql')
-const sqlConn = require('../../config/db')
+const mysql = require("mysql");
+const sqlConn = require("../../config/db");
 
-const Setting = require('../../config/config')
+const Setting = require("../../config/config");
 
 exports.getBrandData = (setCondition, callBackData) => {
-  var connection = mysql.createConnection(Setting.db_setting)
-  connection.connect(err => {
+  var connection = mysql.createConnection(Setting.db_setting);
+  connection.connect((err) => {
     if (err) {
-      console.log('sql syntax error')
-      console.log(err)
+      console.log("sql syntax error");
+      console.log(err);
     }
-  })
-  connection.query('SELECT brand_id,brand,img FROM brand', (err, data) => {
+  });
+  connection.query("SELECT brand_id,brand,img FROM brand", (err, data) => {
     if (err) {
-      console.log(err)
+      console.log(err);
     } else {
-      callBackData(data)
+      callBackData(data);
     }
-  })
-  connection.end()
-}
+  });
+  connection.end();
+};
 // sqlDB.getBrandData([], (data) => {
 //   console.log(data);
 // });
 exports.getprodItemData = (setCondition, callBackData) => {
-  var connection = mysql.createConnection(Setting.db_setting)
-  connection.connect(err => {
+  var connection = mysql.createConnection(Setting.db_setting);
+  connection.connect((err) => {
     if (err) {
-      console.log('sql syntax error')
-      console.log(err)
+      console.log("sql syntax error");
+      console.log(err);
     }
-  })
-  let filter = setCondition[5]
-  setCondition.pop()
+  });
+  let filter = setCondition[5];
+  setCondition.pop();
   connection.query(
     `SELECT * FROM vw_products_info
         WHERE brand_id=? AND price BETWEEN ? AND ?
@@ -41,14 +41,14 @@ exports.getprodItemData = (setCondition, callBackData) => {
     setCondition,
     (err, data) => {
       if (err) {
-        console.log(err)
+        console.log(err);
       } else {
-        callBackData(data)
+        callBackData(data);
       }
     }
-  )
-  connection.end()
-}
+  );
+  connection.end();
+};
 // sqlDB.getprodItemData(
 //   [
 //     getBrand,
@@ -63,27 +63,27 @@ exports.getprodItemData = (setCondition, callBackData) => {
 //   }
 // );
 exports.getAllProdItemNumData = (setCondition, callBackData) => {
-  const connection = mysql.createConnection(Setting.db_setting)
-  connection.connect(err => {
+  const connection = mysql.createConnection(Setting.db_setting);
+  connection.connect((err) => {
     if (err) {
-      console.log('sql syntax error')
-      console.log(err)
+      console.log("sql syntax error");
+      console.log(err);
     }
-  })
+  });
   connection.query(
     `SELECT COUNT(*) as productTotal FROM vw_products_info
         WHERE brand_id=? AND price BETWEEN ? AND ?`,
     setCondition,
     (err, data) => {
       if (err) {
-        console.log(err)
+        console.log(err);
       } else {
-        callBackData(data)
+        callBackData(data);
       }
     }
-  )
-  connection.end()
-}
+  );
+  connection.end();
+};
 // sqlDB.getAllProdItemNumData(
 //   [getBrand, getPriceRange.form, getPriceRange.to],
 //   (data) => {
@@ -91,15 +91,15 @@ exports.getAllProdItemNumData = (setCondition, callBackData) => {
 //   }
 // );
 exports.getTagprodItemData = (setCondition, callBackData) => {
-  var connection = mysql.createConnection(Setting.db_setting)
-  connection.connect(err => {
+  var connection = mysql.createConnection(Setting.db_setting);
+  connection.connect((err) => {
     if (err) {
-      console.log('sql syntax error')
-      console.log(err)
+      console.log("sql syntax error");
+      console.log(err);
     }
-  })
-  let filter = setCondition[5]
-  setCondition.pop()
+  });
+  let filter = setCondition[5];
+  setCondition.pop();
   connection.query(
     `SELECT * FROM product_tag
     LEFT join vw_products_info ON product_tag.prod_id = vw_products_info.prod_id
@@ -109,14 +109,14 @@ exports.getTagprodItemData = (setCondition, callBackData) => {
     setCondition,
     (err, data) => {
       if (err) {
-        console.log(err)
+        console.log(err);
       } else {
-        callBackData(data)
+        callBackData(data);
       }
     }
-  )
-  connection.end()
-}
+  );
+  connection.end();
+};
 // sqlDB.getTagprodItemData(
 //   [
 //     prodSelTag,
@@ -131,13 +131,13 @@ exports.getTagprodItemData = (setCondition, callBackData) => {
 //   }
 // );
 exports.getAllTagProdItemNumData = (setCondition, callBackData) => {
-  var connection = mysql.createConnection(Setting.db_setting)
-  connection.connect(err => {
+  var connection = mysql.createConnection(Setting.db_setting);
+  connection.connect((err) => {
     if (err) {
-      console.log('sql syntax error')
-      console.log(err)
+      console.log("sql syntax error");
+      console.log(err);
     }
-  })
+  });
   connection.query(
     `SELECT COUNT(*) as productTagTotal FROM product_tag
                 RIGHT JOIN tag on tag.tag =product_tag.tag
@@ -148,14 +148,14 @@ exports.getAllTagProdItemNumData = (setCondition, callBackData) => {
     setCondition,
     (err, data) => {
       if (err) {
-        console.log(err)
+        console.log(err);
       } else {
-        callBackData(data)
+        callBackData(data);
       }
     }
-  )
-  connection.end()
-}
+  );
+  connection.end();
+};
 // sqlDB.getAllTagProdItemNumData(
 //   [prodSelTag, getPriceRange.form, getPriceRange.to],
 //   (data) => {
@@ -164,14 +164,14 @@ exports.getAllTagProdItemNumData = (setCondition, callBackData) => {
 // );
 exports.productModels = {
   getAllProduct: async () => {
-    const sql = 'SELECT * FROM vw_products_info'
-    const data = await sqlConn.queryAsync(sql)
-    return data
+    const sql = "SELECT * FROM vw_products_info";
+    const data = await sqlConn.queryAsync(sql);
+    return data;
   },
   hdSelProd: async (req, res) => {
-    req = req.concat('%')
-    const sql = `SELECT prod_id,spec_id,prod_name  FROM vw_products_info WHERE prod_name LIKE ?`
-    const data = await sqlConn.queryAsync(sql, req)
-    return data
+    req = req.concat("%");
+    const sql = `SELECT prod_id,spec_id,prod_name,spec_name  FROM vw_products_info WHERE prod_name LIKE ?`;
+    const data = await sqlConn.queryAsync(sql, req);
+    return data;
   },
-}
+};

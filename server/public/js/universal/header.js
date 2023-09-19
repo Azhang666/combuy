@@ -3,6 +3,9 @@ $(document).ready(function () {
   $('input[name="search"]').on("keyup", function () {
     //herder select display block
     $("#search-result").css("display", "block");
+    if ($(this).val() == "") {
+      $("#search-result").css("display", "none");
+    }
     //req herder select
     $.ajax({
       type: "get",
@@ -12,8 +15,10 @@ $(document).ready(function () {
       },
       success: async function (response) {
         let result = ``;
-        response.forEach((prod) => {
-          result += `<li><a href="/commodity/${prod.prod_id}/${prod.spec_id}">${prod.prod_name}</a></li>`;
+        response.forEach((prod, index) => {
+          if (index < 5) {
+            result += `<li><a href="/commodity/${prod.prod_id}/${prod.spec_id}">${prod.prod_name}${prod.spec_name}</a></li>`;
+          }
         });
         result == ""
           ? (result = "<li><p>搜尋無結果</p></li>")
