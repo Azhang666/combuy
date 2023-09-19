@@ -217,7 +217,7 @@
             </div>
           </div>
           <div class="modal-body bank-body mt-3">
-            <p>帳單地址</p>
+            <p>發票地址</p>
             <!-- 地址 -->
             <div class="bank-name mt-3">
               <input
@@ -272,7 +272,7 @@
             <!-- 銀行帳號 -->
             <div class="bank-user mt-5">
               <h5>銀行帳號</h5>
-              <p class="mt-1">0000 1111 2222 3333</p>
+              <p class="mt-1">152345678561</p>
             </div>
             <!-- 備註 -->
             <div class="mt-5 note">
@@ -493,100 +493,14 @@
             $("#security_code").val(orderData.security_code);
           },
         });
-      });
-      // 縣市
-      $.ajax({
-        type: "get", //請求方式
-        url: "./AllData.json", //請求地址
-        dataType: "json", //
-
-        success: function (data) {
-          // console.log(data); //字符串
-          for (let i = 0; i < data.length; i++) {
-            // console.log(data[i].CityName);
-            var city = $(
-              `<option class="city-option">${data[i].CityName}</option>`
-            );
-            $(".city").append(city);
-          }
-        },
-      });
-
-      // 鄉鎮市區
-      $.ajax({
-        type: "get", //請求方式
-        url: "./AllData.json", //請求地址
-        dataType: "json", //
-
-        success: function (data) {
-          // console.log(data); //字符串
-          for (let i = 0; i < data.length; i++) {
-            var areaList = data[i].AreaList;
-            // console.log(areaList);
-            for (let j = 0; j < areaList.length; j++) {
-              var areaName = areaList[j].AreaName;
-              // console.log(areaName);
-              var area = $(`<option>${areaName}</option>`);
-              $(".Area").append(area);
-            }
-          }
-        },
-      });
-
-      // 篩選
-      $("#select-city").on("change", function () {
-        var selectedCity = $(this).val();
-
         $.ajax({
-          type: "get", //請求方式
-          url: "./AllData.json", //請求地址
-          dataType: "json", //
-          success: function (data) {
-            // 在這裡查找對應的縣市鄉鎮市區數據並更新 #select-Area 的選項
-            var areaSelect = $("#select-Area");
-            areaSelect.empty();
-
-            for (let i = 0; i < data.length; i++) {
-              if (data[i].CityName === selectedCity) {
-                var areaList = data[i].AreaList;
-                for (let j = 0; j < areaList.length; j++) {
-                  var areaName = areaList[j].AreaName;
-                  var area = $(`<option>${areaName}</option>`);
-                  areaSelect.append(area);
-                }
-                break;
-              }
-            }
-          },
-        });
-      });
-
-      // 收件人資訊
-      $(".my-btn").on("click", function () {
-        //姓名
-        var name = $(".name-ipt input").val();
-        //手機號碼
-        var tel = $(".tel-ipt input").val();
-        //選擇縣市
-        var city = $("#select-city option:selected").text();
-        //選擇鄉鎮市區
-        var area = $("#select-Area option:selected").text();
-        //詳細地址
-        var address = $(".complete-adress input").val();
-        //郵遞區號
-        var code = $(".code-ipt input").val();
-
-        $(".show-address-name").text("配送資訊");
-        $(".member-address .show-name").text(`姓名：${name}`);
-        $(".member-address .show-tel").text(`手機號碼：${tel}`);
-        $(".member-address .show-address").text(
-          `地址：${city}${area}${address}${code}`
-        );
-        $("#addressModal").modal("hide");
-
-        $(".member-address").css("display", "block");
-      });
-
+          type:'GET',
+          url:'/shopCart/getUser',
+          success:function(res){
+            $('#address').val(res[0].address)
+          }
+        })
+      });  
       //ATM彈窗
       $(".bank-btn").on("click", function () {
         $("#ATMModal").modal("hide");
