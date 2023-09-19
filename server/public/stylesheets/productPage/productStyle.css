@@ -292,7 +292,6 @@ body div#watchComparison {
   top: 200px;
   right: 30px;
   z-index: 99;
-  border: 1px solid rgb(0, 0, 0);
   border-radius: 15px;
   outline: none;
   background-color: rgb(255, 255, 255);
@@ -301,10 +300,10 @@ body div#watchComparison {
   padding: 8px;
 }
 body div#watchComparison:hover {
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 body div#watchComparison a {
-  font-size: 16px;
+  font-size: 32px;
   color: rgb(0, 0, 0);
   text-decoration: none;
 }

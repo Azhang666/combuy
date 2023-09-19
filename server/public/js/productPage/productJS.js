@@ -82,6 +82,7 @@ $(document).ready(function () {
       type: "get",
       url: "/api/changeProduct",
       data: {
+        getBrand: $(this).attr("data-brand"),
         brand: $(this).attr("value"),
       },
       success: async function (response) {
@@ -107,10 +108,12 @@ $(document).ready(function () {
       });
     }
     //req addTime product
+
     $.ajax({
       type: "get",
       url: "/api/changeProduct",
       data: {
+        getBrand: $(this).attr("data-brand"),
         getUpdateTime: addTimeIsClick,
       },
       success: async function (response) {
@@ -162,6 +165,7 @@ $(document).ready(function () {
       type: "get",
       url: "/api/changeProduct",
       data: {
+        getBrand: $(this).attr("data-brand"),
         getPriceRange: {
           form: $("input[name='priceFrom']").val()
             ? $("input[name='priceFrom']").val()
@@ -188,6 +192,7 @@ $(document).ready(function () {
       type: "get",
       url: "/api/changeProduct",
       data: {
+        getBrand: $(this).attr("data-brand"),
         prodItemPage: $(this).text(),
       },
       success: async function (response) {
@@ -202,6 +207,7 @@ $(document).ready(function () {
       type: "get",
       url: "/api/changeProduct",
       data: {
+        getBrand: $(this).attr("data-brand"),
         prodSelTag: $(this).val(),
       },
       success: async function (response) {
@@ -212,6 +218,15 @@ $(document).ready(function () {
     });
   });
   //req product comparison
+  if (JSON.parse(localStorage.getItem("product")) == null) {
+    localStorage.setItem("product", JSON.stringify([]));
+  }
+  //display btn
+  if (JSON.parse(localStorage.getItem("product")).length > 0) {
+    $("#watchComparison").css("display", "block");
+  } else {
+    $("#watchComparison").css("display", "none");
+  }
   $(".prodComparison").on("click", async function () {
     await $.ajax({
       type: "get",
@@ -261,7 +276,6 @@ $(document).ready(function () {
       },
     });
   });
-  //comparison btn
 
   //api/changeProductItem and this button prevent bubble events防止泡沫事件
   $("body").on("click", ".prodToPItem", function (e) {

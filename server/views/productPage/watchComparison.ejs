@@ -17,7 +17,7 @@
         overflow-x: hidden;
       }
       div.col-3 {
-        padding: 8px;
+        padding: 0px;
       }
       main {
         margin: 16px;
@@ -28,8 +28,26 @@
         border-bottom: 1px solid black;
         height: 200px;
         align-self: center;
+        padding: 1rem;
       }
       p:hover {
+        background-color: lightgray;
+      }
+      .pname {
+        display: block;
+        padding: 3rem 0rem;
+        margin: 0rem;
+        border-bottom: 1px solid black;
+        height: 100px;
+        align-self: center;
+        text-decoration: none;
+        position: sticky;
+        top: 90px;
+        z-index: 5;
+        background-color: white;
+        padding: 1rem;
+      }
+      .pname:hover {
         background-color: lightgray;
       }
       p:nth-last-child(1) {
@@ -43,7 +61,17 @@
     <main class="row">
       <div class="col-3 text-center justify-content-center">
         <div style="width: 200px; height: 200px"></div>
-        <p>產品名稱</p>
+        <p
+          style="
+            height: 100px;
+            position: sticky;
+            top: 90px;
+            z-index: 5;
+            background-color: white;
+          "
+        >
+          產品名稱
+        </p>
         <p>規格名稱</p>
         <p>廠牌名稱</p>
         <p>中央處理器(CPU)</p>
