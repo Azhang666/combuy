@@ -212,6 +212,15 @@ $(document).ready(function () {
     });
   });
   //req product comparison
+  if (JSON.parse(localStorage.getItem("product")) == null) {
+    localStorage.setItem("product", JSON.stringify([]));
+  }
+  //display btn
+  if (JSON.parse(localStorage.getItem("product")).length > 0) {
+    $("#watchComparison").css("display", "block");
+  } else {
+    $("#watchComparison").css("display", "none");
+  }
   $(".prodComparison").on("click", async function () {
     await $.ajax({
       type: "get",
@@ -261,7 +270,6 @@ $(document).ready(function () {
       },
     });
   });
-  //comparison btn
 
   //api/changeProductItem and this button prevent bubble events防止泡沫事件
   $("body").on("click", ".prodToPItem", function (e) {
