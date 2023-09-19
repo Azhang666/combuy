@@ -251,7 +251,7 @@ $(document).ready(function () {
           battery: response[0].battery,
           size: response[0].size,
           weight: response[0].weight,
-          warranty: response[0].warranty,
+          warranty: response[0].warranty ? response[0].warranty : "2年官網保固",
           imgSrc: response[0].dir + response[0].filename,
         };
         if (!localStorage.getItem("product")) {

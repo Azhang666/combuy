@@ -6,8 +6,7 @@ $(document).ready(function () {
     temp += `
     <div class="col-3 text-center">  
     <div style="width: 200px; height: 200px;"><img style=" margin-left:5rem; object-fit: contain;width: 12rem; height: 12rem;" src='/public/${data[i].imgSrc}'></div>
-    <a class="pname" href="/commodity/${data[i].pId}/${data[i].sId}">${data[i].pName}</a>
-    <p>${data[i].sName}</p>
+    <a class="pname" href="/commodity/${data[i].pId}/${data[i].sId}">${data[i].pName}${data[i].sName}</a>
     <p>${data[i].brand}</p>
     <p>${data[i].cpu}</p>
     <p>${data[i].gpu}</p>
@@ -17,6 +16,7 @@ $(document).ready(function () {
     <p>${data[i].battery}</p>
     <p>${data[i].size}</p>
     <p>${data[i].weight}</p>
+    <p>${data[i].warranty}</p>
   </div>
     `;
   }
