@@ -12,11 +12,50 @@
     <link rel="stylesheet" href="/public/stylesheets/universal/footer.css" />
     <link rel="stylesheet" href="/public/stylesheets/darkModeCheckbox.css" />
     <link rel="stylesheet" href="/public/stylesheets/header.css" />
+    <style>
+      body {
+        overflow-x: hidden;
+      }
+      div.col-3 {
+        padding: 8px;
+      }
+      main {
+        margin: 16px;
+      }
+      p {
+        padding: 3rem 0rem;
+        margin: 0rem;
+        border-bottom: 1px solid black;
+        height: 200px;
+        align-self: center;
+      }
+      p:hover {
+        background-color: lightgray;
+      }
+      p:nth-last-child(1) {
+        border-bottom: none;
+      }
+    </style>
   </head>
   <body>
     <%-await include('../header'); %>
 
-    <main class="row"></main>
+    <main class="row">
+      <div class="col-3 text-center justify-content-center">
+        <div style="width: 200px; height: 200px"></div>
+        <p>產品名稱</p>
+        <p>規格名稱</p>
+        <p>廠牌名稱</p>
+        <p>中央處理器(CPU)</p>
+        <p>圖形處理器(GPU)</p>
+        <p>記憶體(RAM)</p>
+        <p>作業系統(OS)</p>
+        <p>螢幕</p>
+        <p>電量</p>
+        <p>筆電尺寸大小</p>
+        <p>筆電重量</p>
+      </div>
+    </main>
     <%-await include('../footerWidth.ejs') %>
     <script src="/public/js/jquery-3.6.0.js"></script>
     <script src="/public/js/productPage/productJS.js"></script>

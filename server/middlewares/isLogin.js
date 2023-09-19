@@ -13,7 +13,8 @@ var login_api = function (req, res, next) {
   if (req.session.member) {
     next()
   } else {
-    res.end(JSON.stringify(new Error('no permission')))
+    // res.end(JSON.stringify(new Error('no permission')))
+    res.end(JSON.stringify(new Error('滾')))
   }
 }
 

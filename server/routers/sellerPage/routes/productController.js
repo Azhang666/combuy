@@ -14,38 +14,34 @@ const queryAsync = (connection, sql, params) =>
     })
   })
 exports.getProducts = (req, res) => {
+  const id = req.session.member.u_id
+  // const id = 3
   const query = `
-    SELECT sellspec.*, product.prod_name, pi.img_src
-    FROM sellspec
-    INNER JOIN product ON sellspec.prod_id = product.prod_id
-    LEFT JOIN (
-        SELECT prod_id, MIN(id) as first_image_id 
-        FROM product_images_test 
-        WHERE products_info = 0
-        GROUP BY prod_id
-    ) as first_images ON sellspec.prod_id = first_images.prod_id
-    LEFT JOIN product_images_test pi ON pi.prod_id = first_images.prod_id AND pi.id = first_images.first_image_id
-    WHERE sellspec.publish = 1 AND pi.products_info = 0
-    ORDER BY sellspec.prod_id
+  SELECT sellspec.*, product.prod_name, pi.img_src 
+  FROM sellspec INNER JOIN product ON sellspec.prod_id = product.prod_id 
+  LEFT JOIN( SELECT prod_id, MIN(img_id) AS first_image_id 
+  FROM productimg WHERE type = 0 GROUP BY prod_id ) AS first_images ON sellspec.prod_id = first_images.prod_id 
+  LEFT JOIN productimg PI ON pi.prod_id = first_images.prod_id AND pi.img_id = first_images.first_image_id 
+  WHERE sellspec.publish = 1 AND pi.type = 0 AND product.user_id =  ?
+  ORDER BY sellspec.prod_id;
     `
 
-  db.query(query, (err, results) => {
+  db.query(query, [id], (err, results) => {
     if (err) throw err
     res.json(results)
   })
 }
 
 exports.getDownProducts = (req, res) => {
+  const id = req.session.member.u_id
+  // const id = 3
   const query = `
-    SELECT sellspec.*, product.prod_name, product_images_test.img_src
-    FROM sellspec
-    INNER JOIN product ON sellspec.prod_id = product.prod_id
-    LEFT JOIN product_images_test ON sellspec.prod_id = product_images_test.prod_id
-    WHERE sellspec.publish = 0 AND products_info = 0
-    ORDER BY sellspec.prod_id
+  SELECT sellspec.*, product.prod_name, pi.img_src 
+  FROM sellspec INNER JOIN product ON sellspec.prod_id = product.prod_id 
+  LEFT JOIN( SELECT prod_id, MIN(img_id) AS first_image_id FROM productimg WHERE type = 0 GROUP BY prod_id ) AS first_images ON sellspec.prod_id = first_images.prod_id LEFT JOIN productimg PI ON pi.prod_id = first_images.prod_id AND pi.img_id = first_images.first_image_id WHERE sellspec.publish = 0 AND pi.type = 0 AND product.user_id = ? ORDER BY sellspec.prod_id;
     `
 
-  db.query(query, (err, results) => {
+  db.query(query, [id], (err, results) => {
     if (err) throw err
     res.json(results)
   })
@@ -91,6 +87,8 @@ exports.createProduct = [
     next()
   },
   async (req, res) => {
+    console.log(req.body)
+
     const mainImageIdx = Number(req.body.mainImageIdx)
     const {
       productData: {
@@ -115,7 +113,8 @@ exports.createProduct = [
     } = req.body
 
     const productData = {
-      user_id: req.body.productData.user_id,
+      // user_id: req.body.productData.user_id,
+      user_id: req.session.member.u_id,
       prod_name: req.body.productData.prod_name,
       brand_id: req.body.productData.brand_id,
       category_id: req.body.productData.category_id,
@@ -139,31 +138,39 @@ exports.createProduct = [
           }
           return {
             prod_id: prodId,
+            spec_id: 10,
             originalname: file.originalname,
             stored_name: file.filename,
+            filename: file.filename,
             upload_date: new Date(),
             file_size: file.size,
             mime_type: file.mimetype,
-            img_src: relativePath,
-            products_info: mainImageIdx === idx ? 0 : 1,
+            // img_src: relativePath,
+            img_src: '../images/products/' + file.filename,
+            // products_info: mainImageIdx === idx ? 0 : 1,
+            type: mainImageIdx === idx ? 0 : 1,
           }
         })
       } else {
         // 如果沒有上傳圖片，使用預設圖片
         imagesData.push({
           prod_id: prodId,
+          spec_id: 10,
           originalname: 'defaultImage.jpg',
           stored_name: 'defaultImage.jpg',
+          filename: 'defaultImage.jpg',
           upload_date: new Date(),
           file_size: '999', // defaultData
           mime_type: 'image/jpeg',
           img_src: DEFAULT_IMAGE_PATH,
-          products_info: 0, // defaultPic
+          // products_info: 0, // defaultPic
+          type: 0, // defaultPic
         })
       }
 
       const imgInsertPromises = imagesData.map(imgData => {
-        return dbQuery('INSERT INTO product_images_test SET ?', imgData)
+        // return dbQuery('INSERT INTO product_images_test SET ?', imgData)
+        return dbQuery('INSERT INTO productimg SET ?', imgData)
       })
 
       await Promise.all(imgInsertPromises)
@@ -218,9 +225,7 @@ exports.getProductsAllData = async (req, res) => {
         categoryResults.length > 0 ? categoryResults[0].category : null
     }
 
-    const imagesResults = await dbQuery('SELECT * FROM product_images_test WHERE prod_id = ?', [
-      prodId,
-    ])
+    const imagesResults = await dbQuery('SELECT * FROM productimg WHERE prod_id = ?', [prodId])
     const sellspecResults = await dbQuery('SELECT * FROM sellspec WHERE prod_id = ?', [prodId])
 
     // 整合資訊並返回
