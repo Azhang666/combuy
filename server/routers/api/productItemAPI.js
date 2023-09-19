@@ -31,7 +31,9 @@ router.get("/prodComparison", async (req, res) => {
     let prodId = req.query.prod_id;
     let specId = req.query.spec_id;
     let specProdData = await queryDatabase(
-      "SELECT * FROM vw_products_detail WHERE prod_id = ? AND spec_id = ?",
+      `SELECT * FROM vw_products_detail
+      RIGHT JOIN productimg ON vw_products_detail.prod_id=productimg.prod_id AND vw_products_detail.spec_id = productimg.spec_id
+      where vw_products_detail.prod_id=? AND vw_products_detail.spec_id= ? AND type=0`,
       [prodId, specId]
     );
     res.send(specProdData);

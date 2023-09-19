@@ -237,7 +237,7 @@ $(document).ready(function () {
           size: response[0].size,
           weight: response[0].weight,
           warranty: response[0].warranty,
-          imgSrc: response[0].img_src,
+          imgSrc: response[0].dir + response[0].filename,
         };
         if (!localStorage.getItem("product")) {
           localStorage.setItem("product", JSON.stringify(objTemp));
