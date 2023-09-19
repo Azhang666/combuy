@@ -15,15 +15,29 @@ const queryAsync = (connection, sql, params) =>
   })
 exports.getProducts = (req, res) => {
   const id = req.session.member.u_id
-  // const id = 3
+  // const query = `
+  // SELECT sellspec.*, product.prod_name, pi.img_src
+  // FROM
+  // sellspec
+  // INNER JOIN product ON sellspec.prod_id = product.prod_id
+  // LEFT JOIN(
+  //   SELECT prod_id, MIN(img_id) AS first_image_id
+  //   FROM productimg WHERE type = 0 GROUP BY prod_id ) AS first_images ON sellspec.prod_id = first_images.prod_id
+  // LEFT JOIN productimg PI ON pi.prod_id = first_images.prod_id AND pi.img_id = first_images.first_image_id
+  // WHERE sellspec.publish = 1 AND pi.type = 0 AND product.user_id =  ?
+  // ORDER BY sellspec.prod_id;
+  //   `
   const query = `
-  SELECT sellspec.*, product.prod_name, pi.img_src 
-  FROM sellspec INNER JOIN product ON sellspec.prod_id = product.prod_id 
-  LEFT JOIN( SELECT prod_id, MIN(img_id) AS first_image_id 
-  FROM productimg WHERE type = 0 GROUP BY prod_id ) AS first_images ON sellspec.prod_id = first_images.prod_id 
-  LEFT JOIN productimg PI ON pi.prod_id = first_images.prod_id AND pi.img_id = first_images.first_image_id 
-  WHERE sellspec.publish = 1 AND pi.type = 0 AND product.user_id =  ?
-  ORDER BY sellspec.prod_id;
+  SELECT 
+    sellspec.*, product.prod_name,pi.img_src
+  FROM 
+    sellspec 
+    INNER JOIN product ON sellspec.prod_id = product.prod_id 
+    LEFT JOIN productimg pi ON pi.prod_id = sellspec.prod_id AND pi.spec_id = sellspec.spec_id  AND type = 0
+  WHERE 
+  sellspec.publish = 1 AND product.user_id =  ?
+  ORDER BY 
+    sellspec.prod_id;
     `
 
   db.query(query, [id], (err, results) => {
@@ -34,11 +48,25 @@ exports.getProducts = (req, res) => {
 
 exports.getDownProducts = (req, res) => {
   const id = req.session.member.u_id
-  // const id = 3
+  // const query = `
+  // SELECT sellspec.*, product.prod_name, pi.img_src
+  // FROM
+  // sellspec INNER JOIN product ON sellspec.prod_id = product.prod_id
+  // LEFT JOIN( SELECT prod_id, MIN(img_id) AS first_image_id FROM productimg WHERE type = 0 GROUP BY prod_id ) AS first_images ON sellspec.prod_id = first_images.prod_id
+  // LEFT JOIN productimg PI ON pi.prod_id = first_images.prod_id AND pi.img_id = first_images.first_image_id
+  // WHERE sellspec.publish = 0 AND pi.type = 0 AND product.user_id = ? ORDER BY sellspec.prod_id;
+  //   `
   const query = `
-  SELECT sellspec.*, product.prod_name, pi.img_src 
-  FROM sellspec INNER JOIN product ON sellspec.prod_id = product.prod_id 
-  LEFT JOIN( SELECT prod_id, MIN(img_id) AS first_image_id FROM productimg WHERE type = 0 GROUP BY prod_id ) AS first_images ON sellspec.prod_id = first_images.prod_id LEFT JOIN productimg PI ON pi.prod_id = first_images.prod_id AND pi.img_id = first_images.first_image_id WHERE sellspec.publish = 0 AND pi.type = 0 AND product.user_id = ? ORDER BY sellspec.prod_id;
+  SELECT 
+    sellspec.*, product.prod_name,pi.img_src
+  FROM 
+    sellspec 
+    INNER JOIN product ON sellspec.prod_id = product.prod_id 
+    LEFT JOIN productimg pi ON pi.prod_id = sellspec.prod_id AND pi.spec_id = sellspec.spec_id  AND type = 0
+  WHERE 
+  sellspec.publish = 0 AND product.user_id =  ?
+  ORDER BY 
+    sellspec.prod_id;
     `
 
   db.query(query, [id], (err, results) => {
@@ -48,9 +76,8 @@ exports.getDownProducts = (req, res) => {
 }
 
 exports.getImage = (req, res) => {
-  const query = `
-    SELECT * FROM product_images_test
-    `
+  // const query = `SELECT * FROM product_images_test`
+  const query = `SELECT * FROM productimg`
 
   db.query(query, (err, results) => {
     if (err) throw err
@@ -60,11 +87,12 @@ exports.getImage = (req, res) => {
 
 exports.updateProduct = (req, res) => {
   const productId = req.params.productId
+  const specId = req.params.specId
   const { publish } = req.body
 
   db.query(
-    'UPDATE sellspec SET publish = ? WHERE prod_id = ?',
-    [publish, productId],
+    'UPDATE sellspec SET publish = ? WHERE prod_id = ? AND spec_id =?',
+    [publish, productId, specId],
     (err, results) => {
       if (err) {
         res.status(500).json({ error: 'Database error' })
@@ -206,10 +234,15 @@ exports.createProduct = [
 ]
 
 exports.getProductsAllData = async (req, res) => {
+  const u_id = req.session.member.u_id
   const prodId = req.params.prod_id
+  const specID = req.params.spec_id
 
   try {
-    const productResults = await dbQuery('SELECT * FROM product WHERE prod_id = ?', [prodId])
+    const productResults = await dbQuery(
+      'SELECT * FROM product WHERE prod_id = ? AND user_id = ?',
+      [prodId, u_id]
+    )
 
     if (productResults.length > 0) {
       const brandId = productResults[0].brand_id
@@ -223,26 +256,34 @@ exports.getProductsAllData = async (req, res) => {
       ])
       productResults[0].categoryName =
         categoryResults.length > 0 ? categoryResults[0].category : null
+
+      const imagesResults = await dbQuery(
+        'SELECT * FROM productimg WHERE prod_id = ? AND spec_id =? ',
+        [prodId, specID]
+      )
+      const sellspecResults = await dbQuery(
+        'SELECT * FROM sellspec WHERE prod_id = ? AND spec_id =?',
+        [prodId, specID]
+      )
+
+      // 整合資訊並返回
+      const responseData = {
+        product: productResults[0],
+        images: imagesResults,
+        sellspec: sellspecResults,
+      }
+      console.log(responseData)
+      res.json(responseData)
+      return
     }
-
-    const imagesResults = await dbQuery('SELECT * FROM productimg WHERE prod_id = ?', [prodId])
-    const sellspecResults = await dbQuery('SELECT * FROM sellspec WHERE prod_id = ?', [prodId])
-
-    // 整合資訊並返回
-    const responseData = {
-      product: productResults[0],
-      images: imagesResults,
-      sellspec: sellspecResults,
-    }
-
-    res.json(responseData)
+    res.json({})
   } catch (error) {
     console.error('Database error:', error)
     res.status(500).json({ error: 'Failed to retrieve product details.' })
   }
 }
 exports.partiallyUpdateProduct = (req, res) => {
-  const { prod_id } = req.params
+  const { prod_id, spec_id } = req.params
   const updatedData = req.body
   const sellspecData = updatedData.sellspec[0]
   const sellspecFields = []
@@ -293,11 +334,16 @@ exports.partiallyUpdateProduct = (req, res) => {
     }
   }
 
+  const checkSql = 'SELECT COUNT(*) as count FROM product WHERE prod_id = ? AND user_id = ?'
+  checkParams = [prod_id, req.session.member.u_id]
+
   const sql = `UPDATE product SET ${fields.join(', ')} WHERE prod_id = ?`
   params.push(prod_id)
 
-  const sellspecSql = `UPDATE sellspec SET ${sellspecFields.join(', ')} WHERE prod_id = ?`
-  sellspecParams.push(prod_id)
+  const sellspecSql = `UPDATE sellspec SET ${sellspecFields.join(
+    ', '
+  )} WHERE prod_id = ? AND spec_id = ?`
+  sellspecParams.push(prod_id, spec_id)
 
   db.getConnection(async (err, connection) => {
     if (err) {
@@ -305,11 +351,16 @@ exports.partiallyUpdateProduct = (req, res) => {
       return res.status(500).json({ message: '內部伺服器錯誤', error: err.message })
     }
     try {
-      // 使用 promisify 後的查詢函數
-      await queryAsync(connection, sql, params)
-      await queryAsync(connection, sellspecSql, sellspecParams)
+      const checkResult = await dbQuery(checkSql, checkParams)
+      if (checkResult[0]) {
+        // 使用 promisify 後的查詢函數
+        await queryAsync(connection, sql, params)
+        await queryAsync(connection, sellspecSql, sellspecParams)
 
-      res.json({ message: '產品和 sellspect 已成功更新' })
+        res.json({ message: '產品和 sellspect 已成功更新' })
+      } else {
+        res.status(500).json({ message: '資料錯誤 或 已被登出' })
+      }
     } catch (error) {
       console.error('資料庫操作期間出錯: ', error.message || error)
       res.status(500).json({ message: '內部伺服器錯誤', error: error.message })

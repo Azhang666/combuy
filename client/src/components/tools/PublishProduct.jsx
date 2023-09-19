@@ -3,14 +3,14 @@ import axios from 'axios';
 import { API_ENDPOINTS } from '../contexts/constants';
 
 
-function PublishProduct({ productId, fetchProducts }) { 
+function PublishProduct({ productId,specId, fetchProducts }) { 
     const [showModal, setShowModal] = useState(false);
     
-    const handlePublish = async (prod_id) => {
-        console.log(prod_id);
+    const handlePublish = async (prod_id,spec_id) => {
+
         
         try {
-            const response = await axios.put(`${API_ENDPOINTS.DOWN}/${productId}`, { publish: 1 });
+            const response = await axios.put(`${API_ENDPOINTS.DOWN}/${productId}/${spec_id}`, { publish: 1 });
             if (response.status === 200) {
                 alert('商品已上架');
                 fetchProducts(); // 刷新商品列表
@@ -36,7 +36,7 @@ function PublishProduct({ productId, fetchProducts }) {
                 }}>
                     <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '5px' }}>
                         <p>是否將商品上架？</p>
-                        <button onClick={() => handlePublish(productId)}>確定上架</button>
+                        <button onClick={() => handlePublish(productId,specId)}>確定上架</button>
                         <button onClick={() => setShowModal(false)}>取消</button>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ import { API_ENDPOINTS } from '../contexts/constants'
 import { Dropdown, Accordion, Form } from 'react-bootstrap'
 
 function EditProductPage() {
-  const { id } = useParams()
+  const { id,sid } = useParams()
 
   const [productState, setProductState] = useState({
     product: { sellspec: [] },
@@ -54,7 +54,7 @@ function EditProductPage() {
     const fetchData = async () => {
       try {
         const [productResponse, categoryResponse, brandResponse] = await Promise.all([
-          axios.get(API_ENDPOINTS.PRODUCT_BY_ID(id)),
+          axios.get(API_ENDPOINTS.PRODUCT_BY_ID(id,sid)),
           axios.get(API_ENDPOINTS.CATEGORY),
           axios.get(API_ENDPOINTS.BRAND),
         ])
@@ -82,7 +82,7 @@ function EditProductPage() {
     }
 
     fetchData()
-  }, [id])
+  }, [id,sid])
 
   useEffect(() => {
     const paymentFromServer = productState.product.payment
@@ -195,7 +195,7 @@ function EditProductPage() {
 
   const saveProductToServer = product => {
     axios
-      .patch(API_ENDPOINTS.UPDATE_PRODUCT_PARTIALLY(id), product)
+      .patch(API_ENDPOINTS.UPDATE_PRODUCT_PARTIALLY(id,sid), product)
       .then(() => {
         setProductState(prevState => ({ ...prevState, product }))
         setSelectedCategory({})

@@ -77,7 +77,7 @@ function Downproducts() {
                     修改
                   </Link>
                   <div className="btn btn-primary delData1">
-                    <PublishProduct productId={prodItem.prod_id} fetchProducts={fetchProducts} />
+                    <PublishProduct productId={prodItem.prod_id}specId={prodItem.spec_id} fetchProducts={fetchProducts} />
                   </div>
                 </div>
               </div>

@@ -6,13 +6,13 @@ const BASE_URL = '/seller'
 export const API_ENDPOINTS = {
   LOCALHOST: BASE_URL,
   PRODUCT: `${BASE_URL}/products`,
-  PRODUCT_BY_ID: id => `${BASE_URL}/getProductsAllData/${id}`,
+  PRODUCT_BY_ID: (id, sid) => `${BASE_URL}/getProductsAllData/${id}/${sid}`,
   CREATE_PRODUCT: `${BASE_URL}/createProduct`,
   CATEGORY: `${BASE_URL}/category`,
   BRAND: `${BASE_URL}/brand`,
   DOWN: `${BASE_URL}/down`,
   DOWN_API: `${BASE_URL}/downproducts`,
-  UPDATE_PRODUCT_PARTIALLY: id => `${BASE_URL}/updateProductPartially/${id}`,
+  UPDATE_PRODUCT_PARTIALLY: (id, sid) => `${BASE_URL}/updateProductPartially/${id}/${sid}`,
 }
 
 // User
