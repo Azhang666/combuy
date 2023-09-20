@@ -339,7 +339,7 @@ CREATE TABLE `sellspec` (
   `prod_id` int(11) NOT NULL,
   `spec_id` int(11) NOT NULL,
   `spec_name` varchar(100) NOT NULL,
-  `content` varchar(2500) DEFAULT NULL,
+  `contnet` varchar(2500) DEFAULT NULL,
   `price` int(11) NOT NULL,
   `stock` int(11) NOT NULL DEFAULT 0,
   `publish` int(11) NOT NULL DEFAULT 0 COMMENT '不公開 0\r\n公開 1',
@@ -907,7 +907,7 @@ USE `combuy`;
 /*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `vw_products_detail` AS select `product`.`prod_id` AS `prod_id`,`sellspec`.`spec_id` AS `spec_id`,`product`.`prod_name` AS `prod_name`,`sellspec`.`spec_name` AS `spec_name`,`brand`.`brand` AS `brand`,`category`.`category` AS `category`,`sellspec`.`publish` AS `publish`,`sellspec`.`cpu` AS `cpu`,`sellspec`.`gpu` AS `gpu`,`sellspec`.`ram` AS `ram`,`sellspec`.`os` AS `os`,`sellspec`.`screen` AS `screen`,`sellspec`.`battery` AS `battery`,`sellspec`.`size` AS `size`,`sellspec`.`weight` AS `weight`,`sellspec`.`warranty` AS `warranty`,`sellspec`.`content` AS `content` from (((`product` left join `sellspec` on(`product`.`prod_id` = `sellspec`.`prod_id`)) left join `brand` on(`product`.`brand_id` = `brand`.`brand_id`)) left join `category` on(`category`.`category_id` = `product`.`category_id`)) group by `product`.`prod_id`,`sellspec`.`spec_id` order by `product`.`prod_id`,`sellspec`.`spec_id` */;
+/*!50001 VIEW `vw_products_detail` AS select `product`.`prod_id` AS `prod_id`,`sellspec`.`spec_id` AS `spec_id`,`product`.`prod_name` AS `prod_name`,`sellspec`.`spec_name` AS `spec_name`,`brand`.`brand` AS `brand`,`category`.`category` AS `category`,`sellspec`.`publish` AS `publish`,`sellspec`.`cpu` AS `cpu`,`sellspec`.`gpu` AS `gpu`,`sellspec`.`ram` AS `ram`,`sellspec`.`os` AS `os`,`sellspec`.`screen` AS `screen`,`sellspec`.`battery` AS `battery`,`sellspec`.`size` AS `size`,`sellspec`.`weight` AS `weight`,`sellspec`.`warranty` AS `warranty`,`sellspec`.`contnet` AS `contnet` from (((`product` left join `sellspec` on(`product`.`prod_id` = `sellspec`.`prod_id`)) left join `brand` on(`product`.`brand_id` = `brand`.`brand_id`)) left join `category` on(`category`.`category_id` = `product`.`category_id`)) group by `product`.`prod_id`,`sellspec`.`spec_id` order by `product`.`prod_id`,`sellspec`.`spec_id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
