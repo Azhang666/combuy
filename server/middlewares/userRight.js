@@ -1,3 +1,5 @@
+const { Error } = require('../config/response')
+
 // 非管理員使用 轉跳回首頁
 const admin_render = function (req, res, next) {
   if (req.session.member) {
@@ -21,7 +23,8 @@ const seller_api = function (req, res, next) {
     if (req.session.member.right == 1) {
       return next()
     } else {
-      res.end(JSON.stringify(new Error('no permission')))
+      // res.end(JSON.stringify(new Error('no permission')))
+      res.end(JSON.stringify(new Error('滾')))
     }
   }
   res.end(JSON.stringify(new Error('no permission')))

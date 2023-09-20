@@ -450,32 +450,13 @@
           },
         });
         $.ajax({
-          type: 'GET',
-          url: '/shopCart/getUser',
-          success: function (res) {
-            console.log(res);
+          type:'GET',
+          url:'/shopCart/getUser',
+          success:function(res){
             $('#address').val(res[0].address)
           }
         })
-
       });
-
-      // 點擊刷卡
-      $(".bank-btn").on('click', function () {
-        $.ajax({
-          type: 'post',
-          url: '/shopCart/postState',
-          data: {
-            'state': 2,
-            'pay': 1,
-            'order_id': order_id,
-          },
-          success: function (res) {
-            console.log(res);
-          }
-        })
-      })
-
       //ATM彈窗
       $(".bank-btn").on("click", function () {
         $("#ATMModal").modal("hide");

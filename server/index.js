@@ -79,6 +79,7 @@ app.use('/member', login_render, member)
 
 const seller = require('./routers/sellerPage/index.js')
 app.use('/seller', login_api, seller_api, seller)
+// app.use('/seller', seller)
 
 const product = require('./routers/productPage/productPage.js')
 app.use('/product', product)

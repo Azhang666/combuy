@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
 import axios from 'axios'; 
 import { API_ENDPOINTS } from '../contexts/constants';
-function MainButton({ productId, fetchProducts }) {
+function MainButton({ productId, specId,fetchProducts }) {
     const [showModal, setShowModal] = useState(false);
     const [isUnpublished] = useState(false);
 
@@ -9,7 +9,7 @@ function MainButton({ productId, fetchProducts }) {
         console.log(productId);
 
         try {
-            await axios.put(`${API_ENDPOINTS.DOWN}/${productId}`, { publish: 0 });
+            await axios.put(`${API_ENDPOINTS.DOWN}/${productId}/${specId}`, { publish: 0 });
             alert('商品已下架');
             fetchProducts(); // 刷新商品列表
         } catch (error) {

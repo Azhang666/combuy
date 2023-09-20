@@ -1,6 +1,5 @@
 const db = require("../../models/productPage/productData");
 
-let getBrand = 2;
 let filter = `ORDER BY ""`;
 let setDESC = false;
 let getPriceRange = {
@@ -15,8 +14,8 @@ let randerProdTag = false;
 exports.changeProduct = (req, res) => {
   let randerProdItme = false;
   //ctrl req brand
-  if (req.query.brand) {
-    getBrand = req.query.brand;
+  if (req.query.getBrand) {
+    getBrand = req.query.getBrand;
     randerProdTag = false;
   }
   //ctrl req getUpdateTime & desc
@@ -120,6 +119,7 @@ exports.changeProduct = (req, res) => {
                       return await res.render(
                         `productPage/chageProdAndPage.ejs`,
                         {
+                          getUserBrand: getBrand,
                           product: productData,
                           lastPage: lastPage,
                         },

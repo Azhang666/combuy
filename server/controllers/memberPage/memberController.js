@@ -46,11 +46,12 @@ const MemberController = {
   },
 
   pwdChangeSucRender: (req, res) => {
-    req.session.destroy()
+    let o_right = req.session.member.right
+    delete req.session.member
 
     res.render('member/message', {
       title: '修改密碼',
-      right: req.session.member.right,
+      right: o_right,
       setting: req.session.setting,
       content: `密碼修改成功，請重新登入`,
       btns: [

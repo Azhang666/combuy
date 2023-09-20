@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
-const cors = require('cors')
+// const cors = require('cors')
 
 const db = require('./routes/database') // 引入資料庫連接模組
 const brandRoutes = require('./routes/brandRoutes')
@@ -9,7 +9,7 @@ const categoryRoutes = require('./routes/categoryRoutes')
 const productRoutes = require('./routes/productRoutes') // 引入路由模組
 
 const router = express.Router()
-router.use(cors())
+// router.use(cors())
 router.use(bodyParser.json())
 // router.use(express.static(path.join(__dirname, 'public')))
 
