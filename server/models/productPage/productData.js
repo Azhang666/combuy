@@ -98,12 +98,14 @@ exports.getTagprodItemData = (setCondition, callBackData) => {
       console.log(err);
     }
   });
-  let filter = setCondition[5];
+  let filter = setCondition[6];
   setCondition.pop();
+  let tag = setCondition[0];
+  setCondition.shift();
   connection.query(
     `SELECT * FROM product_tag
     LEFT join vw_products_info ON product_tag.prod_id = vw_products_info.prod_id
-    WHERE product_tag.tag=? AND vw_products_info.price BETWEEN ? AND ?
+    WHERE ${tag} vw_products_info.brand_id=? AND vw_products_info.price BETWEEN ? AND ?
    ${filter}
     LIMIT ?,?`,
     setCondition,
@@ -138,13 +140,15 @@ exports.getAllTagProdItemNumData = (setCondition, callBackData) => {
       console.log(err);
     }
   });
+  let tag = setCondition[0];
+  setCondition.shift();
   connection.query(
     `SELECT COUNT(*) as productTagTotal FROM product_tag
                 RIGHT JOIN tag on tag.tag =product_tag.tag
                 RIGHT JOIN product on product.prod_id =product_tag.prod_id
                 LEFT JOIN sellspec on sellspec.prod_id  = product.prod_id
                 RIGHT JOIN productimg on productimg.prod_id =product.prod_id AND sellspec.spec_id=productimg.spec_id AND productimg.type=0
-                WHERE tag.tag=? AND price BETWEEN ? AND ?`,
+                WHERE ${tag} product.brand_id=? AND price BETWEEN ? AND ?`,
     setCondition,
     (err, data) => {
       if (err) {
