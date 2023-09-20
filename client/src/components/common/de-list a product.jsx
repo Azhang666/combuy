@@ -73,11 +73,18 @@ function Downproducts() {
                 <div className="col-2 titlefont">{prodItem.stock}</div>
 
                 <div className="col-2 titlefont">
-                  <Link to={`/products/edit/${prodItem.prod_id}`} className="btn btn-success m-1">
+                  <Link
+                    to={`/products/edit/${prodItem.prod_id}/${prodItem.spec_id}`}
+                    className="btn btn-success m-1"
+                  >
                     修改
                   </Link>
                   <div className="btn btn-primary delData1">
-                    <PublishProduct productId={prodItem.prod_id}specId={prodItem.spec_id} fetchProducts={fetchProducts} />
+                    <PublishProduct
+                      productId={prodItem.prod_id}
+                      specId={prodItem.spec_id}
+                      fetchProducts={fetchProducts}
+                    />
                   </div>
                 </div>
               </div>

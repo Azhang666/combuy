@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="/public/stylesheets/out.css" />
     <link rel="stylesheet" href="/public/stylesheets/darkModeCheckbox.css" />
     <link rel="stylesheet" href="/public/stylesheets/header.css" />
+    <link rel="stylesheet" href="/public/stylesheets/universal/notification.css" />
+    <link rel="stylesheet" href="/public/stylesheets/universal/footer.css" />
 
     <script src="/public/js/jquery-3.6.0.js"></script>
     <script src="/public/js/bootstrap.bundle.js"></script>
@@ -25,7 +27,7 @@
 
   <body>
     <!-- 導覽列 -->
-    <%-await include('header.ejs') %>
+    <%-await include('../header.ejs') %>
     <!-- 導覽列 -->
 
     <main class="container">
@@ -133,14 +135,10 @@
         <ul class="nav nav-pills justify-content-center pt-4">
           <% if (imageDataT1.length> 0) { %>
           <li class="nav-item">
-            <a data-bs-toggle="pill" class="nav-link active" href="#information"
-              >商品資訊</a
-            >
+            <a data-bs-toggle="pill" class="nav-link active" href="#information">商品資訊</a>
           </li>
           <li class="nav-item">
-            <a data-bs-toggle="pill" class="nav-link" href="#specification"
-              >商品規格</a
-            >
+            <a data-bs-toggle="pill" class="nav-link" href="#specification">商品規格</a>
           </li>
           <% } %>
         </ul>
@@ -159,9 +157,7 @@
             <%}%>
           </div>
           <% } %>
-          <div class="tab-pane" id="specification">
-            <%-await include('table.ejs') %>
-          </div>
+          <div class="tab-pane" id="specification"><%-await include('table.ejs') %></div>
         </div>
       </section>
 
@@ -174,15 +170,11 @@
         <div class="buyer">
           <div class="rating mt-1">
             <% for ( let i=1 ; i <=5; i++ ) { %>
-            <span
-              class="bi bi-star<%= i <= comment.comment_grade ? '-fill' : '' %>"
-            ></span>
+            <span class="bi bi-star<%= i <= comment.comment_grade ? '-fill' : '' %>"></span>
             <% } %>
           </div>
 
-          <p class="mt-2">
-            <%= comment.comment_time %> | 購入數量 <%= comment.count %>
-          </p>
+          <p class="mt-2"><%= comment.comment_time %> | 購入數量 <%= comment.count %></p>
         </div>
         <div class="comment">
           <p><%= comment.comment %></p>
@@ -200,7 +192,7 @@
     </main>
 
     <!-- footer -->
-    <%-await include('footer.ejs') %>
+    <%-await include('../footerWidth.ejs'); %>
     <script src="/public/js/universal/header.js"></script>
   </body>
 </html>

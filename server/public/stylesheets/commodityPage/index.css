@@ -41,7 +41,7 @@ body header nav.header ul li {
   margin: 0.25rem 2rem;
 }
 
-body header nav.header ul li img[alt="cambuyLogo"] {
+body header nav.header ul li img[alt='cambuyLogo'] {
   width: 128px;
 }
 
@@ -52,7 +52,7 @@ body header nav.header ul li form input {
   width: 30vw;
 }
 
-body header nav.header ul li form button[type="submit"] {
+body header nav.header ul li form button[type='submit'] {
   border-radius: 0px 10px 10px 0px;
   border: none;
   background-color: rgb(128, 129, 128);
@@ -60,7 +60,7 @@ body header nav.header ul li form button[type="submit"] {
   width: 108px;
 }
 
-body header nav.header ul li form button[type="submit"] img {
+body header nav.header ul li form button[type='submit'] img {
   width: 20px;
 }
 
@@ -77,15 +77,15 @@ body header nav.header ul li label.switch input {
   height: 0;
 }
 
-body header nav.header ul li label.switch input:checked+.slider {
+body header nav.header ul li label.switch input:checked + .slider {
   background-color: rgb(0, 0, 0);
 }
 
-body header nav.header ul li label.switch input:focus+.slider {
+body header nav.header ul li label.switch input:focus + .slider {
   box-shadow: 0 0 1px rgb(0, 0, 0);
 }
 
-body header nav.header ul li label.switch input:checked+.slider:before {
+body header nav.header ul li label.switch input:checked + .slider:before {
   transform: translateX(26px);
 }
 
@@ -102,7 +102,7 @@ body header nav.header ul li span.slider {
 
 body header nav.header ul li span.slider::before {
   position: absolute;
-  content: "";
+  content: '';
   height: 26px;
   width: 26px;
   left: 4px;
@@ -322,86 +322,6 @@ body main section.info section.contral-product-page a:hover:not(.active) {
   background-color: rgb(204, 204, 204);
 }
 
-footer {
-  padding: 2rem 4rem;
-  background-color: rgb(128, 129, 128);
-  margin-bottom: 6rem;
-}
-
-footer div.info-href {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-}
-
-footer div.info-href div.href {
-  padding-right: 4rem;
-}
-
-footer div.info-href div.href h5 {
-  font-size: 1.25rem;
-  color: rgb(255, 255, 255);
-  margin-bottom: 1rem;
-}
-
-footer div.info-href div.href ul {
-  padding-left: 0;
-  margin-bottom: 0;
-  list-style-type: none;
-}
-
-footer div.info-href div.href ul li {
-  font-size: 1rem;
-  color: rgb(255, 255, 255);
-  padding-bottom: 0.25rem;
-}
-
-footer div.info-href div.href ul li a {
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-}
-
-footer canvas {
-  width: 100%;
-  height: 1px;
-  border: 1px solid rgb(255, 255, 255);
-  margin: 1rem 0rem;
-}
-
-footer div.info {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-}
-
-footer div.info ul {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  padding-left: 0;
-  margin-bottom: 0;
-  list-style-type: none;
-}
-
-footer div.info ul li {
-  font-size: 1rem;
-  color: rgb(255, 255, 255);
-  padding-bottom: 0.25rem;
-  padding-right: 0.5rem;
-}
-
-footer div.info ul li a {
-  padding-right: 0.5rem;
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-}
-
-footer div.info p {
-  flex-grow: 1;
-  text-align: end;
-  color: rgb(255, 255, 255);
-}
-
 body button.top-btn {
   display: none;
   position: fixed;
@@ -529,7 +449,7 @@ td {
   padding-left: 3%;
 }
 
-.card>img {
+.card > img {
   border-radius: 5px 5px 0 0;
 }
 
@@ -601,7 +521,7 @@ td {
   border-radius: 3px;
   background: #f90;
   position: absolute;
-  content: "";
+  content: '';
 }
 
 .toTop-arrow::before {
@@ -682,13 +602,11 @@ section {
   bottom: 0;
   left: 0;
   right: 0;
-
 }
 
 .d-block .btn {
   width: calc(100% / 3);
 }
-
 
 @media (max-width: 576px) {
   .card h4 {

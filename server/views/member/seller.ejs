@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="/public/stylesheets/out.css" />
     <link rel="stylesheet" href="/public/stylesheets/style.min.css" />
     <link rel="stylesheet" href="/public/stylesheets/universal/footer.css" />
+    <link rel="stylesheet" href="/public/stylesheets/universal/notification.css" />
+
 
     <script src="/public/js/jquery-3.6.0.js"></script>
     <script async src="/public/js/form.js"></script>
@@ -40,7 +42,7 @@
         </div>
         <div class="content">
           <div>
-            <a href="http://localhost:3000/">
+            <a href="" id ="toseller">
               <input class="button" type="button" value="前往上架系統"></input>
             </a>
           </div>
@@ -49,6 +51,11 @@
     </main>
     <!-- 插入footer的保留位 -->
     <%-await include('../footerWidth.ejs'); %>
-    <script></script>
+    <script>
+      $(document).ready(function () {
+        console.log(location.protocol+location.hostname+':3000')
+        $('#toseller').attr('href',location.protocol+'//'+location.hostname+':3000')
+      });
+    </script>
   </body>
 </html>

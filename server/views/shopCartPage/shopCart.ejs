@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="/public/stylesheets/dark.css" />
     <link rel="stylesheet" href="/public/stylesheets/header.css" />
     <link rel="stylesheet" href="/public/stylesheets/darkModeCheckbox.css" />
+    <link rel="stylesheet" href="/public/stylesheets/universal/footer.css" />
+    <link rel="stylesheet" href="/public/stylesheets/universal/notification.css" />
+
     <script src="/public/js/jquery-3.6.0.js"></script>
     <script src="/public/js/bootstrap.min.js"></script>
   </head>
@@ -294,7 +297,9 @@
         </div>
       </div>
     </div>
+    <%-await include('../footerWidth.ejs'); %>
     <script src="/public/js/universal/header.js"></script>
+
     <script>
       //req herder select & herder select display block
       $('input[name="search"]').on('keyup', function () {
