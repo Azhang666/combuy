@@ -35,6 +35,7 @@ exports.ctrlProdPage = (req, res) => {
             let lastPage = Math.ceil(
               productTotalData[0].productTotal / productItem
             );
+
             res.render("productPage/productPage.ejs", {
               getUserBrand: getBrand,
               brand: brandData,
