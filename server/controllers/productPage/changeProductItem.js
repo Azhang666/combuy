@@ -6,17 +6,15 @@ let getPriceRange = {
   form: 0,
   to: 999999,
 };
-let prodItemPage = 1;
-let productItem = 12;
-let offset = (prodItemPage - 1) * productItem;
-let prodSelTag = 3;
-let randerProdTag = false;
+let prodSelTag = "";
 exports.changeProduct = (req, res) => {
   let randerProdItme = false;
+  let prodItemPage = 1;
+  let productItem = 12;
+  let offset = (prodItemPage - 1) * productItem;
   //ctrl req brand
   if (req.query.getBrand) {
-    getBrand = req.query.getBrand;
-    randerProdTag = false;
+    getBrand = Number(req.query.getBrand);
   }
   //ctrl req getUpdateTime & desc
   if (setDESC && filter.includes("update_time")) {
@@ -48,106 +46,66 @@ exports.changeProduct = (req, res) => {
     randerProdItme = true;
   }
   //ctrl productTagItem
-  if (req.query.prodSelTag) {
-    prodSelTag = Number(req.query.prodSelTag);
-    randerProdTag = true;
+  if (req.query.prodSelTag && req.query.prodSelTag !== "") {
+    prodSelTag = `product_tag.tag=${Number(req.query.prodSelTag)} AND`;
+  }
+  if (req.query.prodSelTag == "") {
+    prodSelTag = "";
   }
   //module db
-  //brand
-  db.getBrandData([], (brandData) => {
-    //product
-    db.getprodItemData(
-      [
-        getBrand,
-        getPriceRange.form,
-        getPriceRange.to,
-        offset,
-        productItem,
-        filter,
-      ],
-      (productData) => {
-        //productItem total (Number)
-        db.getAllProdItemNumData(
-          [getBrand, getPriceRange.form, getPriceRange.to],
-          (productTotalData) => {
-            db.getTagprodItemData(
-              [
-                prodSelTag,
-                getPriceRange.form,
-                getPriceRange.to,
-                offset,
-                productItem,
-                filter,
-              ],
-              (productTagData) => {
-                db.getAllTagProdItemNumData(
-                  [prodSelTag, getPriceRange.form, getPriceRange.to],
-                  async (productTagTotalData) => {
-                    let lastPage = Math.ceil(
-                      productTotalData[0].productTotal / productItem
-                    );
-                    let lastTagPage = Math.ceil(
-                      productTagTotalData[0].productTagTotal / productItem
-                    );
-
-                    if (randerProdTag && randerProdItme) {
-                      return await res.render(
-                        `productPage/chageProduct.ejs`,
-                        {
-                          product: productTagData,
-                        },
-                        (err, html) => standardResponse(err, html, res)
-                      );
-                    } else if (randerProdTag) {
-                      return await res.render(
-                        `productPage/chageProdAndPage.ejs`,
-                        {
-                          product: productTagData,
-                          lastPage: lastTagPage,
-                        },
-                        (err, html) => standardResponse(err, html, res)
-                      );
-                    } else if (randerProdItme) {
-                      return await res.render(
-                        `productPage/chageProduct.ejs`,
-                        {
-                          product: productData,
-                        },
-                        (err, html) => standardResponse(err, html, res)
-                      );
-                    } else {
-                      return await res.render(
-                        `productPage/chageProdAndPage.ejs`,
-                        {
-                          getUserBrand: getBrand,
-                          product: productData,
-                          lastPage: lastPage,
-                        },
-                        (err, html) => standardResponse(err, html, res)
-                      );
-                    }
-                  }
-                );
-              }
+  db.getTagprodItemData(
+    [
+      prodSelTag,
+      getBrand,
+      getPriceRange.form,
+      getPriceRange.to,
+      offset,
+      productItem,
+      filter,
+    ],
+    (productData) => {
+      db.getAllTagProdItemNumData(
+        [prodSelTag, getBrand, getPriceRange.form, getPriceRange.to],
+        async (productTotalData) => {
+          let lastPage = Math.ceil(
+            productTotalData[0].productTagTotal / productItem
+          );
+          if (randerProdItme) {
+            return await res.render(
+              `productPage/chageProduct.ejs`,
+              {
+                product: productData,
+              },
+              (err, html) => standardResponse(err, html, res)
+            );
+          } else {
+            return await res.render(
+              `productPage/chageProdAndPage.ejs`,
+              {
+                getUserBrand: getBrand,
+                product: productData,
+                lastPage: lastPage,
+              },
+              (err, html) => standardResponse(err, html, res)
             );
           }
+        }
+      );
+    }
+  );
+  const standardResponse = (err, html, res) => {
+    // If error, return 500 page
+    if (err) {
+      console.log(err);
+      // Passing null to the error response to avoid infinite loops XP
+      return res
+        .status(500)
+        .render(`layout.ejs`, { page: "500", error: err }, (err, html) =>
+          standardResponse(null, html, res)
         );
-        const standardResponse = (err, html, res) => {
-          // If error, return 500 page
-          if (err) {
-            console.log(err);
-            // Passing null to the error response to avoid infinite loops XP
-            return res
-              .status(500)
-              .render(`layout.ejs`, { page: "500", error: err }, (err, html) =>
-                standardResponse(null, html, res)
-              );
-            // Otherwise return the html
-          } else {
-            return res.status(200).send(html);
-          }
-        };
-      }
-    );
-  });
+      // Otherwise return the html
+    } else {
+      return res.status(200).send(html);
+    }
+  };
 };
