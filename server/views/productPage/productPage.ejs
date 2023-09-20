@@ -9,10 +9,16 @@
     <link rel="stylesheet" href="/public/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/public/stylesheets/sidenav.css" />
     <link rel="stylesheet" href="/public/stylesheets/out.css" />
-    <link rel="stylesheet" href="/public/stylesheets/productPage/productStyle.css" />
     <link rel="stylesheet" href="/public/stylesheets/darkModeCheckbox.css" />
     <link rel="stylesheet" href="/public/stylesheets/header.css" />
-    <link rel="stylesheet" href="/public/stylesheets/universal/notification.css" />
+    <link
+      rel="stylesheet"
+      href="/public/stylesheets/universal/notification.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/stylesheets/productPage/productStyle.css"
+    />
   </head>
   <body>
     <%-await include('../header'); %>
@@ -32,11 +38,17 @@
           </select>
           <span>上架時間</span>
           <button id="addTime" type="button" data-brand="<%= getUserBrand %>">
-            <img src="/public/images/icons/chevron-down.svg" alt="chevron-down" />
+            <img
+              src="/public/images/icons/chevron-down.svg"
+              alt="chevron-down"
+            />
           </button>
           <span>金額</span>
           <button id="priceDesc" type="button" data-brand="<%= getUserBrand %>">
-            <img src="/public/images/icons/chevron-down.svg" alt="chevron-down" />
+            <img
+              src="/public/images/icons/chevron-down.svg"
+              alt="chevron-down"
+            />
           </button>
           <label for="price"> 金額 </label>
           <input
@@ -57,10 +69,15 @@
             data-brand="<%= getUserBrand %>"
           />
         </form>
-        <%-await include('./chageProdAndPage.ejs') %> <%-await include('../footer.ejs') %>
+        <%-await include('./chageProdAndPage.ejs') %> <%-await
+        include('../footer.ejs') %>
       </section>
     </main>
-    <div id="watchComparison" title="查看比較" style="background-color: lightgray">
+    <div
+      id="watchComparison"
+      title="查看比較"
+      style="background-color: lightgray"
+    >
       <a target="_blank" href="/product/watchComparison">查看比較</a>
     </div>
     <button class="top-btn" id="topScreenBtn" title="返回頂部">

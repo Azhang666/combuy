@@ -5,6 +5,7 @@ exports.fontPage = (req, res) => {
     res.render("fontPage/fontPage", {
       brand: bdata,
       setting: req.session.setting,
+      userId: req.session.member ? req.session.member.u_id : null,
     });
   });
 };

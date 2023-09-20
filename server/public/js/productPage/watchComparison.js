@@ -8,6 +8,7 @@ $(document).ready(function () {
     <div style="width: 200px; height: 200px;"><img style=" margin-left:5rem; object-fit: contain;width: 12rem; height: 12rem;" src='/public/${data[i].imgSrc}'></div>
     <a class="pname" href="/commodity/${data[i].pId}/${data[i].sId}">${data[i].pName}${data[i].sName}</a>
     <p>${data[i].brand}</p>
+    <p>${data[i].price}</p>
     <p>${data[i].cpu}</p>
     <p>${data[i].gpu}</p>
     <p>${data[i].ram}</p>

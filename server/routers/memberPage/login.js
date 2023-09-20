@@ -15,6 +15,7 @@ router.get("/", notlogin_render, function (req, res) {
   res.render("member/login", {
     title: "會員登入",
     setting: req.session.setting,
+    userId: req.session.member ? req.session.member.u_id : null,
   });
 });
 router.post("/", login_render, LoginController.loginSucRender);

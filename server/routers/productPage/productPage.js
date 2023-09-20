@@ -5,6 +5,7 @@ const router = express.Router();
 router.get("/watchComparison", (req, res) => {
   res.render("productPage/watchComparison.ejs", {
     setting: req.session.setting,
+    userId: req.session.member ? req.session.member.u_id : null,
   });
 });
 

@@ -47,22 +47,25 @@
             <path fill-rule="evenodd"
               d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
           </svg></a>
-        <div class="hidden" id="member-content">
-          <a class="text-black">
-            <div class="individual-member">
-              <a href="/member">
-                <h5><b>會員中心</b></h5>
+          <% if (userId) { %>
+            <div class="hidden" id="member-content">
+              <a class="text-black">
+                <div class="individual-member">
+                  <a href="/member">
+                    <h5><b>會員中心</b></h5>
+                  </a>
+                </div>
+              </a>
+              <a class="text-black">
+                <div class="individual-member">
+                  <a id="logout">
+                    <h5><b>登出</b></h5>
+                  </a>
+                </div>
               </a>
             </div>
-          </a>
-          <a class="text-black">
-            <div class="individual-member">
-              <a id="logout">
-                <h5><b>登出</b></h5>
-              </a>
-            </div>
-          </a>
-        </div>
+          <% } %>
+        
       </li>
 
       <li class="icon-bar d-none d-lg-none d-xl-block">
