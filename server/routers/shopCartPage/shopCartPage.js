@@ -170,6 +170,23 @@ router.get("/delProd", function (req, res) {
   });
 });
 
+// 更新訂單完成 / 已付款
+router.post("/postState", function (req, res) {
+  const sql = `
+            UPDATE orders
+            SET state = ?, pay = ?
+            WHERE order_id = ?;
+            `;
+  db.query(sql, [2, 1, req.body.order_id], function (err, result) {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: "資料讀取失敗。" });
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+
 router.get("/orderPage", (req, res) => {
   res.render("orderPage/orderPage.ejs", {
     setting: req.session.setting,

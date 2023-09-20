@@ -34,4 +34,7 @@ router.use("/userSetting", bp_uncode, userSetting);
 const product = require("./api/productItemAPI");
 router.use("/changeProduct", product);
 
+const notification = require("./api/notification");
+router.use("/notification", notification);
+
 module.exports = router;

@@ -177,10 +177,18 @@ router.post("/addcart", async (req, res) => {
 router.post("/addcollect", login_api, async (req, res) => {
   try {
     var { user_id, prod_id, spec_id } = req.body;
-    var sql =
-      "INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)";
-    await queryDatabase(sql, [user_id, prod_id, spec_id]);
-    res.status(200).send("成功加入收藏");
+    var sqlcheck = "SELECT * FROM collect WHERE user_id = ? AND prod_id = ? AND spec_id = ?"
+    const checkReasult = await queryDatabase(sqlcheck, [user_id, prod_id, spec_id]);
+
+    if (checkReasult.length > 0) {
+      res.status(200).json({ message: "商品已在收藏中" });
+    } else {
+      var sqlInsert =
+        "INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)";
+      await queryDatabase(sqlInsert, [user_id, prod_id, spec_id]);
+      res.status(200).json({ message: "成功加入收藏" });
+    }
+
   } catch (error) {
     console.error("加入收藏失敗", error);
     res.status(500).send("內部伺服器錯誤");

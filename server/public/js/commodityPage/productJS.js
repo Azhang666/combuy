@@ -121,8 +121,8 @@ $(document).ready(function () {
           spec_id: spec_id,
         },
         success: function (response) {
-            console.log('已成功加入購物車');
-            alert('已成功加入購物車');
+          console.log('已成功加入購物車');
+          alert('已成功加入購物車');
 
         },
         error: function (error) {
@@ -153,8 +153,14 @@ $(document).ready(function () {
           update_time: update_time,
         },
         success: function (response) {
-          console.log("已成功加入收藏");
-          alert('已成功加入收藏');
+          if (response.message === "商品已在收藏中") {
+            // Product is already in collection, display filled red heart
+            $("#collect i").addClass("bi-heart-fill text-danger");
+          } else {
+            // Product was added to collection, display filled red heart
+            $("#collect i").addClass("bi-heart-fill text-danger");
+            alert('已成功加入收藏');
+          }
         },
         error: function (error) {
           console.error("加入收藏失敗", error);

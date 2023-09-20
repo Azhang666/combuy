@@ -30,4 +30,19 @@ $(document).ready(function () {
   $("body").on("click", function () {
     $("#search-result").css("display", "none");
   });
+
+  $(document).ready(function() {
+    $('#notification').on("click",(e)=>{
+      e.preventDefault();
+      e.stop
+      $.ajax({
+        url:"/api/notification",
+        type: "get",
+        success:async (res)=>{
+          await $("#notification").prepend(`${res}`);
+        },
+      })
+    })
+
+  })
 });

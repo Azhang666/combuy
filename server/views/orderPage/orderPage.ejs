@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ComBuy - 訂單確認</title>
-    <link rel="icon" href="/public/images/logo/favicon.ico" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link rel="stylesheet" href="/public/stylesheets/bootstrap.css" />
-    <link rel="stylesheet" href="/public/stylesheets/shopCartPage/order.css" />
-    <link rel="stylesheet" href="/public/stylesheets/sidenav.css" />
-    <link rel="stylesheet" href="/public/stylesheets/out.css" />
-    <link rel="stylesheet" href="/public/stylesheets/dark.css" />
-    <link rel="stylesheet" href="/public/stylesheets/header.css" />
-    <link rel="stylesheet" href="/public/stylesheets/darkModeCheckbox.css" />
-    <script src="/public/js/jquery-3.6.0.js"></script>
-    <script src="/public/js/bootstrap.min.js"></script>
-  </head>
 
-  <body>
-    <%-await include('../header'); %>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ComBuy - 訂單確認</title>
+  <link rel="icon" href="/public/images/logo/favicon.ico" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/public/stylesheets/bootstrap.css" />
+  <link rel="stylesheet" href="/public/stylesheets/shopCartPage/order.css" />
+  <link rel="stylesheet" href="/public/stylesheets/sidenav.css" />
+  <link rel="stylesheet" href="/public/stylesheets/out.css" />
+  <link rel="stylesheet" href="/public/stylesheets/dark.css" />
+  <link rel="stylesheet" href="/public/stylesheets/header.css" />
+  <link rel="stylesheet" href="/public/stylesheets/darkModeCheckbox.css" />
+  <script src="/public/js/jquery-3.6.0.js"></script>
+  <script src="/public/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <%-await include('../header'); %>
 
     <div class="shop-car-bar container">
       <div class="row">
@@ -128,12 +126,7 @@
                       <p id="paymentMethod">ATM轉帳</p>
                     </div>
                     <div class="col-4 d-flex align-items-center">
-                      <button
-                        id="paymentButton"
-                        name="pay"
-                        data-bs-toggle="modal"
-                        data-bs-target="#ATMModal"
-                      >
+                      <button id="paymentButton" name="pay" data-bs-toggle="modal" data-bs-target="#ATMModal">
                         轉帳資訊
                       </button>
                     </div>
@@ -150,12 +143,7 @@
                       <p id="paymentMethod">信用卡</p>
                     </div>
                     <div class="col-4 d-flex align-items-center">
-                      <button
-                        id="paymentButton"
-                        name="pay"
-                        data-bs-toggle="modal"
-                        data-bs-target="#cardModal"
-                      >
+                      <button id="paymentButton" name="pay" data-bs-toggle="modal" data-bs-target="#cardModal">
                         去付款
                       </button>
                     </div>
@@ -169,63 +157,34 @@
     </div>
 
     <!-- 信用卡的彈窗 -->
-    <div
-      class="modal fade"
-      id="cardModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="cardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header justify-content-start">
-            <i
-              class="fa fa-cc-visa me-3"
-              style="font-size: 35px; color: rgb(78, 92, 201)"
-            ></i>
+            <i class="fa fa-cc-visa me-3" style="font-size: 35px; color: rgb(78, 92, 201)"></i>
             <h5 class="modal-title" id="exampleModalLabel">新增信用卡</h5>
           </div>
           <div class="modal-body bank-body mt-3">
             <p>卡片詳情</p>
             <!-- 信用卡號碼 -->
             <div class="bank-name">
-              <input
-                type="text"
-                placeholder="信用卡號碼"
-                class="w-100"
-                id="card_num"
-              />
+              <input type="text" placeholder="信用卡號碼" class="w-100" id="card_num" />
             </div>
             <!-- 卡片到期日 安全驗證碼 -->
             <div class="bank-code mt-3 d-flex justify-content-between">
-              <input
-                type="text"
-                placeholder="卡片到期日 MM/YY"
-                class="w-50"
-                id="expiry_date"
-              />
+              <input type="text" placeholder="卡片到期日 MM/YY" class="w-50" id="expiry_date" />
               <input type="text" placeholder="安全驗證碼" id="security_code" />
             </div>
             <!-- 持卡者姓名 -->
             <div class="bank-user mt-3">
-              <input
-                type="text"
-                placeholder="持卡者姓名"
-                class="w-100"
-                id="name"
-              />
+              <input type="text" placeholder="持卡者姓名" class="w-100" id="name" />
             </div>
           </div>
           <div class="modal-body bank-body mt-3">
-            <p>帳單地址</p>
+            <p>發票地址</p>
             <!-- 地址 -->
             <div class="bank-name mt-3">
-              <input
-                type="text"
-                placeholder="地址"
-                class="w-100"
-                id="address"
-              />
+              <input type="text" placeholder="地址" class="w-100" id="address" />
             </div>
             <!-- 郵遞區號 -->
             <div class="bank-code mt-3">
@@ -233,11 +192,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               取消
             </button>
             <button type="button" class="btn btn-primary bank-btn">確定</button>
@@ -247,13 +202,7 @@
     </div>
 
     <!-- ATM的彈窗 -->
-    <div
-      class="modal fade"
-      id="ATMModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="ATMModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -272,7 +221,7 @@
             <!-- 銀行帳號 -->
             <div class="bank-user mt-5">
               <h5>銀行帳號</h5>
-              <p class="mt-1">0000 1111 2222 3333</p>
+              <p class="mt-1">152345678561</p>
             </div>
             <!-- 備註 -->
             <div class="mt-5 note">
@@ -314,6 +263,9 @@
       $("body").on("click", function () {
         $("#search-result").css("display", "none");
       });
+
+      var order_id; // 創建一個變數來保存order_id
+
       // 購物車功能
       $(function () {
         // 因為一打開頁面, 下面就要計算件數跟總價
@@ -438,17 +390,20 @@
       });
       // 取得購買商品
       $(function () {
+
         $.ajax({
           type: "POST",
           url: "/shopCart/getOrderProduct",
           success: function (res) {
-            console.log(res);
+            // console.log(res);
+            // console.log('---------------');
             var itemsData = res[0];
             var itemsHtml = "";
             for (var i = 0; i < itemsData.length; i++) {
-              // var price = res[0][i].price / res[0][i].count;
-
+              // console.log(res[0][0].order_id);
               var item = itemsData[i];
+              // 將order_id保存到變數中
+              order_id = item.order_id;
               itemsHtml += `
                         <div class="col-12 shop-car-item-bar d-flex justify-content-between mt-3">
                         <div class="row">
@@ -460,7 +415,7 @@
                                     <img src="/public/${item.img_src}" alt="">
                                 </div>
                                 <div class="product-name">
-                                    <p class="my-auto">${item.prod_name} <br> <span>${item.spec_name}</span> </p>
+                                    <p id="${item.order_id}" class="my-auto">${item.prod_name} <br> <span>${item.spec_name}</span> </p>
                                 </div>
                             </div>
                         </div>
@@ -485,6 +440,7 @@
           type: "GET",
           url: "/shopCart/getUserCards",
           success: function (res) {
+            console.log(res);
             var orderData = res[0][0];
 
             $("#name").val(orderData.name);
@@ -493,99 +449,32 @@
             $("#security_code").val(orderData.security_code);
           },
         });
-      });
-      // 縣市
-      $.ajax({
-        type: "get", //請求方式
-        url: "./AllData.json", //請求地址
-        dataType: "json", //
-
-        success: function (data) {
-          // console.log(data); //字符串
-          for (let i = 0; i < data.length; i++) {
-            // console.log(data[i].CityName);
-            var city = $(
-              `<option class="city-option">${data[i].CityName}</option>`
-            );
-            $(".city").append(city);
-          }
-        },
-      });
-
-      // 鄉鎮市區
-      $.ajax({
-        type: "get", //請求方式
-        url: "./AllData.json", //請求地址
-        dataType: "json", //
-
-        success: function (data) {
-          // console.log(data); //字符串
-          for (let i = 0; i < data.length; i++) {
-            var areaList = data[i].AreaList;
-            // console.log(areaList);
-            for (let j = 0; j < areaList.length; j++) {
-              var areaName = areaList[j].AreaName;
-              // console.log(areaName);
-              var area = $(`<option>${areaName}</option>`);
-              $(".Area").append(area);
-            }
-          }
-        },
-      });
-
-      // 篩選
-      $("#select-city").on("change", function () {
-        var selectedCity = $(this).val();
-
         $.ajax({
-          type: "get", //請求方式
-          url: "./AllData.json", //請求地址
-          dataType: "json", //
-          success: function (data) {
-            // 在這裡查找對應的縣市鄉鎮市區數據並更新 #select-Area 的選項
-            var areaSelect = $("#select-Area");
-            areaSelect.empty();
+          type: 'GET',
+          url: '/shopCart/getUser',
+          success: function (res) {
+            console.log(res);
+            $('#address').val(res[0].address)
+          }
+        })
 
-            for (let i = 0; i < data.length; i++) {
-              if (data[i].CityName === selectedCity) {
-                var areaList = data[i].AreaList;
-                for (let j = 0; j < areaList.length; j++) {
-                  var areaName = areaList[j].AreaName;
-                  var area = $(`<option>${areaName}</option>`);
-                  areaSelect.append(area);
-                }
-                break;
-              }
-            }
+      });
+
+      // 點擊刷卡
+      $(".bank-btn").on('click', function () {
+        $.ajax({
+          type: 'post',
+          url: '/shopCart/postState',
+          data: {
+            'state': 2,
+            'pay': 1,
+            'order_id': order_id,
           },
-        });
-      });
-
-      // 收件人資訊
-      $(".my-btn").on("click", function () {
-        //姓名
-        var name = $(".name-ipt input").val();
-        //手機號碼
-        var tel = $(".tel-ipt input").val();
-        //選擇縣市
-        var city = $("#select-city option:selected").text();
-        //選擇鄉鎮市區
-        var area = $("#select-Area option:selected").text();
-        //詳細地址
-        var address = $(".complete-adress input").val();
-        //郵遞區號
-        var code = $(".code-ipt input").val();
-
-        $(".show-address-name").text("配送資訊");
-        $(".member-address .show-name").text(`姓名：${name}`);
-        $(".member-address .show-tel").text(`手機號碼：${tel}`);
-        $(".member-address .show-address").text(
-          `地址：${city}${area}${address}${code}`
-        );
-        $("#addressModal").modal("hide");
-
-        $(".member-address").css("display", "block");
-      });
+          success: function (res) {
+            console.log(res);
+          }
+        })
+      })
 
       //ATM彈窗
       $(".bank-btn").on("click", function () {
@@ -598,5 +487,6 @@
         $(".pay-state").text("已付款");
       });
     </script>
-  </body>
+</body>
+
 </html>
