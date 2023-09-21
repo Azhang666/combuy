@@ -76,7 +76,7 @@ body main section.info form {
   margin: 2rem;
 }
 body main section.info form select {
-  width: 10vw;
+  width: 150px;
   border-radius: 10px;
   border: none;
   background-color: rgb(255, 255, 255);
