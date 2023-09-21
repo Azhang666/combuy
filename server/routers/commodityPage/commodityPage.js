@@ -197,29 +197,10 @@ router.post('/addcollect', login_api, async (req, res) => {
   }
 })
 
-// 頁面刷新時，顯示收藏
-router.get('/checkcollect', login_api, async (req, res) => {
-  try {
-    var {prod_id, spec_id, user_id} = req.query;
-    var isInCollect = 'SELECT * FROM collect WHERE user_id =? AND prod_id = ? AND spec_id = ?';
-    var checkISInCollect = await queryDatabase(isInCollect, [user_id, spec_id, prod_id]);
-    if(checkISInCollect.length > 0) {
-      res.status(200).json({isInCollect: true});
-    } else {
-      res.status(200).json({isInCollect: false});
-    }
-  } catch (error) {
-    res.status(500).send('內部伺服器錯誤');
-    console.error('檢查收藏清單失敗', error);
-  }
-})
-
-
 // 相關加入購物車
 router.post('/addCart', async (req, res) => {
   try {
     var { user_id, prod_id, spec_id } = req.body
-
     // 判斷使用者是否登入
     if (!user_id) {
       return res.redirect('/login')

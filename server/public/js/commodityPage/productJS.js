@@ -135,34 +135,38 @@ $(document).ready(function () {
   });
 
   // 加入收藏
-  $(".card-icon").on("click", ".favorite", async function (e) {
-    e.preventDefault();
-    const icon = $(this).find("svg");
-    try {
-      const res = await $.ajax({
-        type: "post",
-        url: "/api/member/collectProd",
-        data: {
-          prod_id: $(this).data("prod-id"),
-          spec_id: $(this).data("spec-id"),
-        },
-        dataType: "json",
-      });
+  $(document).on("click", "#collect", function () {
+    if (user_id == "") {
+      window.location.href = "/login";
+    } else {
+      var prod_id = $(this).data("prod_id");
+      var spec_id = $(this).data("spec_id");
+      var update_time = $(this).data("update_time");
 
-      if (res.err == 0) {
-        if (res.data.type) {
-          icon.css("fill", "red");
-          alert("添加成功");
-        } else {
-          icon.css("fill", "none");
-          alert("取消添加");
-        }
-      } else {
-        alert("請先登入再收藏");
-        location.href = "/login";
-      }
-    } catch (err) {
-      throw err;
+      $.ajax({
+        url: "/commodity/addcollect",
+        type: "POST",
+        data: {
+          user_id: user_id,
+          prod_id: prod_id,
+          spec_id: spec_id,
+          update_time: update_time,
+        },
+        success: function (response) {
+          if (response.message === "商品已在收藏中") {
+            // Product is already in collection, display alert message
+            alert('該商品已在收藏清單中');
+            console.log('該商品已在收藏清單中');
+          } else if (response.message === "成功加入收藏") {
+            // Product was added to collection, change button's icon to filled heart
+            $("#collect svg").html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/></svg>').css('color', 'red');
+            console.log('已成功加入收藏');
+          }
+        },
+        error: function (error) {
+          console.error("加入收藏失敗", error);
+        },
+      });
     }
   });
 
@@ -278,28 +282,4 @@ $(document).ready(function () {
       },
     });
   }
-});
-
-
-// 渲染加入最愛的商品
-$(document).ready(function () {
-  $.ajax({
-    type: "get",
-    url: "/fontPage/getFavoriteProd",
-    success: function (res) {
-      for (var i = 0; i < res.length; i++) {
-        var favoriteProdId = res[i].prod_id;
-        var favoriteSpecId = res[i].spec_id;
-        var $matchingItem = $(
-          ".favorite[data-prod-id=" +
-          favoriteProdId +
-          "][data-spec-id=" +
-          favoriteSpecId +
-          "]"
-        );
-        console.log(res);
-        $matchingItem.find(".heart-icon").css("fill", "red");
-      }
-    },
-  });
 });
