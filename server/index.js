@@ -35,7 +35,7 @@ app.use(
       path: '/',
       httpOnly: true,
       secure: false,
-      maxAge: 10 * 60 * 1000,
+      maxAge: 100 * 60 * 1000,
     },
   })
 )
@@ -78,8 +78,8 @@ const member = require('./routers/memberPage/member')
 app.use('/member', login_render, member)
 
 const seller = require('./routers/sellerPage/index.js')
-app.use('/seller', login_api, seller_api, seller)
-// app.use('/seller', seller)
+// app.use('/seller', login_api, seller_api, seller)
+app.use('/seller', seller)
 
 const product = require('./routers/productPage/productPage.js')
 app.use('/product', product)

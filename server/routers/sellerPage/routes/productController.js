@@ -440,7 +440,7 @@ exports.deleteProductImage = async (req, res) => {
 
     // 從文件系統中刪除圖片
     // await fs.unlinkAsync(path.join(BASE_PATH, image.img_src))
-    console.log(path.join(path.dirname(require.main.filename), 'public', 'public', image.img_src))
+    // console.log(path.join(path.dirname(require.main.filename), 'public', 'public', image.img_src))
     fs.unlink(
       path.join(path.dirname(require.main.filename), 'public', 'public', image.img_src),
       err => {

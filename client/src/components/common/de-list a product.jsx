@@ -63,14 +63,17 @@ function Downproducts() {
             <div key={index} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
               <div className="row text-center d-flex align-items-center">
                 <div className="col-2 titlefont">{index + 1}</div>
-                <div className="col-2 titlefont">{prodItem.prod_name}</div>
+                <div className="col-2 titlefont">
+                  {prodItem.prod_name} <br />
+                  {prodItem.spec_name}
+                </div>
                 <img
                   src={`public/${API_ENDPOINTS.LOCALHOST}/${prodItem.img_src}`}
                   className="col-2 titlefont"
                   alt=""
                 />
-                <div className="col-2 titlefont">{prodItem.price}</div>
-                <div className="col-2 titlefont">{prodItem.stock}</div>
+                <div className="col-2 titlefont">{'NT$ ' + prodItem.price.toLocaleString()}</div>
+                <div className="col-2 titlefont">{prodItem.stock.toLocaleString()}</div>
 
                 <div className="col-2 titlefont">
                   <Link

@@ -102,7 +102,7 @@ function EditProductPage() {
     }
 
     fetchData()
-  }, [id, sid])
+  }, [id])
 
   useEffect(() => {
     const paymentFromServer = productState.product.payment
@@ -198,6 +198,7 @@ function EditProductPage() {
   }
   const convertPaymentToServerFormat = () => {
     // console.log(selectedPayments);
+    // console.log(selectedPayments);
     if (selectedPayments.includes('2')) {
       return 2 // 全選
     }
@@ -215,7 +216,7 @@ function EditProductPage() {
 
   const saveProductToServer = product => {
     axios
-      .patch(API_ENDPOINTS.UPDATE_PRODUCT_PARTIALLY(id, sid), product)
+      .patch(API_ENDPOINTS.UPDATE_PRODUCT_PARTIALLY(id), product)
       .then(() => {
         setProductState(prevState => ({ ...prevState, product }))
         setSelectedCategory({})
@@ -229,6 +230,7 @@ function EditProductPage() {
   }
 
   const handleSpecChange = (specIndex, key, value) => {
+    // console.log("Handling spec change:", { specIndex, key, value });  // Add this
     // console.log("Handling spec change:", { specIndex, key, value });  // Add this
     setProductState(prevState => {
       if (!Array.isArray(prevState.sellSpecs)) {
@@ -817,7 +819,7 @@ function EditProductPage() {
                 NT$
                 {productState.sellSpecs &&
                   productState.sellSpecs.length > 0 &&
-                  productState.sellSpecs[0].price}
+                  productState.sellSpecs[0].price.toLocaleString()}
               </b>
             </div>
           </div>
@@ -843,7 +845,7 @@ function EditProductPage() {
               <b>
                 {productState.sellSpecs &&
                   productState.sellSpecs.length > 0 &&
-                  productState.sellSpecs[0].stock}
+                  productState.sellSpecs[0].stock.toLocaleString()}
               </b>
             </div>
           </div>

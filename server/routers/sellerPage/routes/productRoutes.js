@@ -10,6 +10,11 @@ router.put('/down/:productId/:specId', productController.updateProduct)
 router.post('/createProduct', productController.createProduct)
 router.get('/getProductsAllData/:prod_id/:spec_id', productController.getProductsAllData)
 router.patch('/updateProductPartially/:prod_id/:spec_id', productController.partiallyUpdateProduct)
+router.post(
+  '/products/:prod_id/upload-image',
+  upload.single('productImage'),
+  productController.addProductImage
+)
 
 router.post(
   '/products/:prod_id/:spec_id/upload-image',

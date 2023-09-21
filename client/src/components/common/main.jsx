@@ -55,20 +55,31 @@ function Main() {
           <div key={index} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
             <div className="row text-center d-flex align-items-center">
               <div className="col-2 titlefont">{index + 1}</div>
-              <div className="col-2 titlefont">{prodItem.prod_name}</div>
+              <div className="col-2 titlefont">
+                {prodItem.prod_name}
+                <br />
+                {prodItem.spec_name}
+              </div>
               <img
                 src={`/public${API_ENDPOINTS.LOCALHOST}/${prodItem.img_src}`}
                 className="col-2 titlefont"
                 alt=""
               />
-              <div className="col-2 titlefont">{prodItem.price}</div>
-              <div className="col-2 titlefont">{prodItem.stock}</div>
+              <div className="col-2 titlefont">{'NT$ ' + prodItem.price.toLocaleString()}</div>
+              <div className="col-2 titlefont">{prodItem.stock.toLocaleString()}</div>
               <div className="col-2 titlefont">
-                <Link to={`/products/edit/${prodItem.prod_id}/${prodItem.spec_id}`} className="btn btn-success m-1">
+                <Link
+                  to={`/products/edit/${prodItem.prod_id}/${prodItem.spec_id}`}
+                  className="btn btn-success m-1"
+                >
                   修改
                 </Link>
                 <div className="btn btn-primary delData1">
-                  <MainButton productId={prodItem.prod_id} specId={prodItem.spec_id}fetchProducts={fetchProducts} />
+                  <MainButton
+                    productId={prodItem.prod_id}
+                    specId={prodItem.spec_id}
+                    fetchProducts={fetchProducts}
+                  />
                 </div>
               </div>
             </div>
