@@ -25,9 +25,13 @@
     <div style="display: none" id="userId" data-user-id="<%= userId %>"></div>
     <main class="row">
       <%-await include('../brand'); %>
-      <section class="info col-10">
+      <section class="info col-12 col-xl-10 p-5">
         <form class="productSlecet">
-          <select name="selectItem" data-brand="<%= getUserBrand %>">
+          <select
+            class="d-lg-inline d-block"
+            name="selectItem"
+            data-brand="<%= getUserBrand %>"
+          >
             <option value="">使用需求</option>
             <option value="1">CP值</option>
             <option value="5">極度輕薄</option>
@@ -36,7 +40,7 @@
             <option value="3">電競機</option>
             <option value="4">繪圖高效能機</option>
           </select>
-          <span>上架時間</span>
+          <span class="d-lg-inline d-block">上架時間</span>
           <button id="addTime" type="button" data-brand="<%= getUserBrand %>">
             <img
               src="/public/images/icons/chevron-down.svg"

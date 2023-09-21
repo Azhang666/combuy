@@ -1,9 +1,13 @@
-<aside class="col-2">
+<aside class="col-xl-2 col-0 d-xl-block d-none">
   <nav class="navSide">
     <ul>
       <% for( let i = 0; i < brand.length; i++ ) { %>
       <li class="brand">
-        <img style="width: 20px" src="<%=brand[i].img  ? '/public' + brand[i].img :''%>" alt="" />
+        <img
+          style="width: 20px"
+          src="<%=brand[i].img  ? '/public' + brand[i].img :''%>"
+          alt=""
+        />
         <a
           href="/product/<%=brand[i].brand_id%>"
           value="<%=brand[i].brand_id%>"
