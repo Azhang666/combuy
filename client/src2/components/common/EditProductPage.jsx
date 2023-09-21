@@ -326,8 +326,6 @@ function EditProductPage() {
     }
   }
   const renderProductImages = () => {
-    console.log('render');
-    
     if (!Array.isArray(productState.images)) {
       return null;
     }
@@ -336,7 +334,7 @@ function EditProductPage() {
       .map((image, index) => (
         <div key={index} className="image-item">
           <img
-            src={`/public${API_ENDPOINTS.LOCALHOST}/${image.img_src}?t=${Date.now()}`}
+            src={`${API_ENDPOINTS.LOCALHOST}/${image.img_src}?t=${Date.now()}`}
             alt={image.originalname || 'Product Image'}
             className='editproduct-image1'
             onClick={() => {
@@ -365,7 +363,7 @@ function EditProductPage() {
           }}
         >
           <img
-            src={`/public${API_ENDPOINTS.LOCALHOST}/${image.img_src}?t=${Date.now()}`}
+            src={`${API_ENDPOINTS.LOCALHOST}/${image.img_src}?t=${Date.now()}`}
 
             alt={image.originalname || 'Product Image'}
             className='editproduct-image1'
