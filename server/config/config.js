@@ -2,9 +2,9 @@ const Setting = {
   db_setting: {
     host: "localhost",
     user: "root",
-    password: "root",
+    password: "",
     database: "combuy",
-    port: 3306,
+    port: 3307,
     multipleStatements: true,
   },
 };
