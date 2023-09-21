@@ -26,9 +26,9 @@
     <main class="row">
       <%-await include('../brand'); %>
       <section class="info col-12 col-xl-10">
-        <form class="productSlecet pe-4">
+        <form class="productSlecet row">
           <select
-            class="d-lg-inline d-block"
+            class="col-1"
             name="selectItem"
             data-brand="<%= getUserBrand %>"
           >
@@ -40,38 +40,55 @@
             <option value="3">電競機</option>
             <option value="4">繪圖高效能機</option>
           </select>
-          <span class="d-lg-inline d-block">上架時間</span>
-          <button id="addTime" type="button" data-brand="<%= getUserBrand %>">
+
+          <span class="col-1 w-auto">上架時間</span>
+          <button
+            class="col-1 w-auto"
+            id="addTime"
+            type="button"
+            data-brand="<%= getUserBrand %>"
+          >
             <img
               src="/public/images/icons/chevron-down.svg"
               alt="chevron-down"
             />
           </button>
-          <span>金額</span>
-          <button id="priceDesc" type="button" data-brand="<%= getUserBrand %>">
+
+          <span class="col-1 w-auto">金額</span>
+          <button
+            class="col-1 w-auto"
+            id="priceDesc"
+            type="button"
+            data-brand="<%= getUserBrand %>"
+          >
             <img
               src="/public/images/icons/chevron-down.svg"
               alt="chevron-down"
             />
           </button>
-          <label for="price"> 金額 </label>
-          <input
-            id="price"
-            type="text"
-            name="priceFrom"
-            placeholder="0"
-            pattern="[0-9]{7}"
-            data-brand="<%= getUserBrand %>"
-          />
-          <label for="priceTo"> 到 </label>
-          <input
-            id="priceTo"
-            type="text"
-            name="priceTo"
-            placeholder="9999999"
-            pattern="[0-9]{7}"
-            data-brand="<%= getUserBrand %>"
-          />
+          <div class="w-auto col-4 row mt-lg-0 mt-2">
+            <label class="col-3 w-auto" for="price"> 金額 </label>
+            <input
+              class="col-3 w-25"
+              id="price"
+              type="text"
+              name="priceFrom"
+              placeholder="0"
+              pattern="[0-9]{7}"
+              data-brand="<%= getUserBrand %>"
+            />
+
+            <label class="col-3 w-auto" for="priceTo"> 到 </label>
+            <input
+              class="col-3 w-25"
+              id="priceTo"
+              type="text"
+              name="priceTo"
+              placeholder="9999999"
+              pattern="[0-9]{7}"
+              data-brand="<%= getUserBrand %>"
+            />
+          </div>
         </form>
         <%-await include('./chageProdAndPage.ejs') %> <%-await
         include('../footer.ejs') %>
@@ -87,6 +104,7 @@
     <button class="top-btn" id="topScreenBtn" title="返回頂部">
       <img src="/public/images/icons/top-btn.svg" alt="top-btn" />
     </button>
+    <button type="button" id="BackTop" class="toTop-arrow"></button>
     <script src="/public/js/jquery-3.6.0.js"></script>
     <script src="/public/js/productPage/productJS.js"></script>
     <script src="/public/js/universal/header.js"></script>

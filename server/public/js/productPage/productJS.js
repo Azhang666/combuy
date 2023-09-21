@@ -29,9 +29,9 @@ $(document).ready(function () {
       document.documentElement.scrollTop > 20 ||
       elem > 20
     ) {
-      $("#topScreenBtn").css("display", "block");
+      $("#BackTop").css("display", "block");
     } else {
-      $("#topScreenBtn").css("display", "none");
+      $("#BackTop").css("display", "none");
     }
   }
   function screenTop() {
@@ -46,9 +46,21 @@ $(document).ready(function () {
   $(window).on("scroll", function () {
     blkTopScrBtn();
   });
-  $("#topScreenBtn").click(function () {
+  $("#BackTop").click(function () {
     screenTop();
   });
+  // $("#BackTop").click(function () {
+  //   $("html,body").animate({ scrollTop: 0 }, 100);
+  // });
+  // $(window)
+  //   .scroll(function () {
+  //     if ($(this).scrollTop() > 100) {
+  //       $("#BackTop").fadeIn(222);
+  //     } else {
+  //       $("#BackTop").stop().fadeOut(222);
+  //     }
+  //   })
+  //   .scroll();
   //req herder select & herder select display block
   $('input[name="search"]').on("keyup", function () {
     //herder select display block
@@ -369,7 +381,7 @@ $(document).ready(function () {
             favoriteSpecId +
             "]"
         );
-        console.log(res);
+
         $matchingItem.find(".heart-icon").css("fill", "red");
       }
     },
