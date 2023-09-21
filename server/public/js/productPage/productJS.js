@@ -319,6 +319,7 @@ $(document).ready(function () {
       throw err;
     }
   });
+
   //collectProduct
   $(".card-icon").on("click", ".favorite", async function (e) {
     e.preventDefault();
@@ -368,6 +369,7 @@ $(document).ready(function () {
             favoriteSpecId +
             "]"
         );
+        console.log(res);
         $matchingItem.find(".heart-icon").css("fill", "red");
       }
     },
