@@ -12,6 +12,7 @@ router.get('/', function (req, res) {
   res.render('member/register', {
     title: '註冊帳號',
     setting: req.session.setting,
+    userId: req.session.member ? req.session.member.u_id : null,
   })
 })
 router.post('/', bp_uncode, RegisterController.registerSucRender)

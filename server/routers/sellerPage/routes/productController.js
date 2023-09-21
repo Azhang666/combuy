@@ -1,6 +1,11 @@
+const fs = require('fs')
+
+const path = require('path')
+
 const dbQuery = require('./dbUtils')
 const upload = require('./multerConfig')
 const db = require('./database')
+
 const { handleDbError } = require('./errorHandlers')
 const { getRelativePath } = require('../../../tools/function')
 const queryAsync = (connection, sql, params) =>
@@ -378,57 +383,129 @@ exports.partiallyUpdateProduct = (req, res) => {
   // SELL更新
 }
 
-
-
-
-// 0921 11:03 
-// 0921 11:03 
-// 0921 11:03 
-
 exports.addProductImage = (req, res) => {
-  console.log(req.file);
+  console.log(req.file)
 
   if (!req.file) {
-    return res.status(400).json({ message: "No file uploaded" });
-
+    return res.status(400).json({ message: 'No file uploaded' })
   }
 
   // console.log(req.file);
-  const { prod_id } = req.body;
+  const { prod_id, spec_id } = req.body
   const imageInfo = {
     prod_id: prod_id,
     originalname: req.file.originalname,
     stored_name: req.file.filename,
     filename: req.file.filename,
-    img_src: getRelativePath(req.file.path),
+    // img_src: getRelativePath(req.file.path),
+    img_src: '../images/products/' + req.file.filename,
     file_size: req.file.size,
     mime_type: req.file.mimetype,
-    spec_id:'10'
-  };
+    spec_id: spec_id,
+    type: 1,
+  }
 
-  const sql = 'INSERT INTO productimg SET ?';
+  const sql = 'INSERT INTO productimg SET ?'
 
   db.getConnection(async (err, connection) => {
     if (err) {
-      console.error("連接到資料庫時出錯: ", err.message || err);
-      return res.status(500).json({ message: "內部伺服器錯誤", error: err.message });
+      console.error('連接到資料庫時出錯: ', err.message || err)
+      return res.status(500).json({ message: '內部伺服器錯誤', error: err.message })
     }
     try {
-      await queryAsync(connection, sql, imageInfo);
+      await queryAsync(connection, sql, imageInfo)
       res.json({
-        message: "圖片已成功新增",
-        path: `${imageInfo.img_src}`
-      });
-
+        message: '圖片已成功新增',
+        path: `${imageInfo.img_src}`,
+      })
     } catch (error) {
-      console.error("資料庫操作期間出錯: ", error.message || error);
-      res.status(500).json({ message: "內部伺服器錯誤", error: error.message });
+      console.error('資料庫操作期間出錯: ', error.message || error)
+      res.status(500).json({ message: '內部伺服器錯誤', error: error.message })
     } finally {
-      connection.release();
+      connection.release()
     }
-  });
+  })
 }
 
-// 0921 11:03
-// 0921 11:03
-// 0921 11:03 
+exports.deleteProductImage = async (req, res) => {
+  const imageId = req.params.imageId
+  try {
+    // 從數據庫中找到圖片資料
+    const imageQuery = `SELECT img_src FROM productimg WHERE img_id = ?`
+    const [image] = await dbQuery(imageQuery, [imageId])
+
+    if (!image) {
+      return res.status(404).send({ message: 'Image not found' })
+    }
+
+    // 從文件系統中刪除圖片
+    // await fs.unlinkAsync(path.join(BASE_PATH, image.img_src))
+    // console.log(path.join(path.dirname(require.main.filename), 'public', 'public', image.img_src))
+    fs.unlink(
+      path.join(path.dirname(require.main.filename), 'public', 'public', image.img_src),
+      err => {
+        console.log(err)
+      }
+    )
+    // 從數據庫中刪除圖片
+    const deleteQuery = `DELETE FROM productimg WHERE img_id  = ?`
+    await dbQuery(deleteQuery, [imageId])
+
+    res.status(200).send({ message: 'Image deleted successfully' })
+  } catch (error) {
+    console.error(error)
+    res.status(500).send({ message: 'Server error' })
+  }
+}
+exports.updateCoverImage = (req, res) => {
+  const imageId = req.body.imageId
+
+  if (!imageId) {
+    return res.status(400).json({ message: 'Image ID is required' })
+  }
+
+  db.getConnection((err, connection) => {
+    if (err) {
+      console.error('資料庫連線錯誤: ', err)
+      return res.status(500).json({ message: '伺服器錯誤' })
+    }
+
+    // 根據imageId取得圖片的資訊
+    connection.query('SELECT * FROM productimg WHERE img_id = ?', [imageId], (err, results) => {
+      if (err || results.length === 0) {
+        connection.release()
+        return res.status(404).json({ message: 'Image not found' })
+      }
+
+      const prodId = results[0].prod_id
+      const specId = results[0].spec_id
+
+      // 設定選擇的圖片為封面圖
+      connection.query(
+        'UPDATE productimg SET type = 0 WHERE img_id = ?',
+        [imageId],
+        (err, updateResult) => {
+          if (err) {
+            connection.release()
+            return res.status(500).json({ message: '伺服器錯誤' })
+          }
+
+          // 設定具有相同prod_id的其他圖片不為封面圖
+          connection.query(
+            'UPDATE productimg SET type = 1 WHERE prod_id = ? AND spec_id = ? AND img_id != ?',
+            [prodId, specId, imageId],
+            (err, finalUpdate) => {
+              connection.release()
+
+              if (err) {
+                return res.status(500).json({ message: '伺服器錯誤' })
+              }
+
+              res.status(200).json({ message: '封面圖更新成功！' })
+            }
+          )
+        }
+      )
+    })
+  })
+}

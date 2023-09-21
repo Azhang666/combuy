@@ -30,17 +30,15 @@ $(document).ready(function () {
   })
 
   $(document).ready(function () {
-    $('#notification').hover(function (e) {
+    $('#notification svg').hover(async function (e) {
       e.stopPropagation()
-      const thisBtn = $(this)
-      $.ajax({
+      const res = await $.ajax({
         url: '/api/notification',
         type: 'get',
-        success: async res => {
-          thisBtn.find('#notification-content').remove()
-          await $('#notification').prepend(`${res}`)
-        },
       })
+
+      $('#notification').find('#notification-content').remove()
+      $('#notification').prepend(`${res}`)
     })
   })
 })
