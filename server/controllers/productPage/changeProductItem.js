@@ -13,6 +13,7 @@ exports.changeProduct = (req, res) => {
   let productItem = 12;
   let offset = (prodItemPage - 1) * productItem;
   //ctrl req brand
+  req.query.getBrand ? false : req.query.getBrand;
   if (req.query.getBrand) {
     getBrand = Number(req.query.getBrand);
   }

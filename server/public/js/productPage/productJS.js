@@ -227,7 +227,7 @@ $(document).ready(function () {
   } else {
     $("#watchComparison").css("display", "none");
   }
-  $(".prodComparison").on("click", async function () {
+  $("body").on("click", ".prodComparison", async function () {
     await $.ajax({
       type: "get",
       url: "/api/changeProduct/prodComparison",
@@ -253,6 +253,7 @@ $(document).ready(function () {
           weight: response[0].weight,
           warranty: response[0].warranty ? response[0].warranty : "2年官網保固",
           imgSrc: response[0].dir + response[0].filename,
+          price: response[0].price,
         };
         if (!localStorage.getItem("product")) {
           localStorage.setItem("product", JSON.stringify(objTemp));
@@ -270,9 +271,10 @@ $(document).ready(function () {
         }
         //display btn
         $("#watchComparison").css("display", "block");
+        alert("添加成功");
       },
       error: function (error) {
-        alert(error);
+        alert("添加失敗");
       },
     });
   });
@@ -287,48 +289,108 @@ $(document).ready(function () {
   });
   let user_id = $("#userId").data("userId");
   //plusProduct
-  $(".plusProd").on("click", async function () {
-    if (user_id == "") {
-      location.replace("http://localhost:2407/login");
-    } else {
-      await $.ajax({
+  $(".card-icon").on("click", ".cart", async function (e) {
+    e.preventDefault();
+    const icon = $(this).find("svg");
+    try {
+      const res = await $.ajax({
         type: "post",
-        url: "/commodity/addcart",
+        url: "/api/member/cartProd",
         data: {
-          user_id: user_id,
-          prod_id: $(this).data("prod_id"),
-          spec_id: $(this).data("spec_id"),
+          prod_id: $(this).data("prod-id"),
+          spec_id: $(this).data("spec-id"),
         },
-        success: function (response) {
-          alert("此商品已加入購物車");
-        },
-        error: function (error) {
-          alert("此商品已在購物車");
-        },
+        dataType: "json",
       });
+
+      if (res.err == 0) {
+        if (res.data.type) {
+          icon.css("fill", "gray");
+          alert("添加成功");
+        } else {
+          icon.css("fill", "none");
+          alert("取消添加");
+        }
+      } else {
+        alert("請先登入再加入購物車");
+        location.href = "/login";
+      }
+    } catch (err) {
+      throw err;
     }
   });
   //collectProduct
-  $(".collectProd").on("click", async function () {
-    if (user_id == "") {
-      location.replace("http://localhost:2407/login");
-    } else {
-      await $.ajax({
+  $(".card-icon").on("click", ".favorite", async function (e) {
+    e.preventDefault();
+    const icon = $(this).find("svg");
+    try {
+      const res = await $.ajax({
         type: "post",
-        url: "/commodity/addcollect",
+        url: "/api/member/collectProd",
         data: {
-          user_id: user_id,
-          prod_id: $(this).data("prod_id"),
-          spec_id: $(this).data("spec_id"),
+          prod_id: $(this).data("prod-id"),
+          spec_id: $(this).data("spec-id"),
         },
-        success: function (response) {
-          alert("此商品已加入購物車");
-        },
-        error: function (error) {
-          alert("此商品已在購物車");
-        },
+        dataType: "json",
       });
+
+      if (res.err == 0) {
+        if (res.data.type) {
+          icon.css("fill", "red");
+          alert("添加成功");
+        } else {
+          icon.css("fill", "none");
+          alert("取消添加");
+        }
+      } else {
+        alert("請先登入再收藏");
+        location.href = "/login";
+      }
+    } catch (err) {
+      throw err;
     }
   });
   //jq ready bottom
+});
+// 渲染加入最愛的商品
+$(document).ready(function () {
+  $.ajax({
+    type: "get",
+    url: "/fontPage/getFavoriteProd",
+    success: function (res) {
+      for (var i = 0; i < res.length; i++) {
+        var favoriteProdId = res[i].prod_id;
+        var favoriteSpecId = res[i].spec_id;
+        var $matchingItem = $(
+          ".favorite[data-prod-id=" +
+            favoriteProdId +
+            "][data-spec-id=" +
+            favoriteSpecId +
+            "]"
+        );
+        $matchingItem.find(".heart-icon").css("fill", "red");
+      }
+    },
+  });
+});
+// 渲染加入購物車的商品
+$(document).ready(function () {
+  $.ajax({
+    type: "get",
+    url: "/fontPage/getCartProd",
+    success: function (res) {
+      for (var i = 0; i < res.length; i++) {
+        var favoriteProdId = res[i].prod_id;
+        var favoriteSpecId = res[i].spec_id;
+        var $matchingItem = $(
+          ".cart[data-prod-id=" +
+            favoriteProdId +
+            "][data-spec-id=" +
+            favoriteSpecId +
+            "]"
+        );
+        $matchingItem.find("svg").css("fill", "gray");
+      }
+    },
+  });
 });

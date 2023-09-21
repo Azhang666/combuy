@@ -111,11 +111,11 @@ body main section.info form input:focus {
   border: none;
   border-color: rgb(255, 255, 255);
 }
-body main section.info section.productBox div a {
+body main section.info section.productBox div.col-3 a.prodToPItem {
   text-decoration: none;
   color: rgb(0, 0, 0);
 }
-body main section.info section.productBox div a div.product {
+body main section.info section.productBox div.col-3 a.prodToPItem div.product {
   height: 400px;
   width: 90%;
   margin: 2rem;
@@ -123,41 +123,111 @@ body main section.info section.productBox div a div.product {
   padding-bottom: 1rem;
   background-color: rgb(255, 255, 255);
 }
-body main section.info section.productBox div a div.product:hover {
+body
+  main
+  section.info
+  section.productBox
+  div.col-3
+  a.prodToPItem
+  div.product:hover {
   -webkit-box-shadow: 1px 1px 20px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 1px 1px 20px 2px rgba(0, 0, 0, 0.3);
 }
-body main section.info section.productBox div a div.product img {
-  width: 100%;
+body
+  main
+  section.info
+  section.productBox
+  div.col-3
+  a.prodToPItem
+  div.product
+  img {
+  width: 200px;
   height: 250px;
   -o-object-fit: contain;
   object-fit: contain;
 }
-body main section.info section.productBox div a div.product p {
+body
+  main
+  section.info
+  section.productBox
+  div.col-3
+  a.prodToPItem
+  div.product
+  p {
   font-size: 1rem;
   margin: 1rem 1rem 0rem 1rem;
 }
-body main section.info section.productBox div a div.product p:nth-of-type(2) {
+body
+  main
+  section.info
+  section.productBox
+  div.col-3
+  a.prodToPItem
+  div.product
+  p:nth-of-type(2) {
   font-size: 0.75rem;
   margin: 0rem 0rem 2rem 1rem;
 }
-body main section.info section.productBox div a div.product span {
+body
+  main
+  section.info
+  section.productBox
+  div.col-3
+  a.prodToPItem
+  div.product
+  span {
   margin-left: 1rem;
 }
-body main section.info section.productBox div a div.product button {
+body
+  main
+  section.info
+  section.productBox
+  div.col-3
+  a.prodToPItem
+  div.product
+  button {
   margin-right: 1rem;
   padding: 0.25rem;
   border: none;
   background-color: rgb(255, 255, 255);
   float: right;
 }
-body main section.info section.productBox div a div.product button img {
+body
+  main
+  section.info
+  section.productBox
+  div.col-3
+  a.prodToPItem
+  div.product
+  button
+  img {
   width: 20px;
   height: 20px;
 }
-body main section.info section.productBox div a div.product button img:hover {
+body
+  main
+  section.info
+  section.productBox
+  div.col-3
+  a.prodToPItem
+  div.product
+  button
+  img:hover {
   -webkit-transform: scale(1.5);
   transform: scale(1.5);
+}
+body
+  main
+  section.info
+  section.productBox
+  div.col-3
+  a.prodToPItem
+  div.product
+  div.card-icon
+  a.favorite
+  svg {
+  width: 33.708px;
+  height: 30px;
 }
 body main section.info section.contral-product-page {
   -webkit-box-pack: center;

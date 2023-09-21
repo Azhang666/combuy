@@ -4,7 +4,10 @@ var db = require("../../models/shopCartPage/db");
 const { login_render, login_api } = require("../../middlewares/isLogin");
 
 router.get("/", login_render, (req, res) => {
-  res.render("shopCartPage/shopCart", { setting: req.session.setting });
+  res.render("shopCartPage/shopCart", {
+    setting: req.session.setting,
+    userId: req.session.member ? req.session.member.u_id : null,
+  });
 });
 
 // 獲取商品
@@ -190,6 +193,7 @@ router.post("/postState", function (req, res) {
 router.get("/orderPage", (req, res) => {
   res.render("orderPage/orderPage.ejs", {
     setting: req.session.setting,
+    userId: req.session.member ? req.session.member.u_id : null,
   });
 });
 

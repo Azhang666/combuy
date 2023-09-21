@@ -1,6 +1,10 @@
-const mysql = require('mysql')
-const Setting = require('../../../config/config')
+const mysql = require('mysql');
 
-const db = mysql.createPool(Setting.db_setting)
+const db = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'root',
+  database: 'combuy'
+});
 
-module.exports = db
+module.exports = db;

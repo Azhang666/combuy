@@ -31,8 +31,12 @@ router.get("/prodComparison", async (req, res) => {
     let prodId = req.query.prod_id;
     let specId = req.query.spec_id;
     let specProdData = await queryDatabase(
-      `SELECT * FROM vw_products_detail
+      `SELECT vw_products_detail.prod_id,vw_products_detail.spec_id,vw_products_detail.prod_name,
+      vw_products_detail.spec_name,vw_products_detail.brand,vw_products_detail.cpu,vw_products_detail.gpu,vw_products_detail.ram,
+      vw_products_detail.os,vw_products_detail.screen,vw_products_detail.battery,vw_products_detail.size,vw_products_detail.weight,
+      vw_products_detail.warranty,productimg.dir,productimg.filename,vw_products_info.price  FROM vw_products_detail
       RIGHT JOIN productimg ON vw_products_detail.prod_id=productimg.prod_id AND vw_products_detail.spec_id = productimg.spec_id
+      RIGHT JOIN vw_products_info ON vw_products_detail.prod_id=vw_products_info.prod_id AND vw_products_detail.spec_id = vw_products_info.spec_id
       where vw_products_detail.prod_id=? AND vw_products_detail.spec_id= ? AND type=0`,
       [prodId, specId]
     );

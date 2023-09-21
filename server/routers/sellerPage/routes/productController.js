@@ -377,3 +377,58 @@ exports.partiallyUpdateProduct = (req, res) => {
 
   // SELL更新
 }
+
+
+
+
+// 0921 11:03 
+// 0921 11:03 
+// 0921 11:03 
+
+exports.addProductImage = (req, res) => {
+  console.log(req.file);
+
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
+
+  }
+
+  // console.log(req.file);
+  const { prod_id } = req.body;
+  const imageInfo = {
+    prod_id: prod_id,
+    originalname: req.file.originalname,
+    stored_name: req.file.filename,
+    filename: req.file.filename,
+    img_src: getRelativePath(req.file.path),
+    file_size: req.file.size,
+    mime_type: req.file.mimetype,
+    spec_id:'10'
+  };
+
+  const sql = 'INSERT INTO productimg SET ?';
+
+  db.getConnection(async (err, connection) => {
+    if (err) {
+      console.error("連接到資料庫時出錯: ", err.message || err);
+      return res.status(500).json({ message: "內部伺服器錯誤", error: err.message });
+    }
+    try {
+      await queryAsync(connection, sql, imageInfo);
+      res.json({
+        message: "圖片已成功新增",
+        path: `${imageInfo.img_src}`
+      });
+
+    } catch (error) {
+      console.error("資料庫操作期間出錯: ", error.message || error);
+      res.status(500).json({ message: "內部伺服器錯誤", error: error.message });
+    } finally {
+      connection.release();
+    }
+  });
+}
+
+// 0921 11:03
+// 0921 11:03
+// 0921 11:03 

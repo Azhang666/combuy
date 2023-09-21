@@ -112,8 +112,8 @@ body {
         }
       }
       section.productBox {
-        div {
-          a {
+        div.col-3 {
+          a.prodToPItem {
             text-decoration: none;
             color: $black;
             div.product {
@@ -127,7 +127,7 @@ body {
                 box-shadow: 1px 1px 20px 2px rgba(0, 0, 0, 0.3);
               }
               img {
-                width: 100%;
+                width: 200px;
                 height: 250px;
                 object-fit: contain;
               }
@@ -159,7 +159,14 @@ body {
                   }
                 }
               }
-              // }
+              div.card-icon {
+                a.favorite {
+                  svg {
+                    width: 33.708px;
+                    height: 30px;
+                  }
+                }
+              }
             }
           }
         }
