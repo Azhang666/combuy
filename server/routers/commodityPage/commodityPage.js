@@ -68,6 +68,14 @@ router.get('/:prodId/:specId', async (req, res) => {
       comment.comment_time = new Date(comment.comment_time).toLocaleString()
     })
 
+    // 抓取賣出產品的數量
+    var countData = await queryDatabase('SELECT SUM(count) AS total_count FROM order_product WHERE prod_id = ? AND spec_id = ?', [prodId, specId]);
+
+    var stock = priceData[0].stock;
+    var totalSole = countData[0].total_count;
+    var remainingStock = stock - totalSole;
+
+
     // 通知
     var orderDate = await queryDatabase(
       'SELECT order_id, order_date FROM `vw_order_info` WHERE state = 2 AND pay = 1 AND user_id = ?',
@@ -138,6 +146,8 @@ router.get('/:prodId/:specId', async (req, res) => {
       orderDate,
       userId,
       setting: req.session.setting,
+      countData,
+      remainingStock
     })
   } catch (err) {
     console.error('Error:', err)
@@ -181,7 +191,6 @@ router.post('/addcollect', login_api, async (req, res) => {
       await queryDatabase(sqlInsert, [user_id, prod_id, spec_id]);
       res.status(200).json({ message: "成功加入收藏" });
     }
-
   } catch (error) {
     console.error('加入收藏失敗', error)
     res.status(500).send('內部伺服器錯誤')
@@ -192,7 +201,6 @@ router.post('/addcollect', login_api, async (req, res) => {
 router.post('/addCart', async (req, res) => {
   try {
     var { user_id, prod_id, spec_id } = req.body
-
     // 判斷使用者是否登入
     if (!user_id) {
       return res.redirect('/login')
