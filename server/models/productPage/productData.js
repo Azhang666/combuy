@@ -35,7 +35,7 @@ exports.getprodItemData = (setCondition, callBackData) => {
   setCondition.pop();
   connection.query(
     `SELECT * FROM vw_products_info
-        WHERE brand_id=? AND price BETWEEN ? AND ?
+        WHERE brand_id=? AND vw_products_info.publish=1 AND price BETWEEN ? AND ?
         ${filter}
         LIMIT ?,?;`,
     setCondition,
@@ -72,7 +72,7 @@ exports.getAllProdItemNumData = (setCondition, callBackData) => {
   });
   connection.query(
     `SELECT COUNT(*) as productTotal FROM vw_products_info
-        WHERE brand_id=? AND price BETWEEN ? AND ?`,
+        WHERE brand_id=? AND vw_products_info.publish=1 AND price BETWEEN ? AND ?`,
     setCondition,
     (err, data) => {
       if (err) {
@@ -105,7 +105,7 @@ exports.getTagprodItemData = (setCondition, callBackData) => {
   connection.query(
     `SELECT * FROM product_tag
     RIGHT join vw_products_info ON product_tag.prod_id = vw_products_info.prod_id
-    WHERE ${tag} vw_products_info.brand_id=? AND vw_products_info.price BETWEEN ? AND ?
+    WHERE ${tag} vw_products_info.brand_id=? AND vw_products_info.publish=1 AND vw_products_info.price BETWEEN ? AND ?
    ${filter}
     LIMIT ?,?`,
     setCondition,
@@ -145,7 +145,7 @@ exports.getAllTagProdItemNumData = (setCondition, callBackData) => {
   connection.query(
     `SELECT COUNT(*) as productTagTotal FROM product_tag
     RIGHT join vw_products_info ON product_tag.prod_id = vw_products_info.prod_id
-    WHERE ${tag} vw_products_info.brand_id=? AND vw_products_info.price BETWEEN ? AND ?`,
+    WHERE ${tag} vw_products_info.brand_id=? AND vw_products_info.publish=1 AND vw_products_info.price BETWEEN ? AND ?`,
     setCondition,
     (err, data) => {
       if (err) {
