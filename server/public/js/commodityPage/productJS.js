@@ -134,6 +134,36 @@ $(document).ready(function () {
     }
   });
 
+  // 頁面刷新時，顯示收藏
+  function checkAndDisplayCollect() {
+
+    var prod_id = $('#prodId').data("prod_id");
+    var spec_id = $('#specId').data("spec_id");
+    var update_time = $('#updateTime').data("update_time");
+
+    $.ajax({
+      url: "/commodity/checkcollect",
+      type: "GET",
+      data: {
+        user_id: user_id,
+        prod_id: prod_id,
+        spec_id: spec_id,
+        update_time: update_time
+      },
+      success: function (response) {
+        if (response.isInCollect) {
+          $("#collect svg").html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/></svg>').css('color', 'red');
+        }
+      },
+      error: function (error) {
+        console.error(error);
+      }
+    })
+  }
+  if (user_id.length > 0) {
+    checkAndDisplayCollect();
+  }
+
   // 加入收藏
   $(document).on("click", "#collect", function () {
     if (user_id == "") {
@@ -154,24 +184,24 @@ $(document).ready(function () {
         },
         success: function (response) {
           if (response.message === "商品已在收藏中") {
-            // Product is already in collection, display filled red heart
-            $("#collect i").addClass("bi-heart-fill text-danger");
-          } else {
-            // Product was added to collection, display filled red heart
-            $("#collect i").addClass("bi-heart-fill text-danger");
-            alert('已成功加入收藏');
+            // Product is already in collection, display alert message
+            alert('該商品已在收藏清單中');
+            console.log('該商品已在收藏清單中');
+          } else if (response.message === "成功加入收藏") {
+            // Product was added to collection, change button's icon to filled heart
+            $("#collect svg").html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/></svg>').css('color', 'red');
+            console.log('已成功加入收藏');
           }
         },
         error: function (error) {
           console.error("加入收藏失敗", error);
-          alert('該商品已在收藏清單中');
         },
       });
     }
   });
 
   // 相關商品加入購物車
-  $(document).on("click", "#addtocart", function () {
+  $(document).on("click", ".addtocart", function () {
     if (user_id == "") {
       window.location.href = "/login";
     } else {
@@ -206,6 +236,7 @@ $(document).ready(function () {
       var prod_id = $(this).data("prod_id");
       var spec_id = $(this).data("spec_id");
       var update_time = $(this).data("update_time");
+      var clickedBtn = $(this)
 
       $.ajax({
         url: "/commodity/addCollect",
@@ -218,6 +249,7 @@ $(document).ready(function () {
         },
         success: function (response) {
           console.log("已成功加入收藏");
+          clickedBtn.find('svg').html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/></svg>').css('color', 'red');
         },
         error: function (error) {
           console.error("加入收藏失敗", error);
