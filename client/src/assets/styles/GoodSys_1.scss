@@ -283,6 +283,81 @@ body {
 
 .editproduct-image {
   width: 80px;
-  height: auto;
-  object-fit: cover;
+  height: 200px;
+  object-fit: contain;
+}
+
+
+
+// 
+.image-item {
+  display: inline-block;
+  position: relative;
+  margin: 10px;
+}
+
+.editproduct-image1 {
+  display: block;
+  max-width: 100px; // 根據需求調整
+  width: 80px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.image-item .btn-danger {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+
+.image-item {
+  position: relative; /* 使它的子元素可以使用 absolute 定位 */
+  display: inline-block; 
+  /* 其他必要的樣式 */
+}
+
+.introduce-badge {
+  position: absolute;
+  top: 5px;
+ left:  5px;
+  background-color: lightblue;
+  color: black;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.custom-badge {
+  /* 您想要的自定義樣式，例如： */
+  background-color: lightblue;
+  border: 1px solid white;
+}
+
+
+.hint {
+  background-color: #f8d7da;  // 粉紅色背景
+  color: #721c24;             // 深紅色文字
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.image-item:hover {
+  border: 2px solid lightblue;
+  cursor: pointer;
+}
+
+.image-item.selected {
+  background-color: rgba(0, 123, 255, 0.1); 
+}
+
+
+
+.enlarged-image {
+  max-width: 100%;
+  max-height: 80vh; /* 限制圖片高度，使其不超過視窗的80% */
 }

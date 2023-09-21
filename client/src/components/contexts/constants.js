@@ -13,6 +13,10 @@ export const API_ENDPOINTS = {
   DOWN: `${BASE_URL}/down`,
   DOWN_API: `${BASE_URL}/downproducts`,
   UPDATE_PRODUCT_PARTIALLY: (id, sid) => `${BASE_URL}/updateProductPartially/${id}/${sid}`,
+
+  UPLOAD_PRODUCT_IMAGE: (prodId, specId) => `${BASE_URL}/products/${prodId}/${specId}/upload-image`,
+  DELETE_PRODUCT_IMAGE: imageId => `${BASE_URL}/product-images/${imageId}`,
+  UPDATE_COVER_IMAGE: `${BASE_URL}/update-cover`,
 }
 
 // User

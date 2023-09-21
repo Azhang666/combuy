@@ -1,11 +1,22 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { API_ENDPOINTS } from '../contexts/constants'
 import { Dropdown, Accordion, Form } from 'react-bootstrap'
+import { Button, Modal } from 'react-bootstrap'
 
 function EditProductPage() {
   const { id, sid } = useParams()
+  const [selectedImage, setSelectedImage] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+  const [selectedImageId, setSelectedImageId] = useState(null)
+  const [showDeleteButtons, setShowDeleteButtons] = useState(false)
+  const [fileName, setFileName] = useState('')
+  const [showHint, setShowHint] = useState(false)
+  const [coverUpdated, setCoverUpdated] = useState(false)
+  const [enlargedImageSrc, setEnlargedImageSrc] = useState(null)
+  const [showImageModal, setShowImageModal] = useState(false)
+  const inputFileRef = useRef(null)
 
   const [productState, setProductState] = useState({
     product: { sellspec: [] },
@@ -25,6 +36,7 @@ function EditProductPage() {
   const [inputStock, setInputStock] = useState('')
   const [selectedTransports, setSelectedTransports] = useState([])
   const [selectedPayments, setSelectedPayments] = useState([])
+  const [showChangeCoverModal, setShowChangeCoverModal] = useState(false)
 
   const SPEC_FIELDS = [
     { key: 'cpu', label: 'CPU' },
@@ -50,6 +62,14 @@ function EditProductPage() {
   ]
 
   // ... 所有您的事件處理函數和邏輯函數 ...
+  useEffect(() => {
+    console.log('useEffect triggered!') // 這樣您可以看到每次useEffect被調用時的紀錄
+    if (coverUpdated) {
+      // 這裡進行您的邏輯
+
+      setCoverUpdated(false)
+    }
+  }, [coverUpdated])
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -177,7 +197,7 @@ function EditProductPage() {
     return null // 沒有選擇任何運送方式
   }
   const convertPaymentToServerFormat = () => {
-    console.log(selectedPayments)
+    // console.log(selectedPayments);
     if (selectedPayments.includes('2')) {
       return 2 // 全選
     }
@@ -208,33 +228,8 @@ function EditProductPage() {
       })
   }
 
-  const handleSave = () => {
-    const updatedSpecs = updateSpecName()
-
-    // 如果inputPrice有值，更新updatedSpecs[0].price，否則保持原樣
-    if (inputPrice && updatedSpecs.length > 0) {
-      updatedSpecs[0].price = Number(inputPrice)
-    }
-    if (inputStock && updatedSpecs.length > 0) {
-      updatedSpecs[0].stock = Number(inputStock)
-    }
-
-    const transportToUpdate = convertTransportToServerFormat()
-    const paymentToUpdate = convertPaymentToServerFormat()
-    const productToUpdate = {
-      ...productState.updatedProduct,
-      sellSpecs: updatedSpecs,
-      categoryId: selectedCategory.category_id || productState.product.categoryId,
-      brandId: selectedBrand.brand_id || productState.product.brandId,
-      transport: transportToUpdate,
-      payment: paymentToUpdate,
-    }
-
-    saveProductToServer(productToUpdate)
-  }
-
   const handleSpecChange = (specIndex, key, value) => {
-    console.log('Handling spec change:', { specIndex, key, value }) // Add this
+    // console.log("Handling spec change:", { specIndex, key, value });  // Add this
     setProductState(prevState => {
       if (!Array.isArray(prevState.sellSpecs)) {
         console.error('sellSpecs is not an array:', prevState.sellSpecs)
@@ -256,7 +251,7 @@ function EditProductPage() {
     return selectedPayments.includes(value)
   }
   const handlePaymentChange = value => {
-    console.log('Currently selected value:', value)
+    // console.log("Currently selected value:", value);
 
     if (value === '2') {
       // 當「全選」被選擇時，選擇所有選項；否則，取消所有選項
@@ -290,7 +285,7 @@ function EditProductPage() {
   }
 
   const handleTransportChange = value => {
-    console.log('Currently selected value:', value)
+    // console.log("Currently selected value:", value);
     if (value === '2') {
       // 當「全選」被選擇時，選擇所有選項；否則，取消所有選項
       if (isOptionChecked('2')) {
@@ -321,23 +316,221 @@ function EditProductPage() {
       setSelectedTransports(newTransports)
     }
   }
-
   const renderProductImages = () => {
-    return productState.images.map((image, index) => (
-      <img
-        key={index}
-        src={`/public${API_ENDPOINTS.LOCALHOST}/${image.img_src}`}
-        alt={image.originalname}
-        className="editproduct-image"
-      />
-    ))
+    if (!Array.isArray(productState.images)) {
+      return null
+    }
+    return productState.images
+      .filter(image => image && image.img_src)
+      .map((image, index) => (
+        <div key={index} className="image-item">
+          <img
+            src={`/public${API_ENDPOINTS.LOCALHOST}/${image.img_src}?t=${Date.now()}`}
+            alt={image.originalname || 'Product Image'}
+            className="editproduct-image1"
+            onClick={() => {
+              setEnlargedImageSrc(`${API_ENDPOINTS.LOCALHOST}/${image.img_src}?t=${Date.now()}`)
+              setShowImageModal(true)
+            }}
+          />
+
+          {image.type === 0 && <div className="introduce-badge custom-badge">介紹圖</div>}
+        </div>
+      ))
+  }
+  const renderProductImagesPutDel = (isModal = false) => {
+    return productState.images
+      .filter(image => image && image.img_src)
+      .map((image, index) => (
+        <div
+          key={index}
+          className={`image-item ${isModal && image.img_id === selectedImageId ? 'selected' : ''}`}
+          onClick={() => {
+            if (!showDeleteButtons) {
+              setSelectedImageId(image.img_id)
+            }
+          }}
+        >
+          <img
+            src={`/public${API_ENDPOINTS.LOCALHOST}/${image.img_src}?t=${Date.now()}`}
+            alt={image.originalname || 'Product Image'}
+            className="editproduct-image1"
+          />
+          {image.type === 0 && <div className="introduce-badge">封面圖</div>}
+          {showDeleteButtons && (
+            <Button
+              variant="danger"
+              size="sm"
+              onClick={e => {
+                e.stopPropagation() // 阻止事件冒泡
+                console.log(image.img_id)
+                if (window.confirm('確定要刪除此圖片嗎？')) {
+                  deleteImage(image.img_id)
+                }
+              }}
+            >
+              刪除
+            </Button>
+          )}
+        </div>
+      ))
   }
 
+  const uploadImage = async () => {
+    // console.log("uploadImage function is called");
+    if (!selectedImage) {
+      console.error('No image selected')
+      return
+    }
+    const formData = new FormData()
+    formData.append('productImage', selectedImage)
+    formData.append('prod_id', productState.product.prod_id)
+    formData.append('spec_id', productState.product.spec_id)
+
+    try {
+      const response = await fetch(
+        API_ENDPOINTS.UPLOAD_PRODUCT_IMAGE(
+          productState.product.prod_id,
+          productState.product.spec_id
+        ),
+        {
+          method: 'POST',
+          body: formData,
+        }
+      )
+
+      const responseData = await response.json()
+
+      if (response.ok) {
+        // 使用伺服器回應中的path
+        // console.log(response);
+
+        const newImage = {
+          img_src: `${responseData.path}`,
+        }
+
+        // 更新當前的圖片列表
+        setProductState(prevState => {
+          const newState = {
+            ...prevState,
+            images: [...prevState.images, newImage],
+          }
+          // console.log(newState.images);
+          return newState
+        })
+
+        if (inputFileRef.current) {
+          inputFileRef.current.value = ''
+          setFileName('新增圖片')
+        } else {
+          console.error(responseData.message || 'Error uploading image')
+        }
+      } else {
+        console.error(responseData.message || 'Error uploading image')
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error)
+    }
+  }
+
+  const deleteImage = async imageId => {
+    console.log(imageId)
+    try {
+      const response = await fetch(API_ENDPOINTS.DELETE_PRODUCT_IMAGE(imageId), {
+        method: 'DELETE',
+      })
+
+      if (response.ok) {
+        setProductState(prevState => ({
+          ...prevState,
+          images: prevState.images.filter(image => image.img_id !== imageId),
+        }))
+      } else {
+        const data = await response.json()
+        console.error(data.error)
+      }
+    } catch (error) {
+      console.error('Error deleting image:', error)
+    }
+  }
+  const changeCoverImage = async () => {
+    if (selectedImageId) {
+      try {
+        const response = await axios.post(API_ENDPOINTS.UPDATE_COVER_IMAGE, {
+          imageId: selectedImageId,
+        })
+        if (response.status === 200) {
+          alert('封面圖更新成功！')
+          // 這裡應該重新獲取產品圖片或更新狀態，以確保視圖是最新的
+          fetchProductImages() // 假設這是用來重新獲取產品圖片的函數
+        } else {
+          alert('封面圖更新失敗！')
+        }
+      } catch (error) {
+        console.error('更新封面圖失敗: ', error)
+        alert('更新封面圖失敗！')
+      }
+      setSelectedImageId(null) // 清空所選的圖片ID
+      setShowChangeCoverModal(false) // 關閉模態框
+    } else {
+      setShowHint(true) // 顯示提示
+      setTimeout(() => setShowHint(false), 5000) // 5秒後自動隱藏提示
+    }
+  }
+
+  // 假設這是用來重新獲取產品圖片的函數，你可能已經有這個功能，只是我在提供的代碼中沒有看到。
+  const fetchProductImages = async () => {
+    const response = await axios.get(API_ENDPOINTS.PRODUCT_BY_ID(id))
+    if (response.status === 200 && Array.isArray(response.data.images)) {
+      setProductState({ ...productState, images: response.data.images })
+      console.log('Fetched and updated product images:', response.data.images)
+    }
+  }
+
+  const handleImageChange = event => {
+    if (event.target.files.length > 0) {
+      setFileName(event.target.files[0].name)
+      if (event.target.files.length > 5) {
+        alert('最多只能上傳5張圖片！')
+        return
+      }
+      // 其他處理...
+    }
+    setSelectedImage(event.target.files[0])
+  }
+
+  const handleSave = () => {
+    const updatedSpecs = updateSpecName()
+
+    // 如果inputPrice有值，更新updatedSpecs[0].price，否則保持原樣
+    if (inputPrice && updatedSpecs.length > 0) {
+      updatedSpecs[0].price = Number(inputPrice)
+    }
+    if (inputStock && updatedSpecs.length > 0) {
+      updatedSpecs[0].stock = Number(inputStock)
+    }
+
+    const transportToUpdate = convertTransportToServerFormat()
+    const paymentToUpdate = convertPaymentToServerFormat()
+    const productToUpdate = {
+      ...productState.updatedProduct,
+      sellSpecs: updatedSpecs,
+      categoryId: selectedCategory.category_id || productState.product.categoryId,
+      brandId: selectedBrand.brand_id || productState.product.brandId,
+      transport: transportToUpdate,
+      payment: paymentToUpdate,
+    }
+
+    saveProductToServer(productToUpdate)
+  }
   if (error.length > 0) return <div>{error.join(', ')}</div>
 
   if (!productState.product) return <div>Loading...</div>
 
-  console.log(productState.product.sellspec)
+  const handleModalClose = () => {
+    setShowModal(false)
+    setShowDeleteButtons(false)
+  }
 
   return (
     <>
@@ -356,7 +549,7 @@ function EditProductPage() {
         </div>
 
         <div className="row mt-5">
-          <label className="col-2 align-self-start titlerow">商品描述</label>
+          <label className="col-2 align-self-start titlerow">商品名稱</label>
           <div className="col">
             <div className="row">
               <div className="col-6">
@@ -384,8 +577,103 @@ function EditProductPage() {
         </div>
         <div className="row mt-5">
           <div className="col-2">商品圖片</div>
-          <div className="col">{renderProductImages()}</div>
+          <div className="col">
+            {renderProductImages()}
+            <Modal show={showImageModal} onHide={() => setShowImageModal(false)}>
+              <Modal.Header closeButton>
+                <Modal.Title>查看圖片</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {enlargedImageSrc && (
+                  <img
+                    src={'/public' + enlargedImageSrc}
+                    alt="Enlarged Product "
+                    className="enlarged-image"
+                  />
+                )}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={() => setShowImageModal(false)}>
+                  關閉
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </div>
+          <div className="col">
+            <Button variant="primary" onClick={() => setShowModal(true)}>
+              新增/刪減圖片
+            </Button>
+            <div className="col-12 mt-2">
+              <Button
+                variant="info"
+                onClick={() => {
+                  setShowChangeCoverModal(true)
+                  setShowHint(true)
+                }}
+              >
+                更改封面圖
+              </Button>
+            </div>
+            <Modal show={showModal} onHide={handleModalClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>編輯商品圖片</Modal.Title>
+              </Modal.Header>
+              <div className="row">
+                <Button
+                  variant="danger"
+                  onClick={() => setShowDeleteButtons(!showDeleteButtons)}
+                  className="col"
+                >
+                  {showDeleteButtons ? '隱藏刪除按鈕' : '顯示刪除按鈕'}
+                </Button>
+              </div>
+              <Modal.Body>
+                {renderProductImagesPutDel()}
+                <div className="custom-file">
+                  <input
+                    ref={inputFileRef} // Attach the ref here
+                    type="file"
+                    onChange={handleImageChange}
+                    name="productImage"
+                    className="custom-file-input"
+                    id="productImageInput"
+                  />
+                  <label className="custom-file-label" htmlFor="productImageInput">
+                    {fileName || '新增圖片'}
+                  </label>
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleModalClose}>
+                  取消
+                </Button>
+                <Button variant="primary" onClick={uploadImage}>
+                  上傳圖片
+                </Button>
+              </Modal.Footer>
+            </Modal>
+
+            <Modal show={showChangeCoverModal} onHide={() => setShowChangeCoverModal(false)}>
+              <Modal.Header closeButton>
+                <Modal.Title>更改封面圖</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {renderProductImagesPutDel(true)}
+
+                {showHint && <div className="hint">請點擊想要設為封面的圖片</div>}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={() => setShowChangeCoverModal(false)}>
+                  取消
+                </Button>
+                <Button variant="primary" onClick={changeCoverImage}>
+                  確認更改
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </div>
         </div>
+
         <div className="row mt-5">
           <label className="col-2 align-self-start titlerow">商品分類</label>
           <div className="col">
@@ -409,7 +697,7 @@ function EditProductPage() {
                         <Dropdown.Item
                           key={category.category_id}
                           onClick={() => {
-                            console.log(`已點擊分類: ${category.category}`)
+                            // console.log(`已點擊分類: ${category.category}`);
                             setSelectedCategory(category)
                           }}
                         >
@@ -429,7 +717,7 @@ function EditProductPage() {
                         <Dropdown.Item
                           key={brand.brand_id}
                           onClick={() => {
-                            console.log(`已點擊品牌: ${brand.brand}`)
+                            // console.log(`已點擊品牌: ${brand.brand}`);
                             setSelectedBrand(brand)
                           }}
                         >
