@@ -36,7 +36,10 @@ const AuthController = {
     }
   },
   facebookAuth: async (req, res, next) => {
-    console.log(req.user)
+    if (req.user == undefined) {
+      res.redirect('/')
+      return
+    }
     if (req.session.member) {
       //
     } else {

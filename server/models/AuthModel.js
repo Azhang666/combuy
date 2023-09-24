@@ -105,6 +105,8 @@ const AuthModel = {
           result.insertId,
           data.name.familyName + data.name.givenName,
           2,
+          1,
+          data.emails[0].value,
           true
         )
         return new Success({ type: 'register', member_data: member_data })

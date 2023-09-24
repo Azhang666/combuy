@@ -7,6 +7,7 @@ const passport = require('passport')
 const FacebookStrategy = require('passport-facebook')
 
 const AuthController = require('../../../controllers/authController')
+const JWT = require('../../../middlewares/jwt')
 
 passport.use(
   new FacebookStrategy(
@@ -32,6 +33,7 @@ passport.deserializeUser(function (obj, done) {
 
 router.get(
   '/',
+  JWT.createAndVerifyToken,
   passport.authenticate('facebook', {
     scope: ['email', 'public_profile'],
   })
@@ -46,6 +48,6 @@ router.get(
   })
 )
 
-router.use('/suc', AuthController.facebookAuth)
+router.use('/suc', JWT.decodingAndVerifyToken, AuthController.facebookAuth)
 
 module.exports = router
