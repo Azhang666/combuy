@@ -11,6 +11,8 @@ router.get('/', function (req, res) {
 router.get('/data', MemberController.dataRender)
 router.post('/data', MemberController.dataUpadteSucRender)
 
+router.use('/auth', MemberController.authRender)
+
 router.get('/password_change', MemberController.pwdChangeRender)
 router.post('/password_change', MemberController.pwdChangeSucRender)
 

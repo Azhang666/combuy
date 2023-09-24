@@ -1,8 +1,10 @@
 class MemberData {
-  constructor(u_id, u_name, right, islog = true) {
+  constructor(u_id, u_name, right, verified, mail, islog = true) {
     this.u_id = u_id
     this.u_name = u_name
     this.right = right
+    this.verified = verified
+    this.mail = mail
     this.islog = islog
   }
 }
