@@ -87,7 +87,7 @@ function Downproducts() {
                       productId={prodItem.prod_id}
                       specId={prodItem.spec_id}
                       fetchProducts={fetchProducts}
-                    />
+                      productName={prodItem.prod_name} />
                   </div>
                 </div>
               </div>

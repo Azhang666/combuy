@@ -37,6 +37,11 @@ function EditProductPage() {
   const [selectedTransports, setSelectedTransports] = useState([])
   const [selectedPayments, setSelectedPayments] = useState([])
   const [showChangeCoverModal, setShowChangeCoverModal] = useState(false)
+  const [textareaContent, setTextareaContent] = useState(
+    productState.product.sellspec && productState.product.sellspec[0]
+      ? productState.product.sellspec[0].contnet
+      : ""
+  );
 
   const SPEC_FIELDS = [
     { key: 'cpu', label: 'CPU' },
@@ -102,7 +107,7 @@ function EditProductPage() {
     }
 
     fetchData()
-  }, [id])
+  }, [id, sid])
 
   useEffect(() => {
     const paymentFromServer = productState.product.payment
@@ -139,6 +144,12 @@ function EditProductPage() {
     }
   }, [productState.product.payment, productState.product.transport])
 
+  useEffect(() => {
+    if (productState.product.sellspec && productState.product.sellspec[0]) {
+      setTextareaContent(productState.product.sellspec[0].contnet);
+    }
+  }, [productState.product.sellspec]);
+
   const handleSpecNameChange = e => {
     setEditedSpecName(e.target.value)
   }
@@ -149,11 +160,16 @@ function EditProductPage() {
 
   const handleInputChange = useCallback(
     e => {
-      const { name, value } = e.target
-      if (name === 'spec_name' && productState.sellSpecs.length > 0) {
+      const { name, value } = e.target;
+
+      if (name === 'descriptionContent') {
+        // 更新本地 state
+        setTextareaContent(value);
+      }
+      else if (name === 'spec_name' && productState.sellSpecs.length > 0) {
         setProductState(prevState => {
-          const updatedSpecs = [...prevState.sellSpecs]
-          updatedSpecs[0].spec_name = value
+          const updatedSpecs = [...prevState.sellSpecs];
+          updatedSpecs[0].spec_name = value;
           return {
             ...prevState,
             sellSpecs: updatedSpecs,
@@ -161,17 +177,18 @@ function EditProductPage() {
               ...prevState.updatedProduct,
               sellSpecs: updatedSpecs,
             },
-          }
-        })
-      } else {
+          };
+        });
+      }
+      else {
         setProductState(prevState => ({
           ...prevState,
           updatedProduct: { ...prevState.updatedProduct, [name]: value },
-        }))
+        }));
       }
     },
     [productState.sellSpecs]
-  )
+  );
 
   const updateSpecName = () => {
     if (editedSpecName && productState.sellSpecs.length > 0) {
@@ -379,22 +396,31 @@ function EditProductPage() {
   }
 
   const uploadImage = async () => {
-    // console.log("uploadImage function is called");
+    const spec_id = productState.product.sellspec[0].spec_id;
+
     if (!selectedImage) {
       console.error('No image selected')
       return
     }
-    const formData = new FormData()
-    formData.append('productImage', selectedImage)
-    formData.append('prod_id', productState.product.prod_id)
-    formData.append('spec_id', productState.product.spec_id)
+
+    if (typeof spec_id === 'undefined') { // 修改了這裡
+      console.error('spec_id is not defined!')
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('productImage', selectedImage);
+    formData.append('prod_id', productState.product.prod_id);
+    formData.append('spec_id', spec_id);
 
     try {
       const response = await fetch(
         API_ENDPOINTS.UPLOAD_PRODUCT_IMAGE(
           productState.product.prod_id,
-          productState.product.spec_id
+          spec_id // 修改了這裡
         ),
+        // ... 其他代碼
+
         {
           method: 'POST',
           body: formData,
@@ -512,11 +538,19 @@ function EditProductPage() {
       updatedSpecs[0].stock = Number(inputStock)
     }
 
+    // 使用 textareaContent 更新 sellspec 的內容
+    const updatedSellSpec = productState.updatedProduct.sellspec ? [...productState.updatedProduct.sellspec] : [];
+
+    if (updatedSellSpec[0]) {
+      updatedSellSpec[0].contnet = textareaContent;
+    }
+
     const transportToUpdate = convertTransportToServerFormat()
     const paymentToUpdate = convertPaymentToServerFormat()
     const productToUpdate = {
       ...productState.updatedProduct,
       sellSpecs: updatedSpecs,
+      sellspec: updatedSellSpec,  // 使用更新後的 sellspec
       categoryId: selectedCategory.category_id || productState.product.categoryId,
       brandId: selectedBrand.brand_id || productState.product.brandId,
       transport: transportToUpdate,
@@ -525,6 +559,10 @@ function EditProductPage() {
 
     saveProductToServer(productToUpdate)
   }
+
+
+
+
   if (error.length > 0) return <div>{error.join(', ')}</div>
 
   if (!productState.product) return <div>Loading...</div>
@@ -545,7 +583,7 @@ function EditProductPage() {
       </div>
       <div className="top2 top2-b10px incontentText mt-3 p-4">
         <div className="row">
-          <h5 className="col-2">{}</h5>
+          <h5 className="col-2">{ }</h5>
           <h5 className="col-5 ">當前商品資訊</h5>
           <h5 className="col-5 ">編輯商品資訊</h5>
         </div>
@@ -748,14 +786,12 @@ function EditProductPage() {
             <textarea
               className="form-control txtara"
               rows={4}
-              value={
-                productState.product.sellspec &&
-                productState.product.sellspec[0] &&
-                productState.product.sellspec[0].contnet
-              }
+              value={textareaContent}
               onChange={handleInputChange}
-              name="description"
+              name="descriptionContent"
             />
+
+
           </div>
         </div>
 

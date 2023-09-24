@@ -288,7 +288,8 @@ exports.getProductsAllData = async (req, res) => {
   }
 }
 exports.partiallyUpdateProduct = (req, res) => {
-  const { prod_id, spec_id } = req.params
+  const { prod_id, spec_id } = req.body.sellspec[0];
+
   const updatedData = req.body
   const sellspecData = updatedData.sellspec[0]
   const sellspecFields = []
@@ -315,6 +316,7 @@ exports.partiallyUpdateProduct = (req, res) => {
     size: 'size',
     weight: 'weight',
     stock: 'stock',
+    contnet:'contnet' 
   }
 
   if (!updatedData.prod_name) {

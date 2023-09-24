@@ -1,5 +1,8 @@
 @charset "UTF-8";
-/* The sidebar menu */
+body {
+  background-color: #DFD9D9;
+}
+
 .sidenav {
   height: 100%;
   width: 15%;
@@ -10,7 +13,6 @@
   overflow-x: hidden;
   padding-top: 20px;
 }
-
 .sidenav a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
@@ -43,27 +45,20 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-.top2-b10px {
-  border-radius: 10px;
+.top2-b10px,
+.top2 .gray1,
+.top2 .gray3 {
+  border-radius: 5px;
 }
-.top2-bgray {
+.top2-bgray,
+.top2 .rbgray,
+.top2 .gray1,
+.top2 .gray2,
+.top2 .gray3,
+.top2 .even-row {
   background-color: #F2F2F2;
 }
-
-.rbgray,
-.gray1,
-.gray2,
-.gray3,
-.even-row {
-  background-color: #F2F2F2;
-}
-
-.gray1,
-.gray3 {
-  border-radius: 10px;
-}
-
-.gray3 {
+.top2 .gray3 {
   height: auto;
 }
 
@@ -72,7 +67,6 @@
   display: inline-block;
   padding: 1%;
 }
-
 .titlefont-blue {
   color: #2D59F5;
 }
@@ -85,18 +79,6 @@
 
 .iphone {
   width: 150px;
-}
-
-body {
-  background-color: #DFD9D9;
-}
-
-.modal-dialog {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 80vh;
-  height: 200px;
 }
 
 .txtara,
@@ -127,15 +109,17 @@ body {
   text-align: right;
 }
 
-.titlerow {
+.titlerow,
+.titlerowfit {
   display: flex;
   align-items: center;
+}
+
+.titlerow {
   height: 40px;
 }
 
 .titlerowfit {
-  display: flex;
-  align-items: center;
   width: auto;
   min-height: 40px;
   max-height: 80px;
@@ -159,6 +143,14 @@ body {
   z-index: 1;
 }
 
+.modal-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  height: 200px;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -176,6 +168,7 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  color: black;
 }
 
 .odd-row {
