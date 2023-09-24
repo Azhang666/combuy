@@ -55,7 +55,7 @@ function Main() {
       <div className="top2 top2-bgray">
         {notPublishedProducts.length === 0 ? (
           <div className="row text-center d-flex align-items-center">
-            <b className="col-12 titlefont">目前沒有下架商品</b>
+            <b className="col-12 titlefont">目前沒有上架商品</b>
           </div>
         ) : (
           notPublishedProducts.map((prodItem, index) => (

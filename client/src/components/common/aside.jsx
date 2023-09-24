@@ -52,7 +52,7 @@ function Aside() {
         <div className="sidenav">
             <Link to="/" className="mt-5">
                 <AdminIcon />
-                <span className="titlefont-blue">賣家一號</span>
+                <span className="titlefont-blue">小美</span>
             </Link>
             <Link to="/" className="mt-5">
                 <ProductManagementIcon />

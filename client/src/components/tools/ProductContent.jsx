@@ -1,84 +1,21 @@
-import React, { useState } from 'react';
-function ProductContent({ onUpdateForm }) {
+import React from 'react';
 
-    const [formState, setFormState] = useState({
-        spec: '',
-        quantity: '',
-        price: '',
-        description: ''
-    });
+function ProductContent({ formik }) {
 
-    const [hasError, setHasError] = useState({
-        price: false,
-        quantity: false
-    });
-    const handleInputChange = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-
-        // 這是新加入的檢查
-        if (formState[name] === value) return;
-
-        const currentErrors = { ...hasError };
-
+    const validateInput = (name, value) => {
         if (name === "quantity") {
-            const isValidInteger = /^\d+$/.test(value);  // 檢查是否為有效整數
-            if (value > "999") {
-                value.startsWith("999")
-            }
-            if (!isValidInteger || value === "" || value.startsWith("0")) {
-                currentErrors[name] = true;
-            } else {
-                currentErrors[name] = false;
-            }
+            return /^\d+$/.test(value) && !value.startsWith("0") && parseInt(value) <= 999;
+        } else if (name === "price") {
+            return /^\d+$/.test(value) && !value.startsWith("0");
         }
-        if (name === "price") {
-            const isValidNumberWithoutPunctuation = /^\d+$/.test(value);  // 檢查是否為有效數字
-
-            if (!isValidNumberWithoutPunctuation || value === "" || value.startsWith("0")) {
-                currentErrors[name] = true;
-            } else {
-                currentErrors[name] = false;
-            }
-        }
-
-        setHasError(currentErrors);
-
-        if (!currentErrors[name]) {
-            const updatedFormState = { ...formState, [name]: value };
-            setFormState(updatedFormState);
-            if (onUpdateForm) {
-                onUpdateForm(updatedFormState);
-            }
-        }
+        return true;
     };
-    const handleInputBlur = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
 
-        const currentErrors = { ...hasError };
-
-        if (name === "quantity") {
-            const isValidInteger = /^\d+$/.test(value);  // 檢查是否為有效整數
-
-            if (!isValidInteger || value === "" || value.startsWith("0")) {
-                currentErrors[name] = true;
-            } else {
-                currentErrors[name] = false;
-            }
-
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        if (validateInput(name, value)) {
+            formik.setFieldValue(name, value);
         }
-        if (name === "price") {
-            const isValidNumberWithoutPunctuation = /^\d+$/.test(value);  // 檢查是否為有效數字
-
-            if (!isValidNumberWithoutPunctuation || value === "" || value.startsWith("0")) {
-                currentErrors[name] = true;
-            } else {
-                currentErrors[name] = false;
-            }
-        }
-
-        setHasError(currentErrors);
     };
 
     return (
@@ -90,9 +27,8 @@ function ProductContent({ onUpdateForm }) {
                     <textarea
                         className="form-control txtara"
                         rows={4}
-                        value={formState.description}
+                        value={formik.values.description}
                         onChange={handleInputChange}
-
                         name="description"
                     />
                 </div>
@@ -110,12 +46,15 @@ function ProductContent({ onUpdateForm }) {
                                         type="text"
                                         name="spec"
                                         id="spec"
-                                        value={formState.spec}
-                                        onInput={handleInputChange}
-
-                                        className="form-control ms-1 input-right-placeholder "
+                                        value={formik.values.spec}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        className={`form-control ms-1 ${formik.touched.spec && formik.errors.spec ? 'error-input' : ''}`}
                                         placeholder="例如:基本款"
                                     />
+                                    {formik.touched.spec && formik.errors.spec ? (
+                                        <div className="text-danger">{formik.errors.spec}</div>
+                                    ) : null}
                                 </div>
                             </div>
 
@@ -126,35 +65,37 @@ function ProductContent({ onUpdateForm }) {
                                         type="number"
                                         name="quantity"
                                         id="quantity"
-                                        className={`form-control ms-1 ${hasError.quantity ? 'error-input' : ''}`}
-                                        value={formState.quantity}
-                                        onInput={handleInputChange}
-                                        onBlur={handleInputBlur}
+                                        className={`form-control ms-1 ${formik.touched.quantity && formik.errors.quantity ? 'error-input' : ''}`}
+                                        value={formik.values.quantity}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
                                         min={0}
                                         max={999}
                                     />
-                                    {hasError.quantity && <div className="text-danger">請輸入數量!</div>}
-
-
+                                    {formik.touched.quantity && formik.errors.quantity ? (
+                                        <div className="text-danger">{formik.errors.quantity}</div>
+                                    ) : null}
                                 </div>
                             </div>
+
                             <div className="col-md-4">
                                 <div className='m-2'>
                                     <label htmlFor="price">價格</label>
                                     <input
                                         type="text"
-                                        name="price"          
-                                        id="price"           
-                                        className={`form-control ms-1 ${hasError.price ? 'error-input' : ''}`}
-                                        value={formState.price}    
+                                        name="price"
+                                        id="price"
+                                        className={`form-control ms-1 ${formik.touched.price && formik.errors.price ? 'error-input' : ''}`}
+                                        value={formik.values.price}
                                         onChange={handleInputChange}
-                                        onBlur={handleInputBlur}
+                                        onBlur={handleInputChange}
                                         min={0}
                                     />
-                                    {hasError.price && <div className="text-danger">請輸入價格!</div>}
+                                    {formik.touched.price && formik.errors.price ? (
+                                        <div className="text-danger">{formik.errors.price}</div>
+                                    ) : null}
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

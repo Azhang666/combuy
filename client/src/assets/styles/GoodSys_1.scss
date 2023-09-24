@@ -1,16 +1,4 @@
-// Variables
-$background-light: #FFEEEE;
-$background-dark: #DFD9D9;
-$background-gray: #F2F2F2;
-$border-color: #D9D9D9;
-$font-size-large: 25px;
-$text-color: black;
-$text-hover-color: lightgray;
-$background-hover: lightslategrey;
-
-body {
-  background-color: $background-dark;
-}
+/* The sidebar menu */
 
 .sidenav {
   height: 100%;
@@ -18,31 +6,31 @@ body {
   position: fixed;
   z-index: 1;
   left: 0;
-  background-color: $background-light;
+  background-color: #FFEEEE;
   overflow-x: hidden;
   padding-top: 20px;
+}
 
-  a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: $font-size-large;
-    color: $text-color;
-    display: block;
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+  display: block;
 
-    &:hover {
-      color: $text-hover-color;
-      background-color: $background-hover;
-    }
+  &:hover {
+    color: lightgray;
+    background-color: lightslategrey;
   }
 }
 
 @media screen and (max-height: 450px) {
   .sidenav {
     padding-top: 15px;
+  }
 
-    a {
-      font-size: 18px;
-    }
+  .sidenav a {
+    font-size: 18px;
   }
 }
 
@@ -52,6 +40,7 @@ body {
   margin-left: 16%;
   margin-right: 1%;
   background-color: #fff;
+
 }
 
 .top2 {
@@ -60,34 +49,40 @@ body {
     border-top-right-radius: 10px;
   }
 
-  &-b10px,
-  .gray1,
-  .gray3 {
-    border-radius: 5px;
+  &-b10px {
+    border-radius: 10px;
   }
 
-  &-bgray,
-  .rbgray,
-  .gray1,
-  .gray2,
-  .gray3,
-  .even-row {
-    background-color: $background-gray;
-  }
-
-  .gray3 {
-    height: auto;
+  &-bgray {
+    background-color: #F2F2F2;
   }
 }
 
+.rbgray,
+.gray1,
+.gray2,
+.gray3,
+.even-row {
+  background-color: #F2F2F2;
+}
+
+.gray1,
+.gray3 {
+  border-radius: 10px;
+}
+
+.gray3 {
+  height: auto;
+}
+
 .titlefont {
-  font-size: $font-size-large;
+  font-size: 25px;
   display: inline-block;
   padding: 1%;
+}
 
-  &-blue {
-    color: #2D59F5;
-  }
+.titlefont-blue {
+  color: #2D59F5;
 }
 
 .butt1 {
@@ -100,12 +95,17 @@ body {
   width: 150px;
 }
 
+body {
+  background-color: #DFD9D9;
+}
+
+
 .txtara,
 .conarae {
-  border: 1px solid $border-color;
-
+  border: 1px solid #D9D9D9;
+  
   &:focus {
-    border-color: $border-color;
+    border-color: #D9D9D9;
     outline: none;
   }
 }
@@ -118,29 +118,36 @@ body {
   height: 50px;
 }
 
-.input-right-placeholder::placeholder {
-  direction: rtl;
-  text-align: right;
-}
+// .inputS, .stockinput {
+  //   width: 20%;
+  //   height: 30px;
+// }
 
-.titlerow,
-.titlerowfit {
+// .inputS {
+  //   border: 2px #D9D9D9 solid;
+  // }
+  
+  .input-right-placeholder::placeholder {
+    direction: rtl;
+    text-align: right;
+  }
+.titlerow {
   display: flex;
   align-items: center;
-}
-
-.titlerow {
   height: 40px;
 }
 
 .titlerowfit {
+  display: flex;
+  align-items: center;
   width: auto;
-  min-height: 40px; 
-  max-height: 80px; 
-  overflow: hidden; 
-  text-overflow: ellipsis; 
+  min-height: 40px; // 例如，設定最小高度為40px
+  max-height: 80px; // 設定最大高度為80px
+  overflow: hidden; // 確保內容不會溢出
+  // white-space: nowrap; // 防止文字換行
+  text-overflow: ellipsis; // 當文字超出時，會在結尾顯示省略號
+  
 }
-
 
 .mtt {
   margin-top: 0px;
@@ -355,3 +362,9 @@ body {
   max-width: 100%;
   max-height: 80vh; /* 限制圖片高度，使其不超過視窗的80% */
 }
+
+
+.input-error {
+  border-color: red;
+}
+

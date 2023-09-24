@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { API_ENDPOINTS } from '../contexts/constants';
+import WarningMessage from './WarningMessage';
 const LAPTOP_CATEGORY = '筆電';
 
-function CategoryMenu(props) {
+function CategoryMenu({ onCategorySelect, onBrandSelect, formikErrors, formikTouched, ...props }) {
+    // console.log('formikTouched:', formikTouched, 'formikErrors:', formikErrors)
     const [showCategories, setShowCategories] = useState(false);
     const [mainCategories, setMainCategories] = useState([]);
     const [brands, setBrands] = useState([]);
@@ -44,10 +46,9 @@ function CategoryMenu(props) {
         setShowCategories(prev => !prev);
         setSelectedCategory(null);
         setSelectedBrand(null);
-        props.onSelectProduct(null);
-        props.onCategorySelect(null, null);
-    };
 
+        onCategorySelect(null, null);
+    };
 
     const selectMainCategory = (categoryName, categoryId) => {
         setSelectedCategory(categoryName);
@@ -55,27 +56,26 @@ function CategoryMenu(props) {
         if (categoryName === LAPTOP_CATEGORY) {
             console.log("筆電的categoryId是:", categoryId);
             fetchBrands();
-            props.onSelectProduct(LAPTOP_CATEGORY);
-            props.onCategorySelect(categoryName, categoryId);
+            // props.onSelectProduct(LAPTOP_CATEGORY); // 删除或修改此行
+            onCategorySelect(categoryName, categoryId); // 修改此行
         } else {
-            props.onCategorySelect(null, null);
+            onCategorySelect(null, null); // 修改此行
         }
     };
 
 
     const handleBrandClick = (brandId, brandName) => {
-        props.onBrandSelect(brandId); // 將品牌 ID 傳給父組件
+        onBrandSelect(brandId); // 修改此行
         setSelectedBrand(brandName);
         setShowCategories(false);
         console.log(brandId);
-
     };
 
 
 
     return (
         <>
-           
+
             <div className="row align-items-center mt-5">
                 <label className="col-1">商品類別</label>
 
@@ -83,7 +83,15 @@ function CategoryMenu(props) {
                     {!selectedCategory && !selectedBrand && (
                         <button type='button' id="main-category" onClick={toggleCategories} className='m-1 btn btn-secondary'>選擇分類</button>
                     )}
-
+                   
+                    {/* 分類偽填警告 */}
+                    {formikTouched.categoryId && formikErrors.categoryId ? (
+                        <WarningMessage message={formikErrors.categoryId} />
+                    ) : null} 
+                    {/* 品牌偽填警告 */}
+                    {formikTouched.brandId && formikErrors.brandId ? (
+                        <WarningMessage message={formikErrors.brandId} />
+                    ) : null}
                     {showCategories && !selectedCategory && (
                         <>
                             {mainCategories.map(category => (
@@ -96,6 +104,10 @@ function CategoryMenu(props) {
                                 </button>
                             ))}
                             <button type='button' onClick={toggleCategories} className='m-1 btn btn-danger'>返回</button>
+                            {/* 品牌偽填警告 */}
+                            {formikTouched.brandId && formikErrors.brandId ? (
+                                <WarningMessage message={formikErrors.brandId} />
+                            ) : null}
                         </>
                     )}
 
@@ -118,6 +130,10 @@ function CategoryMenu(props) {
                                 </button>
                             ))}
                             <button type='button' onClick={toggleCategories} className='m-1 btn btn-danger'>返回</button>
+                            {/* 品牌偽填警告 */}
+                            {formikTouched.brandId && formikErrors.brandId ? (
+                                <WarningMessage message={formikErrors.brandId} />
+                            ) : null}
                         </>
                     )}
 

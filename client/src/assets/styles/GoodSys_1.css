@@ -1,8 +1,5 @@
 @charset "UTF-8";
-body {
-  background-color: #DFD9D9;
-}
-
+/* The sidebar menu */
 .sidenav {
   height: 100%;
   width: 15%;
@@ -13,6 +10,7 @@ body {
   overflow-x: hidden;
   padding-top: 20px;
 }
+
 .sidenav a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
@@ -45,20 +43,27 @@ body {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-.top2-b10px,
-.top2 .gray1,
-.top2 .gray3 {
-  border-radius: 5px;
+.top2-b10px {
+  border-radius: 10px;
 }
-.top2-bgray,
-.top2 .rbgray,
-.top2 .gray1,
-.top2 .gray2,
-.top2 .gray3,
-.top2 .even-row {
+.top2-bgray {
   background-color: #F2F2F2;
 }
-.top2 .gray3 {
+
+.rbgray,
+.gray1,
+.gray2,
+.gray3,
+.even-row {
+  background-color: #F2F2F2;
+}
+
+.gray1,
+.gray3 {
+  border-radius: 10px;
+}
+
+.gray3 {
   height: auto;
 }
 
@@ -67,6 +72,7 @@ body {
   display: inline-block;
   padding: 1%;
 }
+
 .titlefont-blue {
   color: #2D59F5;
 }
@@ -79,6 +85,10 @@ body {
 
 .iphone {
   width: 150px;
+}
+
+body {
+  background-color: #DFD9D9;
 }
 
 .txtara,
@@ -109,17 +119,15 @@ body {
   text-align: right;
 }
 
-.titlerow,
-.titlerowfit {
+.titlerow {
   display: flex;
   align-items: center;
-}
-
-.titlerow {
   height: 40px;
 }
 
 .titlerowfit {
+  display: flex;
+  align-items: center;
   width: auto;
   min-height: 40px;
   max-height: 80px;
@@ -328,4 +336,8 @@ body {
 .enlarged-image {
   max-width: 100%;
   max-height: 80vh; /* 限制圖片高度，使其不超過視窗的80% */
+}
+
+.input-error {
+  border-color: red;
 }/*# sourceMappingURL=GoodSys_1.css.map */

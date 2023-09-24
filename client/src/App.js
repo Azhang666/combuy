@@ -8,6 +8,7 @@ import './assets/styles/productStyle.css'
 import './assets/styles/navtop.css'
 import './assets/styles/GoodSys_1.css'
 import 'react-toastify/dist/ReactToastify.css';
+import './assets/styles/WarningMessage.css'
 import { ToastContainer } from 'react-toastify';
 
 // Components and local styles

@@ -120,7 +120,7 @@ exports.createProduct = [
     next()
   },
   async (req, res) => {
-    console.log(req.body)
+    console.log('req.body',req.body)
 
     const mainImageIdx = Number(req.body.mainImageIdx)
     const {
@@ -136,7 +136,8 @@ exports.createProduct = [
         weight,
         price,
         description,
-        spec,
+        spec_name,
+        contnet,
       },
       prod_name,
       brand_id,
@@ -158,7 +159,7 @@ exports.createProduct = [
       const results = await dbQuery('INSERT INTO product SET ?', productData)
       const prodId = results.insertId
       const publishValue = req.body.productData.publish
-      const quantityValue = req.body.productData.quantity
+      const quantityValue = req.body.productData.stock
       const DEFAULT_IMAGE_PATH = '/images/products/defaultImage.jpg'
 
       let imagesData = []
@@ -210,7 +211,7 @@ exports.createProduct = [
       const sellSpecData = {
         prod_id: prodId,
         spec_id: '10',
-        spec_name: spec,
+        spec_name: spec_name,
         contnet: description,
         price: price,
         cpu,
