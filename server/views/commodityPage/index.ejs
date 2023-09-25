@@ -140,8 +140,12 @@
         <h2 class="pt-4 evaluate text-center"><strong>商品評價</strong></h2>
         <hr />
         <% commentData.forEach(function(comment) { %>
-          <div class="circle"></div>
+          <div class="circle">
+            <img src="/public<%= comment.photo %>" >
+
+          </div>
           <div class="buyer">
+            <span><%= comment.name %></span>
             <div class="rating mt-1">
               <% for ( let i=1 ; i <=5; i++ ) { %>
                 <span class="bi bi-star<%= i <= comment.comment_grade ? '-fill' : '' %>"></span>
@@ -149,7 +153,7 @@
             </div>
 
             <p class="mt-2">
-              <%= comment.comment_time %> | 購入數量 <%= comment.count %>
+              <%= comment.comment_time %>
             </p>
           </div>
           <div class="comment">

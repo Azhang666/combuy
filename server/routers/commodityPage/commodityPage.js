@@ -61,8 +61,8 @@ router.get('/:prodId/:specId', async (req, res) => {
       'SELECT * FROM productimg WHERE type = 0 ORDER BY RAND() LIMIT 8'
     )
     var commentData = await queryDatabase(
-      'SELECT count, comment, comment_grade, comment_time FROM order_product WHERE prod_id = ? AND comment_time IS NOT null',
-      [prodId]
+      'SELECT vw_comment.comment, vw_comment.comment_grade, vw_comment.comment_time, vw_comment.name, vw_comment.spec_name,user.photo FROM vw_comment JOIN user ON vw_comment.user_id = user.user_id WHERE prod_id = ? AND spec_id = ? AND comment_time IS NOT null',
+      [prodId,specId]
     )
     commentData.forEach(comment => {
       comment.comment_time = new Date(comment.comment_time).toLocaleString()
@@ -87,6 +87,8 @@ router.get('/:prodId/:specId', async (req, res) => {
       date.order_date = new Date(date.order_date).toLocaleString()
       date.order_id = String(date.order_id).padStart(8, '0')
     })
+
+
 
     // 排列相關產品
     // 使用 Promise.all 處理所有資料庫的查詢
@@ -125,7 +127,6 @@ router.get('/:prodId/:specId', async (req, res) => {
       attributes: [
         'spec_name',
         'price',
-        'stock',
         'cpu',
         'gpu',
         'ram',
