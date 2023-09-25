@@ -13,7 +13,7 @@ const AuthModel = {
           result[0].name,
           result[0].rights,
           result[0].verified,
-          result[0].email,
+          result[0].google_auth_mail || result[0].email,
           true
         )
         return new Success({ type: 'login', member_data: member_data })
@@ -58,7 +58,7 @@ const AuthModel = {
       if (result1.length == 0) {
         // 綁定
         sql2 =
-          'UPDATE user SET 	verified= 1,	google_auth_id = ? ,google_auth_mail = ? WHERE user_id = ? '
+          'UPDATE user SET 	verified = 1,	google_auth_id = ? ,google_auth_mail = ? WHERE user_id = ? '
         const result2 = await conn.queryAsync(sql2, [data.id, data.emails[0].value, uid])
         return new Success('bind')
       } else {

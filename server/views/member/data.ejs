@@ -156,7 +156,34 @@
               <input type="submit" value="儲 存" />
             </div>
           </form>
-        </div>
+          <div>
+            <h3>第三方綁定</h3>
+          </div>
+          <div>
+            <h4>GOOGLE</h4>
+          </div>
+          <div>
+            <% if(google_auth_id == null){%>
+            <a href="/auth/google">
+              <input type="button" class="button" value="綁定 GOOGLE" />
+            </a>
+            <% }else{%>
+            <input type="button" class="button" value="解除 GOOGLE" />
+            <%}%>
+          </div>
+          <div>
+            <h4>FACEBOOK</h4>
+          </div>
+          <div>
+            <% if(facebook_auth_id == null){%>
+            <a href="/auth/facebook">
+              <input type="button" class="button" value="綁定 FACEBOOK" />
+            </a>
+            <% }else{%>
+            <input type="button" class="button" value="解除 FACEBOOK" />
+            <%}%>
+          </div>
+
       </section>
     </main>
     <!-- 插入footer的保留位 -->

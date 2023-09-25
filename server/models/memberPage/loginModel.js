@@ -17,7 +17,7 @@ const LoginModel = {
             response[0].name,
             response[0].rights,
             response[0].verified,
-            response[0].email,
+            response[0].google_auth_mail || response[0].email,
             true
           )
           return new Success(member_data)

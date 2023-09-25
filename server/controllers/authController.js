@@ -14,7 +14,7 @@ const AuthController = {
 
     if (req.session.member) {
       const result = await AuthModel.googleBind(req.session.member.u_id, req.user)
-      res.redirect(`/member/auth?p=google&r=${result.message}`)
+      res.redirect(`/member/data?p=GOOGLE&r=${result.message}`)
     } else {
       const result = await AuthModel.google(req.user)
       if (result.err == 0) {

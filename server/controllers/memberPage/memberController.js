@@ -2,16 +2,34 @@ const MemberModel = require('../../models/memberPage/memberModel')
 
 const MemberController = {
   dataRender: async (req, res) => {
-    const uid = req.session.member.u_id
-    const result = await MemberModel.dataRender(uid)
+    const p = req.query.p
+    const r = req.query.r
 
-    if (result.err == 0) {
+    if ((p == 'google' || p == 'facebook') && (r == 'bind' || r == 'unbind' || r == 'cantuse')) {
+      res.render('member/message', {
+        title: '資料綁定',
+        setting: req.session.setting,
+        right: req.session.member.right,
+        type: 0.5,
+        content: `${p}${r == 'bind' ? '綁定' : r == 'unbind' ? '解除' : '，已被他人綁定'}`,
+        btns: [{ linkTo: '/member/auth', linkText: '確 定' }],
+        userId: req.session.member ? req.session.member.u_id : null,
+      })
+      return
+    }
+
+    const uid = req.session.member.u_id
+    const result1 = await MemberModel.dataRender(uid)
+    const result2 = await MemberModel.authRender(uid)
+
+    if (result1.err == 0) {
       res.render('member/data', {
         title: '會員資料',
         setting: req.session.setting,
         right: req.session.member.right,
         type: 0,
-        ...result.data,
+        ...result1.data,
+        ...result2.data,
         userId: req.session.member ? req.session.member.u_id : null,
       })
     } else {

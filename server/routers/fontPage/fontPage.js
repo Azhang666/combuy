@@ -26,7 +26,7 @@ router.get('/product', (req, res) => {})
 // 獲取熱銷商品
 router.get('/getHotIndexProd', function (req, res) {
   var query =
-    'SELECT * FROM vw_products_info WHERE publish != 0 AND inventory > 0 ORDER BY sales DESC ,update_time DESC  LIMIT 8'
+    'SELECT * FROM vw_products_info WHERE publish != 0 AND inventory > 0 ORDER BY sales DESC ,update_time DESC LIMIT 8'
   db.query(query, function (err, result) {
     if (err) {
       console.error(err)
