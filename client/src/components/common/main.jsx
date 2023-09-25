@@ -28,17 +28,18 @@ function Main() {
 
   return (
     <div>
-      <div className="top2 top2-b10px">
-        <div className="mt-3">
+      <div className="top2 top2-b10px mt-3 top2-bgray">
+        <div >
           <div className="titlefont ">
             <span className="titlefont-blue">商品管理</span> / 商品列表
           </div>
         </div>
       </div>
-      <div className="top2 top2-b10px mt-4">
+      <div className="top2 top2-b10px mt-4 top2-bgray">
         <div className="col-12 gray1 titlefont-blue titlefont ">商品搜尋</div>
-        <div className="col-12 titlefont">
-          名稱: <input type="text" className="me-3 top2-b10px" />
+        <div className="col-12 titlefont d-flex align-items-center">
+          名稱: 
+          <input type="text" className="form-control me-3 ml-2 ms-1" style={{ width: 'auto' }} />
           <button className="butt1"> 搜尋</button>
         </div>
       </div>
@@ -52,7 +53,7 @@ function Main() {
           <div className="col-2 titlefont">狀態</div>
         </div>
       </div>
-      <div className="top2 top2-bgray">
+      <div className="top2 top2-bgray ">
         {notPublishedProducts.length === 0 ? (
           <div className="row text-center d-flex align-items-center">
             <b className="col-12 titlefont">目前沒有上架商品</b>

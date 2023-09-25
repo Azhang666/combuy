@@ -180,14 +180,14 @@ function AddProduct() {
             <form onSubmit={formik.handleSubmit}>
 
 
-                <div className="top2 top2-b10px">
-                    <div className="mt-3">
+                <div className="top2 top2-bgray mt-3">
+                    <div >
                         <div className="titlefont ">
                             <span className="titlefont-blue">商品管理</span> / 商品新增
                         </div>
                     </div>
                 </div>
-                <div className="top2 top2-b10px incontentText p-4 mt-2">
+                <div className="top2 incontentText p-4 mt-2 top2-bgray">
                     <div className="row align-items-center">
                         <label className="col-1">商品名稱</label>
                         <div className="col">
@@ -262,7 +262,7 @@ function AddProduct() {
                         </div>
                     </div>
 
-                    <div className="row mt-5 mb-5">
+                  <div className="row mt-5 mb-5 hover-highlight">
                         <label className="col-1 align-self-start titlerow">運送方式</label>
                         <div className='col-11'>
                             <CheckboxGroup

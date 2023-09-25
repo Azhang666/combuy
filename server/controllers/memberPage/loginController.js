@@ -18,7 +18,7 @@ const LoginController = {
     if (result.err == 0) {
       req.session.member = result.data;
     }
-    console.log(req.session);
+    console.log('req.session',req.session);
     res.end(JSON.stringify(result));
   },
   logoutAPI: (req, res) => {
@@ -28,5 +28,12 @@ const LoginController = {
     delete req.session.member;
     res.end(JSON.stringify(result));
   },
+  getCurrentUser: (req, res) => {
+    if (req.session.member) {
+        res.json(req.session.member);
+    } else {
+        res.status(401).json({ error: 'Not logged in' });
+    }
+  }
 };
 module.exports = LoginController;

@@ -584,14 +584,14 @@ function EditProductPage() {
 
   return (
     <>
-      <div className="top2 top2-b10px">
+      <div className="top2 top2-b10px mt-3 top2-bgray">
         <div className="mt-3">
           <div className="titlefont ">
-            <span className="titlefont-blue">商品管理</span> / 商品編輯
+            <span className="titlefont-blue ">商品管理</span> / 商品編輯
           </div>
         </div>
       </div>
-      <div className="top2 top2-b10px incontentText mt-3 p-4">
+      <div className="top2 top2-b10px incontentText mt-3 p-4 top2-bgray">
         <div className="row">
           <h5 className="col-2">{ }</h5>
           <h5 className="col-5 ">當前商品資訊</h5>
