@@ -4,7 +4,7 @@ import axios from 'axios'
 import { API_ENDPOINTS } from '../contexts/constants'
 import { Dropdown, Accordion, Form } from 'react-bootstrap'
 import { Button, Modal } from 'react-bootstrap'
-
+import { useNavigate } from 'react-router-dom';
 function EditProductPage() {
   const { id, sid } = useParams()
   const [selectedImage, setSelectedImage] = useState(null)
@@ -42,6 +42,12 @@ function EditProductPage() {
       ? productState.product.sellspec[0].contnet
       : ""
   );
+
+  const navigate = useNavigate();
+
+  function handleCancel() {
+      navigate('/'); // 替換成你要跳轉的路徑
+  }
 
   const SPEC_FIELDS = [
     { key: 'cpu', label: 'CPU' },
@@ -572,6 +578,8 @@ function EditProductPage() {
     setShowDeleteButtons(false)
   }
 
+
+
   return (
     <>
       <div className="top2 top2-b10px">
@@ -987,6 +995,7 @@ function EditProductPage() {
       </div>
 
       <nav className="gray2 conarae d-flex justify-content-end">
+        <button style={{ marginRight: '16px' }} className="btn btn-danger m-1" onClick={handleCancel}>取消</button>
         <button onClick={handleSave} className="btn btn-primary m-1">
           保存更改
         </button>

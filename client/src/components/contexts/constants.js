@@ -32,7 +32,6 @@ export const TRANSPORT_OPTIONS = [
   { id: 'postal_delivery', label: '郵寄寄送', value: '0' },
   { id: 'courier_delivery', label: '宅配/快遞', value: '1' },
 ]
-
 export const FAILSTEXT = '操作失敗，請再試一次。'
 
 export const SAVE = {

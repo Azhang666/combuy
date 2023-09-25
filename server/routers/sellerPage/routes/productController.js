@@ -120,7 +120,7 @@ exports.createProduct = [
     next()
   },
   async (req, res) => {
-    console.log('req.body',req.body)
+    console.log('req.body', req.body)
 
     const mainImageIdx = Number(req.body.mainImageIdx)
     const {
@@ -135,9 +135,9 @@ exports.createProduct = [
         size,
         weight,
         price,
-        description,
+        
         spec_name,
-        contnet,
+        
       },
       prod_name,
       brand_id,
@@ -154,6 +154,7 @@ exports.createProduct = [
       category_id: req.body.productData.category_id,
       transport: req.body.productData.transport,
       payment: req.body.productData.payment,
+
     }
     try {
       const results = await dbQuery('INSERT INTO product SET ?', productData)
@@ -161,7 +162,7 @@ exports.createProduct = [
       const publishValue = req.body.productData.publish
       const quantityValue = req.body.productData.stock
       const DEFAULT_IMAGE_PATH = '/images/products/defaultImage.jpg'
-
+      const description = req.body.productData.contnet
       let imagesData = []
 
       if (req.files && req.files.length > 0) {
@@ -226,7 +227,6 @@ exports.createProduct = [
         publish: publishValue,
         stock: quantityValue,
       }
-
       await dbQuery('INSERT INTO sellspec SET ?', sellSpecData)
       res.json({
         success: true,
@@ -317,7 +317,7 @@ exports.partiallyUpdateProduct = (req, res) => {
     size: 'size',
     weight: 'weight',
     stock: 'stock',
-    contnet:'contnet' 
+    contnet: 'contnet'
   }
 
   if (!updatedData.prod_name) {

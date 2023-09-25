@@ -28,9 +28,10 @@ function ProductContent({ formik }) {
                         className="form-control txtara"
                         rows={4}
                         value={formik.values.description}
-                        onChange={handleInputChange}
+                        onChange={formik.handleChange}  // 使用formik的handleChange
                         name="description"
                     />
+
                 </div>
             </div>
             <div className="row mt-5">

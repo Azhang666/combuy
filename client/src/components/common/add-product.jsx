@@ -93,7 +93,8 @@ function AddProduct() {
             transport: [],
             spec: '',
             quantity: '',
-            price: ''
+            price: '',
+            description: '',
             // 其他表單初始值
         },
         validationSchema: productValidationSchema,
@@ -117,7 +118,7 @@ function AddProduct() {
         }
     });
     const specName = formik.values.spec;
-    const content = formik.values.content;
+    const content = formik.values.description;
     const price = formik.values.price;
     const stock = formik.values.quantity;
     // Helper functions

@@ -39,16 +39,15 @@ function CheckboxGroup({ title, name, options, onChange, value }) {
                         <input
                             type="checkbox"
                             className="form-check-input"
-                            id="selectAll"
+                            id={`selectAll-${name}`} // 使用name屬性作為前綴
                             value="2"
                             checked={isAllSelected}
                             onChange={() => handleCheckboxChange("2")}
                         />
-                        <label className="form-check-label" htmlFor="selectAll">
+                        <label className="form-check-label" htmlFor={`selectAll-${name}`}>
                             全選
                         </label>
                     </div>
-
                     {options.map((option, index) => (
                         <div key={index} className="ms-3 col form-check">
                             <input
