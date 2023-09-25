@@ -1,10 +1,10 @@
-<section class="productBox row">
+<section class="productBox row p-4 pt-0 m-0">
   <% if (product.length==0) { %>
   <div class="col-12 mb-5 pb-5">
     <p class="text-center mb-5 pb-4">查無資料</p>
   </div>
   <% } %> <% for( let i = 0; i < product.length; i++ ) {%>
-  <div class="col-md-12 col-lg-6 col-xl-4 col-xxl-3 p-3">
+  <div class="col-12 col-md-6 col-lg-6 col-xl-4 col-xxl-3 p-3">
     <a
       style="text-decoration: none; color: black"
       href="/commodity/<%=product[i].prod_id%>/<%=product[i].spec_id%>"

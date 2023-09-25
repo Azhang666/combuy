@@ -38,7 +38,37 @@ const MemberController = {
     }
   },
 
-  pwdChangeRender: async (req, res) => {
+  authRender: async (req, res) => {
+    const uid = req.session.member.u_id
+
+    const p = req.query.p
+    const r = req.query.r
+
+    if ((p == 'google' || p == 'facebook') && (r == 'bind' || r == 'unbind' || r == 'cantuse')) {
+      res.render('member/message', {
+        title: '資料綁定',
+        setting: req.session.setting,
+        right: req.session.member.right,
+        type: 0.5,
+        content: `${p}${r == 'bind' ? '綁定' : r == 'unbind' ? '解除' : '，已被他人綁定'}`,
+        btns: [{ linkTo: '/member/auth', linkText: '確 定' }],
+        userId: req.session.member ? req.session.member.u_id : null,
+      })
+      return
+    }
+
+    const result = await MemberModel.authRender(uid)
+    res.render('member/auth', {
+      title: '資料綁定',
+      setting: req.session.setting,
+      right: req.session.member.right,
+      type: 0.5,
+      ...result.data,
+      userId: req.session.member ? req.session.member.u_id : null,
+    })
+  },
+
+  pwdChangeRender: (req, res) => {
     res.render('member/pwdChange', {
       title: '修改密碼',
       setting: req.session.setting,

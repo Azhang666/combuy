@@ -1,5 +1,6 @@
 const db = require("../../models/productPage/productData");
 
+let getBrand = "";
 let filter = `ORDER BY ""`;
 let setDESC = false;
 let getPriceRange = {

@@ -32,7 +32,7 @@ router.get('/:prodId/:specId', async (req, res) => {
     var brandId = req.params.brandId
     var productData = {}
     var userId = req.session.member ? req.session.member.u_id : null
-    console.log(userId)
+    // console.log(userId)
 
     var data = await queryDatabase('SELECT * FROM sellspec WHERE prod_id = ? AND spec_id = ?', [
       prodId,
@@ -69,12 +69,14 @@ router.get('/:prodId/:specId', async (req, res) => {
     })
 
     // 抓取賣出產品的數量
-    var countData = await queryDatabase('SELECT SUM(count) AS total_count FROM order_product WHERE prod_id = ? AND spec_id = ?', [prodId, specId]);
+    var countData = await queryDatabase(
+      'SELECT SUM(count) AS total_count FROM order_product WHERE prod_id = ? AND spec_id = ?',
+      [prodId, specId]
+    )
 
-    var stock = priceData[0].stock;
-    var totalSole = countData[0].total_count;
-    var remainingStock = stock - totalSole;
-
+    var stock = priceData[0].stock
+    var totalSole = countData[0].total_count
+    var remainingStock = stock - totalSole
 
     // 通知
     var orderDate = await queryDatabase(
@@ -146,7 +148,7 @@ router.get('/:prodId/:specId', async (req, res) => {
       userId,
       setting: req.session.setting,
       countData,
-      remainingStock
+      remainingStock,
     })
   } catch (err) {
     console.error('Error:', err)
@@ -178,17 +180,16 @@ router.post('/addcart', async (req, res) => {
 // 加入收藏
 router.post('/addcollect', login_api, async (req, res) => {
   try {
-    var { user_id, prod_id, spec_id } = req.body;
-    var sqlcheck = "SELECT * FROM collect WHERE user_id = ? AND prod_id = ? AND spec_id = ?"
-    const checkReasult = await queryDatabase(sqlcheck, [user_id, prod_id, spec_id]);
+    var { user_id, prod_id, spec_id } = req.body
+    var sqlcheck = 'SELECT * FROM collect WHERE user_id = ? AND prod_id = ? AND spec_id = ?'
+    const checkReasult = await queryDatabase(sqlcheck, [user_id, prod_id, spec_id])
 
     if (checkReasult.length > 0) {
-      res.status(200).json({ message: "商品已在收藏中" });
+      res.status(200).json({ message: '商品已在收藏中' })
     } else {
-      var sqlInsert =
-        "INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)";
-      await queryDatabase(sqlInsert, [user_id, prod_id, spec_id]);
-      res.status(200).json({ message: "成功加入收藏" });
+      var sqlInsert = 'INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)'
+      await queryDatabase(sqlInsert, [user_id, prod_id, spec_id])
+      res.status(200).json({ message: '成功加入收藏' })
     }
   } catch (error) {
     console.error('加入收藏失敗', error)
