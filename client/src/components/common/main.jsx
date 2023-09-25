@@ -81,7 +81,7 @@ function Main() {
                   >
                     修改
                   </Link>
-                  <div className="btn btn-primary delData1">
+                  <div className="btn btn-danger">
                     <MainButton
                       productId={prodItem.prod_id}
                       specId={prodItem.spec_id}

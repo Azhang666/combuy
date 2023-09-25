@@ -164,7 +164,7 @@ function AddProduct() {
                 alert(FAILSTEXT);
             }
 
-            // navigate('/');
+            navigate('/');
         } catch (error) {
             toast.error('Failed to save product');
         }

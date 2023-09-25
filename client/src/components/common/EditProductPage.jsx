@@ -514,10 +514,12 @@ function EditProductPage() {
 
   // 假設這是用來重新獲取產品圖片的函數，你可能已經有這個功能，只是我在提供的代碼中沒有看到。
   const fetchProductImages = async () => {
-    const response = await axios.get(API_ENDPOINTS.PRODUCT_BY_ID(id))
+    const response = await axios.get(API_ENDPOINTS.PRODUCT_BY_ID(id,sid
+      
+      ))
     if (response.status === 200 && Array.isArray(response.data.images)) {
       setProductState({ ...productState, images: response.data.images })
-      console.log('Fetched and updated product images:', response.data.images)
+      console.log('Fetched and updated product images:', response.data)
     }
   }
 
@@ -525,7 +527,7 @@ function EditProductPage() {
     if (event.target.files.length > 0) {
       setFileName(event.target.files[0].name)
       if (event.target.files.length > 5) {
-        alert('最多只能上傳5張圖片！')
+        alert('最多只能上傳6張圖片！')
         return
       }
       // 其他處理...

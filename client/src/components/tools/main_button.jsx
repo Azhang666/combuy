@@ -32,21 +32,21 @@ function MainButton({ productId, specId, fetchProducts, productName }) {
 
     return (
         <>
-            <div className="delData1" onClick={() => setShowModal(true)}>下架</div>
+            <div className="" onClick={() => setShowModal(true)}>下架</div>
 
             {showModal && (
                 <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}>
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title">下架商品</h5>
+                                <h5 className="modal-title">⚠️下架商品</h5>
                                 <button type="button" className="btn-close" onClick={() => setShowModal(false)} aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
                                 <h4>是否將商品<strong>『{productName}』</strong>下架？</h4>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-primary" onClick={() => handleUnpublish(productId, specId)}>確定下架</button>
+                                <button type="button" className="btn btn-danger" onClick={() => handleUnpublish(productId, specId)}>確定下架</button>
                                 <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>取消</button>
                             </div>
                         </div>
