@@ -52,8 +52,8 @@ router.get('/:prodId/:specId', async (req, res) => {
       'SELECT product.prod_id, product.brand_id, brand.brand FROM product JOIN brand ON product.brand_id = brand.brand_id WHERE prod_id = ?',
       [prodId]
     )
-    var priceData = await queryDatabase('SELECT price, stock FROM sellspec WHERE prod_id = ?', [
-      prodId,
+    var priceData = await queryDatabase('SELECT price, stock FROM sellspec WHERE prod_id = ? AND spec_id = ?', [
+      prodId,specId
     ])
     var totalCountData = await queryDatabase('SELECT COUNT(*) AS COUNT FROM productimg')
     var totalCount = totalCountData[0].COUNT
@@ -99,8 +99,8 @@ router.get('/:prodId/:specId', async (req, res) => {
           'SELECT prod_name FROM product WHERE prod_id = ?',
           [prodId]
         )
-        var productPriceData = await queryDatabase('SELECT price FROM sellspec WHERE prod_id = ?', [
-          prodId,
+        var productPriceData = await queryDatabase('SELECT price FROM sellspec WHERE prod_id = ? AND spec_id = ?', [
+          prodId,specId
         ])
         var productSpecname = await queryDatabase(
           'SELECT spec_name FROM sellspec WHERE prod_id =? AND spec_id = ?',
@@ -124,7 +124,6 @@ router.get('/:prodId/:specId', async (req, res) => {
       priceData,
       attributes: [
         'spec_name',
-        'content',
         'price',
         'stock',
         'cpu',
