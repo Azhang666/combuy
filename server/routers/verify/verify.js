@@ -33,7 +33,7 @@ router.use('/account', async (req, res) => {
     }
   } catch (err) {
     console.log(err)
-    if (err.toString().includes('jwt expired')) {
+    if (err.message == 'jwt expired') {
       content = `信箱驗證連結已過期`
     } else {
       content = `信箱驗證連結錯誤`
