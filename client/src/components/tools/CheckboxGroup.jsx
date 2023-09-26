@@ -1,64 +1,35 @@
-// CheckboxGroup.jsx
+function CheckboxGroup({ title, name, options, onChange, value }) {
+    const isAllSelected = value.includes("2");
 
-import React, { useState, useEffect } from 'react';
-function CheckboxGroup({ title, name, options, onChange, initialSelected }) {
+    const handleCheckboxChange = (selectedValue) => {
+        let newValues;
 
-    const [selected, setSelected] = useState(initialSelected || []);
-
-    const [selectAll, setSelectAll] = useState(false);
-    const [prevSelected, setPrevSelected] = useState([]);
-    const handleCheckboxChange = (value) => {
-        let newSelected;
-
-        if (selected.includes(value)) {
-            newSelected = selected.filter(item => item !== value);
-        } else {
-            newSelected = [...selected, value];
-        }
-
-        setSelected(newSelected);
-
-        if (newSelected.length === options.length) {
-            setSelectAll(true);
-        } else {
-            setSelectAll(false);
-        }
-    };
-
-    const handleSelectAllChange = () => {
-        if (selectAll) {
-            setSelected([]);
-            setSelectAll(false);
-        } else {
-            setSelected(options.map(option => option.value)); // Set all values
-            setSelectAll(true);
-        }
-    };
-    useEffect(() => {
-        if (initialSelected) {
-            setSelected(initialSelected);
-        }
-    }, [initialSelected]);
-
-    
-    
-    
-    
-    
-
-    useEffect(() => {
-        if (JSON.stringify(prevSelected) !== JSON.stringify(selected)) {
-            if (selectAll) {
-                onChange(name, ["2"]);
+        if (selectedValue === "2") { // 全選
+            if (isAllSelected) {
+                newValues = [];
             } else {
-                onChange(name, selected);
+                newValues = options.map(o => o.value);
+                newValues.push("2"); // 代表全選
             }
-            setPrevSelected(selected);
+        } else {
+            if (value.includes(selectedValue)) {
+                newValues = value.filter(v => v !== selectedValue);
+            } else {
+                newValues = [...value, selectedValue];
+            }
+
+            // 檢查是否全部都被選中
+            if (options.every(o => newValues.includes(o.value))) {
+                newValues.push("2");
+            } else {
+                newValues = newValues.filter(v => v !== "2");
+            }
         }
-    }, [selected, onChange, name, selectAll, prevSelected]);
+
+        onChange(name, newValues);
+    };
 
     return (
-
         <div className="col">
             <div className="gray3 incontentText titlerow top2-r10px ps-2">方式</div>
             <div className="txtara">
@@ -68,16 +39,15 @@ function CheckboxGroup({ title, name, options, onChange, initialSelected }) {
                         <input
                             type="checkbox"
                             className="form-check-input"
-                            id={`all_${name}`}
-                            checked={selectAll}
-                            onChange={handleSelectAllChange}
+                            id={`selectAll-${name}`} // 使用name屬性作為前綴
+                            value="2"
+                            checked={isAllSelected}
+                            onChange={() => handleCheckboxChange("2")}
                         />
-                        <label className="form-check-label" htmlFor={`all_${name}`}>
+                        <label className="form-check-label" htmlFor={`selectAll-${name}`}>
                             全選
                         </label>
                     </div>
-
-                    {/* 其他選項 */}
                     {options.map((option, index) => (
                         <div key={index} className="ms-3 col form-check">
                             <input
@@ -85,7 +55,7 @@ function CheckboxGroup({ title, name, options, onChange, initialSelected }) {
                                 className="form-check-input"
                                 id={option.id}
                                 value={option.value}
-                                checked={selected.includes(option.value)}
+                                checked={value.includes(option.value)}
                                 onChange={() => handleCheckboxChange(option.value)}
                             />
                             <label className="form-check-label" htmlFor={option.id}>
@@ -98,7 +68,5 @@ function CheckboxGroup({ title, name, options, onChange, initialSelected }) {
         </div>
     );
 }
-
-
 
 export default CheckboxGroup;

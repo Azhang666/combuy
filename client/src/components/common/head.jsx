@@ -57,7 +57,7 @@ const Head = () => {
             </a>
           </li>
           <li>
-            <a href="http://localhost:3000" title="會員中心">
+            <a href="http://localhost:2407/member/data" title="會員中心">
               <img src={memberIcon} alt="member" />
             </a>
           </li>

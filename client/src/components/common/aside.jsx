@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function AdminIcon() {
@@ -22,16 +22,6 @@ function ProductManagementIcon() {
     );
 }
 
-// function ProductListIcon() {
-//     return (
-//         <svg xmlns="http://www.w3.org/2000/svg" width={35} height={35} viewBox="0 0 48 48">
-//             <g fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth={4}>
-//                 <rect width={30} height={36} x={9} y={8} rx={2} />
-//                 <path strokeLinecap="round" d="M18 4v6m12-6v6m-14 9h16m-16 8h12m-12 8h8" />
-//             </g>
-//         </svg>
-//     );
-// }
 
 function AddProductIcon() {
     return (
@@ -48,11 +38,23 @@ function Offgoods() {
     );
 }
 function Aside() {
+    const [userName, setUserName] = useState('');
+    useEffect(() => {
+        fetch('/api/current-user')
+            .then(response => response.json())
+            .then(data => {
+                if (data.u_name) {
+                    setUserName(data.u_name);
+                }
+            })
+            .catch(error => console.error('Error fetching user:', error));
+    }, []);
+
     return (
         <div className="sidenav">
-            <Link to="/" className="mt-5">
+               <Link to="/" className="mt-5">
                 <AdminIcon />
-                <span className="titlefont-blue">賣家一號</span>
+                <span className="titlefont-blue"> {userName}</span>
             </Link>
             <Link to="/" className="mt-5">
                 <ProductManagementIcon />

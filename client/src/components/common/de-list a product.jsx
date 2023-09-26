@@ -27,19 +27,21 @@ function Downproducts() {
 
   return (
     <div>
-      <div className="top2 top2-b10px">
-        <div className="mt-3">
+      <div className="top2 top2-b10px mt-3 top2-bgray" >
+        <div>
           <div className="titlefont ">
             <span className="titlefont-blue">商品管理</span> / 下架商品
           </div>
         </div>
       </div>
-      <div className="top2 top2-b10px mt-4">
-        <div className="col-12 gray1 titlefont-blue titlefont">商品搜尋</div>
-        <div className="col-12 titlefont">
-          名稱: <input type="text" className="me-3 top2-b10px" />
+      <div className="top2 top2-b10px mt-4 top2-bgray">
+        <div className="col-12 gray1 titlefont-blue titlefont ">商品搜尋</div>
+        <div className="col-12 titlefont d-flex align-items-center">
+          名稱: 
+          <input type="text" className="form-control me-3 ml-2 ms-1" style={{ width: 'auto' }} />
           <button className="butt1"> 搜尋</button>
         </div>
+
       </div>
       <div className="top2 top2-r10px mt-4">
         <div className="row text-center">
@@ -82,12 +84,12 @@ function Downproducts() {
                   >
                     修改
                   </Link>
-                  <div className="btn btn-primary delData1">
+                  <div className="btn btn-primary ">
                     <PublishProduct
                       productId={prodItem.prod_id}
                       specId={prodItem.spec_id}
                       fetchProducts={fetchProducts}
-                    />
+                      productName={prodItem.prod_name} />
                   </div>
                 </div>
               </div>

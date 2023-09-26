@@ -7,6 +7,9 @@ import './assets/styles/bootstrap-5.2.3-dist/css/bootstrap.css'
 import './assets/styles/productStyle.css'
 import './assets/styles/navtop.css'
 import './assets/styles/GoodSys_1.css'
+import 'react-toastify/dist/ReactToastify.css';
+import './assets/styles/WarningMessage.css'
+import { ToastContainer } from 'react-toastify';
 
 // Components and local styles
 import Head from './components/common/head'
@@ -19,8 +22,10 @@ import EditProductPage from './components/common/EditProductPage'
 function App() {
   return (
     <Router>
+      <ToastContainer />
       <Head />
       <Aside />
+
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/downproducts" element={<Downproducts />} />
