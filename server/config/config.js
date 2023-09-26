@@ -3,7 +3,7 @@ const Setting = {
 
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'combuy',
 
     port: 3306,

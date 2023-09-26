@@ -1,6 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { API_ENDPOINTS } from '../contexts/constants';
+
 
 function AdminIcon() {
     return (
@@ -37,18 +40,42 @@ function Offgoods() {
         </svg>
     );
 }
+
+
 function Aside() {
     const [userName, setUserName] = useState('');
+    const navigate = useNavigate();  // React Router 的導航方法
+
     useEffect(() => {
         fetch('/api/current-user')
-            .then(response => response.json())
+            .then(response => {
+                // 檢查回應的狀態是否為 401
+                if (response.status === 401) {
+                    Swal.fire({
+                        title: '未授權!',
+                        text: '請先登入才能訪問此頁面。',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '去登入',
+                        cancelButtonText: '取消'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = API_ENDPOINTS.LOGING_PAGE;
+                        }
+                    });
+                } else {
+                    return response.json();  // 如果狀態不是 401，繼續處理
+                }
+            })
             .then(data => {
-                if (data.u_name) {
+                if (data && data.u_name) {
                     setUserName(data.u_name);
                 }
             })
             .catch(error => console.error('Error fetching user:', error));
-    }, []);
+    }, [navigate]);
 
     return (
         <div className="sidenav">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 // Global styles
@@ -18,14 +18,24 @@ import Main from './components/common/main'
 import Downproducts from './components/common/de-list a product'
 import AddProduct from './components/common/add-product'
 import EditProductPage from './components/common/EditProductPage'
-
+import AuthLoader from './components/contexts/AuthLoader';
 function App() {
+  const [authCompleted, setAuthCompleted] = useState(false);
+
+  const handleAuthenticated = () => {
+    // 在這裡處理認證後的行為，例如轉到特定頁面或渲染特定內容
+    setAuthCompleted(true); // 身份驗證完成後，更新state
+  };
+
+  if (!authCompleted) {
+    return <AuthLoader onAuthenticated={handleAuthenticated} />;
+  }
+
   return (
     <Router>
       <ToastContainer />
       <Head />
       <Aside />
-
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/downproducts" element={<Downproducts />} />
@@ -33,7 +43,8 @@ function App() {
         <Route path="/products/edit/:id/:sid" element={<EditProductPage />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+
+export default App;

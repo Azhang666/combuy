@@ -21,13 +21,14 @@ const seller_render = function (req, res, next) {
 const seller_api = function (req, res, next) {
   if (req.session.member) {
     if (req.session.member.right == 1) {
-      return next()
+      return next();
     } else {
-      // res.end(JSON.stringify(new Error('no permission')))
-      res.end(JSON.stringify(new Error('滾')))
+      res.end(JSON.stringify(new Error('滾')));
+      return; 
     }
   }
-  res.end(JSON.stringify(new Error('no permission')))
+  res.end(JSON.stringify(new Error('no permission')));
+  return;  
 }
 
 // 非買家使用 轉跳回首頁

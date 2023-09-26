@@ -17,6 +17,7 @@ export const API_ENDPOINTS = {
   UPLOAD_PRODUCT_IMAGE: (prodId, specId) => `${BASE_URL}/products/${prodId}/${specId}/upload-image`,
   DELETE_PRODUCT_IMAGE: imageId => `${BASE_URL}/product-images/${imageId}`,
   UPDATE_COVER_IMAGE: `${BASE_URL}/update-cover`,
+  LOGING_PAGE : 'http://localhost:2407/login'
 }
 
 // User
