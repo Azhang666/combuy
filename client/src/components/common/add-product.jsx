@@ -11,7 +11,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import WarningMessage from '../tools/WarningMessage';
 import { toast } from 'react-toastify';
-
+import Swal from 'sweetalert2';
 
 function AddProduct() {
     const navigate = useNavigate();
@@ -39,6 +39,41 @@ function AddProduct() {
     });
 
     // Callbacks
+    
+
+    const handleSubmit = (shouldPublish) => {
+        Swal.fire({
+            icon: 'question',
+            title: '確認',
+            text: '是否新增商品？',
+            showCancelButton: true,
+            confirmButtonText: '確定',
+            cancelButtonText: '取消'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                formik.setFieldValue('shouldPublish', shouldPublish);
+                formik.submitForm().then(() => {
+                    // 在此檢查formik的狀態或錯誤
+                    if (formik.isValidating || formik.isSubmitting) {
+                        // 仍在驗證或提交
+                        return;
+                    }
+    
+                    if (Object.keys(formik.errors).length > 0) {
+                        // 表單有錯誤
+                        Swal.fire({
+                            icon: 'error',
+                            title: '提交失敗',
+                            text: '尚有商品資訊未填齊'
+                        });
+                    }
+                    // 如果有其他需要檢查的條件，也可以在此添加
+                });
+            }
+        });
+    }
+    
+
     const handleFilesSelect = useCallback((selectedFiles) => {
         setFiles(selectedFiles);
     }, []);
@@ -262,7 +297,7 @@ function AddProduct() {
                         </div>
                     </div>
 
-                  <div className="row mt-5 mb-5 hover-highlight">
+                    <div className="row mt-5 mb-5 hover-highlight">
                         <label className="col-1 align-self-start titlerow">運送方式</label>
                         <div className='col-11'>
                             <CheckboxGroup
@@ -290,20 +325,17 @@ function AddProduct() {
                     <button style={{ marginRight: '16px' }} className="btn btn-danger mt-1" onClick={handleCancel}>取消</button>
                     <button
                         className="btn btn-success mt-1"
-                        onClick={() => {
-                            formik.setFieldValue('shouldPublish', false);
-                        }}
-                        type="submit">
+                        onClick={() => handleSubmit(false)}
+                        type="button"  // 注意：這裡我們改為"type=button"，因為我們希望通過處理器提交表格
+                    >
                         {SAVE.SAVE}
                     </button>
 
                     <button
-                        type='submit'
                         style={{ marginLeft: '16px' }}
                         className="btn btn-primary mt-1"
-                        onClick={() => {
-                            formik.setFieldValue('shouldPublish', true);
-                        }}
+                        onClick={() => handleSubmit(true)}
+                        type="button"  // 同上，改為 "type=button"
                     >
                         {SAVE.SAVEANDPUBLISH}
                     </button>
