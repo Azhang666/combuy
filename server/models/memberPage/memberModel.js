@@ -17,16 +17,16 @@ const MemberModel = {
   dataRender: async uid => {
     try {
       const sql =
-        'SELECT user_id ,name,phone,birth,address,email,IFNULL(photo,"")AS photo FROM combuy.user WHERE user_id = ?'
+        'SELECT user_id ,name,phone,birth,address,email,verified,IFNULL(photo,"")AS photo FROM combuy.user WHERE user_id = ?'
       const result = await conn.queryAsync(sql, uid)
 
       if (result.length == 1) {
         var data = { ...result[0], ...addressSplite(result[0].address) }
         data.user_id = data.user_id.toString().padStart(8, '0')
         const birthDate = new Date(data.birth)
-        data.year = birthDate.getFullYear()
-        data.month = birthDate.getMonth() + 1
-        data.day = birthDate.getDate()
+        data.year = data.birth ? birthDate.getFullYear() : ''
+        data.month = data.birth ? birthDate.getMonth() + 1 : ''
+        data.day = data.birth ? birthDate.getDate() : ''
         delete data.birth
         return new Success(data)
       } else {
@@ -117,7 +117,7 @@ const MemberModel = {
         fs.writeFile(storagePath + uniqueFileName, dataBuffer, 'binary', err => {
           if (err) {
             console.error(err)
-            return new Error('保存文件失败')
+            return new Error('保存文件失敗')
           }
         })
 
@@ -147,6 +147,21 @@ const MemberModel = {
       console.log(err)
     }
   },
+  authRender: async uid => {
+    try {
+      const sql =
+        'SELECT 	google_auth_id,	google_auth_mail,	facebook_auth_id,	facebook_auth_mail FROM combuy.user WHERE user_id = ?'
+      const result = await conn.queryAsync(sql, uid)
+      if (result.length == 1) {
+        return new Success(result[0])
+      } else {
+        return new Error('data failed')
+      }
+    } catch (err) {
+      // throw err
+      console.log(err)
+    }
+  },
   pwdChangeAPI: async (uid, data) => {
     let errorInputs = []
     const { o_pwd, pwd, pwdCheck } = data
@@ -168,27 +183,35 @@ const MemberModel = {
     try {
       const sql1 = 'select pwd,change_pwd_time from user where user_id =?'
       const result1 = await conn.queryAsync(sql1, [uid])
-
+      console.log(result1)
       if (result1.length == 1) {
-        if (Math.floor(new Date() - result1[0].change_pwd_time) / (1000 * 3600 * 24) < 14) {
-          return new Error('需與上次修改時間相個兩個禮拜以上')
+        if (result1[0].pwd == '') {
+          const hashPwd = bcrypt.hashSync(pwd, 10)
+          const sql2 =
+            'update user set pwd = ? ,change_pwd_time= current_timestamp()	 where user_id =?'
+          const result2 = await conn.queryAsync(sql2, [hashPwd, uid])
+          return new Success(result2)
         } else {
-          if (bcrypt.compareSync(o_pwd, result1[0].pwd)) {
-            const hashPwd = bcrypt.hashSync(pwd, 10)
-            const sql2 =
-              'update user set pwd = ? ,change_pwd_time= current_timestamp()	 where user_id =?'
-            const result2 = await conn.queryAsync(sql2, [hashPwd, uid])
-            return new Success(result2)
+          if (Math.floor(new Date() - result1[0].change_pwd_time) / (1000 * 3600 * 24) < 14) {
+            return new Error('需與上次修改時間相個兩個禮拜以上')
           } else {
-            errorInputs.push({
-              input: 'o_pwd',
-              text: '密碼輸入錯誤',
-            })
-            return new Error(errorInputs)
+            if (bcrypt.compareSync(o_pwd, result1[0].pwd)) {
+              const hashPwd = bcrypt.hashSync(pwd, 10)
+              const sql2 =
+                'update user set pwd = ? ,change_pwd_time= current_timestamp()	 where user_id =?'
+              const result2 = await conn.queryAsync(sql2, [hashPwd, uid])
+              return new Success(result2)
+            } else {
+              errorInputs.push({
+                input: 'o_pwd',
+                text: '密碼輸入錯誤',
+              })
+              return new Error(errorInputs)
+            }
           }
         }
       } else {
-        resolve(new Error('預期外錯誤'))
+        return new Error('預期外錯誤')
       }
     } catch (err) {
       throw err

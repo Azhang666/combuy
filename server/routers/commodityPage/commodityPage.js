@@ -32,7 +32,7 @@ router.get('/:prodId/:specId', async (req, res) => {
     var brandId = req.params.brandId
     var productData = {}
     var userId = req.session.member ? req.session.member.u_id : null
-    console.log(userId)
+    // console.log(userId)
 
     var data = await queryDatabase('SELECT * FROM sellspec WHERE prod_id = ? AND spec_id = ?', [
       prodId,
@@ -52,8 +52,8 @@ router.get('/:prodId/:specId', async (req, res) => {
       'SELECT product.prod_id, product.brand_id, brand.brand FROM product JOIN brand ON product.brand_id = brand.brand_id WHERE prod_id = ?',
       [prodId]
     )
-    var priceData = await queryDatabase('SELECT price, stock FROM sellspec WHERE prod_id = ?', [
-      prodId,
+    var priceData = await queryDatabase('SELECT price, stock FROM sellspec WHERE prod_id = ? AND spec_id = ?', [
+      prodId,specId
     ])
     var totalCountData = await queryDatabase('SELECT COUNT(*) AS COUNT FROM productimg')
     var totalCount = totalCountData[0].COUNT
@@ -61,20 +61,22 @@ router.get('/:prodId/:specId', async (req, res) => {
       'SELECT * FROM productimg WHERE type = 0 ORDER BY RAND() LIMIT 8'
     )
     var commentData = await queryDatabase(
-      'SELECT count, comment, comment_grade, comment_time FROM order_product WHERE prod_id = ? AND comment_time IS NOT null',
-      [prodId]
+      'SELECT vw_comment.comment, vw_comment.comment_grade, vw_comment.comment_time, vw_comment.name, vw_comment.spec_name,user.photo FROM vw_comment JOIN user ON vw_comment.user_id = user.user_id WHERE prod_id = ? AND spec_id = ? AND comment_time IS NOT null',
+      [prodId,specId]
     )
     commentData.forEach(comment => {
       comment.comment_time = new Date(comment.comment_time).toLocaleString()
     })
 
     // 抓取賣出產品的數量
-    var countData = await queryDatabase('SELECT SUM(count) AS total_count FROM order_product WHERE prod_id = ? AND spec_id = ?', [prodId, specId]);
+    var countData = await queryDatabase(
+      'SELECT SUM(count) AS total_count FROM order_product WHERE prod_id = ? AND spec_id = ?',
+      [prodId, specId]
+    )
 
-    var stock = priceData[0].stock;
-    var totalSole = countData[0].total_count;
-    var remainingStock = stock - totalSole;
-
+    var stock = priceData[0].stock
+    var totalSole = countData[0].total_count
+    var remainingStock = stock - totalSole
 
     // 通知
     var orderDate = await queryDatabase(
@@ -85,6 +87,8 @@ router.get('/:prodId/:specId', async (req, res) => {
       date.order_date = new Date(date.order_date).toLocaleString()
       date.order_id = String(date.order_id).padStart(8, '0')
     })
+
+
 
     // 排列相關產品
     // 使用 Promise.all 處理所有資料庫的查詢
@@ -97,8 +101,8 @@ router.get('/:prodId/:specId', async (req, res) => {
           'SELECT prod_name FROM product WHERE prod_id = ?',
           [prodId]
         )
-        var productPriceData = await queryDatabase('SELECT price FROM sellspec WHERE prod_id = ?', [
-          prodId,
+        var productPriceData = await queryDatabase('SELECT price FROM sellspec WHERE prod_id = ? AND spec_id = ?', [
+          prodId,specId
         ])
         var productSpecname = await queryDatabase(
           'SELECT spec_name FROM sellspec WHERE prod_id =? AND spec_id = ?',
@@ -122,9 +126,7 @@ router.get('/:prodId/:specId', async (req, res) => {
       priceData,
       attributes: [
         'spec_name',
-        'content',
         'price',
-        'stock',
         'cpu',
         'gpu',
         'ram',
@@ -147,7 +149,7 @@ router.get('/:prodId/:specId', async (req, res) => {
       userId,
       setting: req.session.setting,
       countData,
-      remainingStock
+      remainingStock,
     })
   } catch (err) {
     console.error('Error:', err)
@@ -179,17 +181,16 @@ router.post('/addcart', async (req, res) => {
 // 加入收藏
 router.post('/addcollect', login_api, async (req, res) => {
   try {
-    var { user_id, prod_id, spec_id } = req.body;
-    var sqlcheck = "SELECT * FROM collect WHERE user_id = ? AND prod_id = ? AND spec_id = ?"
-    const checkReasult = await queryDatabase(sqlcheck, [user_id, prod_id, spec_id]);
+    var { user_id, prod_id, spec_id } = req.body
+    var sqlcheck = 'SELECT * FROM collect WHERE user_id = ? AND prod_id = ? AND spec_id = ?'
+    const checkReasult = await queryDatabase(sqlcheck, [user_id, prod_id, spec_id])
 
     if (checkReasult.length > 0) {
-      res.status(200).json({ message: "商品已在收藏中" });
+      res.status(200).json({ message: '商品已在收藏中' })
     } else {
-      var sqlInsert =
-        "INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)";
-      await queryDatabase(sqlInsert, [user_id, prod_id, spec_id]);
-      res.status(200).json({ message: "成功加入收藏" });
+      var sqlInsert = 'INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)'
+      await queryDatabase(sqlInsert, [user_id, prod_id, spec_id])
+      res.status(200).json({ message: '成功加入收藏' })
     }
   } catch (error) {
     console.error('加入收藏失敗', error)

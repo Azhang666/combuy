@@ -1,6 +1,7 @@
 const express = require('express')
 const session = require('express-session')
-const bodyparse = require('body-parser')
+const cookieParser = require('cookie-parser')
+const bodyparser = require('body-parser')
 const ejs = require('ejs')
 const { login_render, login_api, notlogin_render, notlogin_api } = require('./middlewares/isLogin')
 const { seller_api } = require('./middlewares/userRight')
@@ -29,19 +30,20 @@ app.engine('ejs', async (path, data, cb) => {
 app.use(
   session({
     secret: 'combuy',
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     cookie: {
       path: '/',
       httpOnly: true,
       secure: false,
-      maxAge: 100 * 60 * 1000,
+      maxAge: 60 * 60 * 1000,
     },
   })
 )
+app.use(cookieParser())
 
-var bp_json = bodyparse.json({ limit: '10mb' })
-var bp_uncode = bodyparse.urlencoded({ extended: true, limit: '10mb' })
+var bp_json = bodyparser.json({ limit: '10mb' })
+var bp_uncode = bodyparser.urlencoded({ extended: true, limit: '10mb' })
 
 app.use('/public', express.static(__dirname + '/public'))
 
@@ -74,17 +76,26 @@ app.use('/login', login)
 const register = require('./routers/memberPage/register')
 app.use('/register', notlogin_render, register)
 
+const auth = require('./routers/auth/auth')
+app.use('/auth', auth)
+
+const verify = require('./routers/verify/verify')
+app.use('/verify', verify)
+
+const mail = require('./routers/mail/mail')
+app.use('/mail', mail)
+
 const member = require('./routers/memberPage/member')
 app.use('/member', login_render, member)
 
-const seller = require('./routers/sellerPage/index.js')
-// app.use('/seller', login_api, seller_api, seller)
-app.use('/seller', seller)
+const seller = require('./routers/sellerPage/index')
+app.use('/seller', login_api, seller_api, seller)
+// app.use('/seller', seller)
 
-const product = require('./routers/productPage/productPage.js')
+const product = require('./routers/productPage/productPage')
 app.use('/product', product)
 
-const commodity = require('./routers/commodityPage/commodityPage.js')
+const commodity = require('./routers/commodityPage/commodityPage')
 app.use('/commodity', bp_uncode, commodity)
 
 const shopCart = require('./routers/shopCartPage/shopCartPage')

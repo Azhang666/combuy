@@ -50,7 +50,8 @@ $(document).ready(function () {
       }
     }
 
-    var result = [...data, serializedCheckBox[0], ...serializedRadio]
+    // var result = [...data, serializedCheckBox[0], ...serializedRadio]
+    var result = [...data, serializedCheckBox[0]]
 
     var values = toJson(result)
     try {
@@ -142,14 +143,11 @@ $(document).ready(function () {
       if (res.err == 0) {
         $(this).off('submit')
         $(this).submit()
-        // alert('密碼更新成功，請重新登入')
-        // $.get('/api/logout', function () {
-        //   location.reload()
-        // })
       } else {
         if (res.message == undefined) {
           showErrorInput(res.data)
         } else {
+          $('.input_alert').remove()
           $('#alert').text(res.message)
         }
       }

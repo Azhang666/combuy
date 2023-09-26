@@ -20,10 +20,7 @@
     <link rel="stylesheet" href="/public/stylesheets/out.css" />
     <link rel="stylesheet" href="/public/stylesheets/style.min.css" />
     <link rel="stylesheet" href="/public/stylesheets/universal/footer.css" />
-    <link
-      rel="stylesheet"
-      href="/public/stylesheets/universal/notification.css"
-    />
+    <link rel="stylesheet" href="/public/stylesheets/universal/notification.css" />
 
     <script src="/public/js/jquery-3.6.0.js"></script>
 
@@ -53,28 +50,42 @@
           <form id="formLogin" action="" method="post">
             <div class="spacing">
               <label for="iptAcc">帳號</label>
-              <input
-                type="text"
-                name="acc"
-                id="iptAcc"
-                placeholder="請輸入您的帳號"
-                required
-              />
+              <input type="text" name="acc" id="iptAcc" placeholder="請輸入您的帳號" required />
             </div>
             <div class="spacing">
               <label for="iptPwd">密碼</label>
-              <input
-                type="password"
-                name="pwd"
-                id="iptPwd"
-                placeholder="請輸入您的密碼"
-                required
-              />
+              <input type="password" name="pwd" id="iptPwd" placeholder="請輸入您的密碼" required />
             </div>
-            <div class="submit">
+            <div class="submit" style="flex-direction: column;">
               <input type="submit" value="登 入" />
+              <br>
+              <p>
+                <a href="/login/forgetPassword">忘記密碼 ?</a>
+              </p>
             </div>
           </form>
+          
+
+
+          <div>
+            <h4 style="text-align: center;">
+              第三方快速登入、註冊           
+              <br>
+              <span style="font-size: .6em;font-weight: normal;">僅能以買家身分進行第三方快速註冊</span>
+              <br/>
+              <br/>
+              <div>
+                <a href="/auth/google">
+                  <input type="button" class="button" value="GOOGLE"></input>
+                </a>
+                <a href="/auth/facebook">
+                  <input type="button" class="button " value="FACEBOOK"></input>
+                </a>
+              </div>
+            </h4>
+          </div>
+
+        
         </div>
       </section>
     </main>

@@ -10,7 +10,7 @@
   overflow-y: auto;
   opacity: 0;
   transition: visibility 0.3s, opacity 0.3s;
-  margin-top: 32px;
+  margin-top: 28px;
 }
 
 #notification:hover #notification-content {

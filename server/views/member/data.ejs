@@ -61,7 +61,7 @@
                 disabled
                 required
               />
-              <p id="memberId"><%= user_id%></p>
+              <p id="memberId"><%= user_id%>&nbsp;<%= verified == 0 ? '未驗證' : '已驗證' %></p>
             </div>
             <div class="spacing box">
               <label for="iptPhone">手機</label>
@@ -70,7 +70,7 @@
                 class="num"
                 name="phone"
                 id="iptPhone"
-                placeholder="請輸入您的密碼"
+                placeholder="請輸入您的電話號碼"
                 value="<%= phone%>"
                 disabled
                 required
@@ -156,7 +156,34 @@
               <input type="submit" value="儲 存" />
             </div>
           </form>
-        </div>
+          <div>
+            <h3>第三方綁定</h3>
+          </div>
+          <div>
+            <h4>GOOGLE</h4>
+          </div>
+          <div>
+            <% if(google_auth_id == null){%>
+            <a href="/auth/google">
+              <input type="button" class="button" value="綁定 GOOGLE" />
+            </a>
+            <% }else{%>
+            <input type="button" class="button" value="解除 GOOGLE" />
+            <%}%>
+          </div>
+          <div>
+            <h4>FACEBOOK</h4>
+          </div>
+          <div>
+            <% if(facebook_auth_id == null){%>
+            <a href="/auth/facebook">
+              <input type="button" class="button" value="綁定 FACEBOOK" />
+            </a>
+            <% }else{%>
+            <input type="button" class="button" value="解除 FACEBOOK" />
+            <%}%>
+          </div>
+
       </section>
     </main>
     <!-- 插入footer的保留位 -->

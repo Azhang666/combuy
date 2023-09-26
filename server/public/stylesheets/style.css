@@ -16,7 +16,7 @@
   --color_6: #eee;
 }
 
-section.member.container > div.content > form > div.submit > div, section.member.container > div.content > form > div.submit, section.member.container > div.content > div, section.member.container > div.content, section.member.container > div.subtitle > div.group, section.member.container div.memberList ul, main, div.pages .page {
+section.member.container > div.content > form > div.submit > div, section.member.container > div.content > form > div.submit, section.member.container > div.content > div, section.member.container > div.content, section.member.container > div.subtitle > div.group, section.member.container div.memberList ul, main:has(.member), div.pages .page {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -28,10 +28,10 @@ section.member.container > div.content > form > div.submit > div, section.member
           align-items: center;
 }
 
-div.pages .page, .collapse, textarea, select option, select, input[type=checkbox] + label,
-input[type=radio] + label, input[type=text],
-input[type=email],
-input[type=password], input, a {
+div.pages .page, .member .collapse, .member textarea, .member select option, .member select, .member input[type=checkbox] + label,
+.member input[type=radio] + label, .member input[type=text],
+.member input[type=email],
+.member input[type=password], .member input, a {
   border-radius: 10px;
 }
 
@@ -57,94 +57,91 @@ section.member.container > div.content div.table table table td {
 }
 
 *,
-::before,
-::after {
+*::before,
+*::after {
   padding: 0;
   margin: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
 
-:root {
+header input {
+  font-size: 18.5px;
+}
+
+main:has(.member) {
   color: var(--color_6);
-  font-size: 14px;
+  font-size: 15px;
   font-family: "Noto Sans TC", sans-serif;
 }
 
-h1 {
-  font-size: 42px;
+main:has(.member) h1 {
+  font-size: 43px;
   line-height: 60px;
 }
-
-h2 {
-  font-size: 34px;
+main:has(.member) h2 {
+  font-size: 35px;
   line-height: 48px;
 }
-
-h3 {
-  font-size: 30px;
+main:has(.member) h3 {
+  font-size: 31px;
+  line-height: 48px;
+}
+main:has(.member) h4 {
+  font-size: 27px;
   line-height: 36px;
 }
-
-h4 {
-  font-size: 26px;
+main:has(.member) h5 {
+  font-size: 23px;
   line-height: 36px;
 }
-
-h5 {
-  font-size: 22px;
-  line-height: 36px;
-}
-
-h6 {
-  font-size: 18px;
+main:has(.member) h6 {
+  font-size: 19px;
   line-height: 24px;
 }
-
-label,
-input,
-p {
-  font-size: 18px;
+main:has(.member) label,
+main:has(.member) input,
+main:has(.member) p {
+  font-size: 19px;
   line-height: 24px;
 }
-
-span {
+main:has(.member) span {
   font-size: inherit;
   line-height: inherit;
 }
-
 @media all and (max-width: 768px) {
-  h1 {
-    font-size: 38px;
+  main:has(.member) h1 {
+    font-size: 39px;
     line-height: 48px;
   }
-  h2 {
-    font-size: 30px;
+  main:has(.member) h2 {
+    font-size: 31px;
+    line-height: 48px;
+  }
+  main:has(.member) h3 {
+    font-size: 27px;
     line-height: 36px;
   }
-  h3 {
-    font-size: 26px;
+  main:has(.member) h4 {
+    font-size: 23px;
     line-height: 36px;
   }
-  h4 {
-    font-size: 22px;
-    line-height: 36px;
-  }
-  h5 {
-    font-size: 18px;
+  main:has(.member) h5 {
+    font-size: 19px;
     line-height: 24px;
   }
-  h6 {
-    font-size: 14px;
+  main:has(.member) h6 {
+    font-size: 15px;
     line-height: 24px;
   }
-  p,
-  label,
-  input {
-    font-size: 14px;
+  main:has(.member) p,
+  main:has(.member) label,
+  main:has(.member) input {
+    font-size: 15px;
     line-height: 24px;
   }
 }
+
 a {
   text-decoration: none;
 }
@@ -152,106 +149,90 @@ a:link, a:visited, a:hover, a:focus, a:active {
   color: inherit;
 }
 
-input {
+.member input {
   position: relative;
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  font-size: 18px;
+}
+.member input::-webkit-input-placeholder {
+  font-size: 15px;
   line-height: 24px;
 }
-input::-webkit-input-placeholder {
-  font-size: 14px;
+.member input::-moz-placeholder {
+  font-size: 15px;
   line-height: 24px;
 }
-input::-moz-placeholder {
-  font-size: 14px;
+.member input:-ms-input-placeholder {
+  font-size: 15px;
   line-height: 24px;
 }
-input:-ms-input-placeholder {
-  font-size: 14px;
+.member input::-ms-input-placeholder {
+  font-size: 15px;
   line-height: 24px;
 }
-input::-ms-input-placeholder {
-  font-size: 14px;
+.member input::placeholder {
+  font-size: 15px;
   line-height: 24px;
 }
-input::placeholder {
-  font-size: 14px;
-  line-height: 24px;
+.member input.input-L {
+  min-width: 20em;
+  max-width: 100%;
 }
-input.input-L {
-  width: 20em;
-}
-@media all and (max-width: 768px) {
-  input.input-L {
-    width: 100%;
-  }
-}
-input.input-M {
+.member input.input-M {
   width: 6em;
   text-align: center;
   margin-right: 1em;
 }
-input.input-S {
+.member input.input-S {
   width: 4em;
   text-align: center;
   margin-right: 1em;
 }
-@media all and (max-width: 576px) {
-  input.input-S {
-    margin-right: 0.25em;
-  }
-}
-
-label {
+.member label {
   position: relative;
 }
-
-input[type=text],
-input[type=email],
-input[type=password] {
+.member input[type=text],
+.member input[type=email],
+.member input[type=password] {
   padding: 0.5em 0.75em;
   outline: none;
   border-width: 1px;
   border-style: solid;
   border-color: var(--color_4);
 }
-input[type=text]:focus,
-input[type=email]:focus,
-input[type=password]:focus {
+.member input[type=text]:focus,
+.member input[type=email]:focus,
+.member input[type=password]:focus {
   border-width: 1px;
   border-style: solid;
   border-color: var(--color_6);
 }
-
-input[type=radio] + label {
+.member input[type=radio] + label {
   border-radius: 1em;
   cursor: pointer;
 }
-input[type=radio] + label:before {
+.member input[type=radio] + label:before {
   border-radius: 100%;
 }
-
-input[type=checkbox] + label {
+.member input[type=checkbox] + label {
   cursor: pointer;
 }
-input[type=checkbox] + label:before {
+.member input[type=checkbox] + label:before {
   border-radius: 3px;
 }
-
-input[type=checkbox],
-input[type=radio] {
+.member input[type=checkbox],
+.member input[type=radio] {
   display: none;
 }
-input[type=checkbox] + label,
-input[type=radio] + label {
+.member input[type=checkbox] + label,
+.member input[type=radio] + label {
   padding: 0.25em 1em 0.25em 2.5em;
   background-color: transparent;
   -webkit-transition: 0.25s;
   transition: 0.25s;
 }
-input[type=checkbox] + label::before,
-input[type=radio] + label::before {
+.member input[type=checkbox] + label::before,
+.member input[type=radio] + label::before {
   content: "";
   position: absolute;
   top: 50%;
@@ -269,21 +250,19 @@ input[type=radio] + label::before {
   -webkit-transition-delay: 0.15s;
           transition-delay: 0.15s;
 }
-input[type=checkbox]:checked + label,
-input[type=radio]:checked + label {
+.member input[type=checkbox]:checked + label,
+.member input[type=radio]:checked + label {
   background-color: var(--color_3);
 }
-input[type=checkbox]:checked + label::before,
-input[type=radio]:checked + label::before {
+.member input[type=checkbox]:checked + label::before,
+.member input[type=radio]:checked + label::before {
   background-color: var(--color_4);
 }
-
-input[type=button],
-input[type=submit],
-input[type=reset],
-button,
-.button {
-  max-width: 100%;
+.member input[type=button],
+.member input[type=submit],
+.member input[type=reset],
+.member button,
+.member .button {
   padding: 0.5em 5em;
   text-align: justify;
   color: var(--color_2);
@@ -296,66 +275,54 @@ button,
           appearance: button;
   cursor: pointer;
 }
-input[type=button].button-S,
-input[type=submit].button-S,
-input[type=reset].button-S,
-button.button-S,
-.button.button-S {
+.member input[type=button].button-S,
+.member input[type=submit].button-S,
+.member input[type=reset].button-S,
+.member button.button-S,
+.member .button.button-S {
   word-spacing: 0.5em;
   padding: 0.2em 2em;
   margin: 0 1em;
 }
-input[type=button]:hover,
-input[type=submit]:hover,
-input[type=reset]:hover,
-button:hover,
-.button:hover {
+.member input[type=button]:hover,
+.member input[type=submit]:hover,
+.member input[type=reset]:hover,
+.member button:hover,
+.member .button:hover {
   color: var(--color_1);
   background-color: var(--color_5);
 }
-input[type=button]:active,
-input[type=submit]:active,
-input[type=reset]:active,
-button:active,
-.button:active {
+.member input[type=button]:active,
+.member input[type=submit]:active,
+.member input[type=reset]:active,
+.member button:active,
+.member .button:active {
   color: var(--color_6);
   background-color: var(--color_1);
   border-color: var(--color_6);
 }
-@media all and (max-width: 768px) {
-  input[type=button],
-  input[type=submit],
-  input[type=reset],
-  button,
-  .button {
-    word-spacing: 0.5em;
-    padding: 0.5em 1em;
-  }
-}
-
-select {
-  padding: 0.5em 0.5em;
+.member select {
+  padding: 0.5em 0.3em;
   border-color: var(--color_5);
-  font-size: 18px;
+  font-size: 19px;
   line-height: 24px;
 }
-select option {
-  font-size: 18px;
+.member select option {
+  font-size: 19px;
   line-height: 24px;
 }
-
-textarea {
+.member textarea {
   width: 100%;
+  margin: 0 1.5em;
   padding: 1em 1em;
-  font-size: 18px;
+  font-size: 19px;
   line-height: 24px;
   resize: none;
 }
-
-input[type=file] {
+.member input[type=file] {
   display: none;
 }
-input[type=file] + label > img {
+.member input[type=file] + label > img {
   width: 150px;
   height: 150px;
   -o-object-fit: cover;
@@ -364,20 +331,19 @@ input[type=file] + label > img {
   border-color: var(--color_6);
   border-width: 1px;
 }
-
-.collapse {
+.member .collapse {
   margin: 0 auto;
   width: 960px;
   max-width: 95%;
   border: 1px solid var(--color_5);
   overflow: hidden;
 }
-.collapse div:first-child {
+.member .collapse div:first-child {
   position: relative;
   padding: 18px 24px;
   background-color: var(--color_2);
 }
-.collapse div:first-child:after {
+.member .collapse div:first-child:after {
   content: "";
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' fill='currentColor' class='bi bi-caret-down-fill' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -391,7 +357,7 @@ input[type=file] + label > img {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-.collapse div:last-child {
+.member .collapse div:last-child {
   display: block;
   padding: 0 75px;
   max-height: 0px;
@@ -399,16 +365,19 @@ input[type=file] + label > img {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-.collapse.active div:first-child:after {
+.member .collapse.active div:first-child:after {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
 }
-.collapse.active div:last-child {
+.member .collapse.active div:last-child {
   display: block;
   padding: 18px 24px;
   max-height: 960px;
 }
 
+#mode {
+  display: none;
+}
 #mode + label {
   position: relative;
   display: block;
@@ -423,6 +392,8 @@ input[type=file] + label > img {
   background-color: var(--color_5);
   -webkit-transition: 0.2s;
   transition: 0.2s;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 #mode + label > span {
   position: absolute;
@@ -497,6 +468,14 @@ div.pages .page {
 }
 
 body {
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   background-color: var(--color_2);
   background-image: linear-gradient(0deg, rgba(145, 75, 0, 0.05) 1px, transparent 0), linear-gradient(90deg, rgba(145, 75, 0, 0.05) 1px, transparent 0), linear-gradient(0deg, rgba(100, 50, 0, 0.05) 1px, transparent 0), linear-gradient(90deg, rgba(100, 50, 0, 0.05) 1px, transparent 0), linear-gradient(0deg, rgba(0, 0, 0, 0.05) 1px, transparent 0), linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 0);
   background-size: 10px 10px, 10px 10px, 100px 100px, 100px 100px, 300px 300px, 300px 300px;
@@ -506,7 +485,10 @@ body:has(#mode:checked) {
   background-size: 10px 10px, 10px 10px, 100px 100px, 100px 100px, 300px 300px, 300px 300px;
 }
 
-main {
+main:has(.member) {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   padding: 96px 0;
 }
 
@@ -545,7 +527,7 @@ section.member.container div.memberList li {
 section.member.container div.memberList li a {
   display: inline-block;
   width: 100%;
-  font-size: 22px;
+  font-size: 23px;
   line-height: 36px;
   font-weight: bold;
   text-align: center;
@@ -728,7 +710,7 @@ section.member.container > div.content div.table table {
 section.member.container > div.content div.table table th,
 section.member.container > div.content div.table table td {
   padding: 24px 12px;
-  font-size: 18px;
+  font-size: 19px;
   line-height: 24px;
   text-align: center;
 }
@@ -752,7 +734,7 @@ section.member.container > div.content div.table table img {
 section.member.container > div.content .collapse th,
 section.member.container > div.content .collapse td {
   padding: 12px 0;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 24px;
 }
 section.member.container > div.content .stars {
