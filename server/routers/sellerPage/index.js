@@ -13,10 +13,6 @@ const router = express.Router()
 router.use(bodyParser.json())
 // router.use(express.static(path.join(__dirname, 'public')))
 
-router.use('/', (req, res, next) => {
-  console.log(0)
-  next()
-})
 router.use('/', brandRoutes)
 router.use('/', categoryRoutes)
 router.use('/', productRoutes) // 使用路由模組

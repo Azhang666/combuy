@@ -135,9 +135,8 @@ exports.createProduct = [
         size,
         weight,
         price,
-        
+
         spec_name,
-        
       },
       prod_name,
       brand_id,
@@ -154,14 +153,13 @@ exports.createProduct = [
       category_id: req.body.productData.category_id,
       transport: req.body.productData.transport,
       payment: req.body.productData.payment,
-
     }
     try {
       const results = await dbQuery('INSERT INTO product SET ?', productData)
       const prodId = results.insertId
       const publishValue = req.body.productData.publish
       const quantityValue = req.body.productData.stock
-      const DEFAULT_IMAGE_PATH = '/images/products/defaultImage.jpg'
+      const DEFAULT_IMAGE_PATH = '../images/products/defaultImage.jpg'
       const description = req.body.productData.contnet
       let imagesData = []
 
@@ -290,7 +288,7 @@ exports.getProductsAllData = async (req, res) => {
   }
 }
 exports.partiallyUpdateProduct = (req, res) => {
-  const { prod_id, spec_id } = req.body.sellspec[0];
+  const { prod_id, spec_id } = req.body.sellspec[0]
 
   const updatedData = req.body
   const sellspecData = updatedData.sellspec[0]
@@ -318,7 +316,7 @@ exports.partiallyUpdateProduct = (req, res) => {
     size: 'size',
     weight: 'weight',
     stock: 'stock',
-    contnet: 'contnet'
+    contnet: 'contnet',
   }
 
   if (!updatedData.prod_name) {
