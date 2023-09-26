@@ -120,7 +120,7 @@ exports.createProduct = [
     next()
   },
   async (req, res) => {
-    console.log(req.body)
+    console.log('req.body', req.body)
 
     const mainImageIdx = Number(req.body.mainImageIdx)
     const {
@@ -135,8 +135,9 @@ exports.createProduct = [
         size,
         weight,
         price,
-        description,
-        spec,
+        
+        spec_name,
+        
       },
       prod_name,
       brand_id,
@@ -153,14 +154,15 @@ exports.createProduct = [
       category_id: req.body.productData.category_id,
       transport: req.body.productData.transport,
       payment: req.body.productData.payment,
+
     }
     try {
       const results = await dbQuery('INSERT INTO product SET ?', productData)
       const prodId = results.insertId
       const publishValue = req.body.productData.publish
-      const quantityValue = req.body.productData.quantity
+      const quantityValue = req.body.productData.stock
       const DEFAULT_IMAGE_PATH = '/images/products/defaultImage.jpg'
-
+      const description = req.body.productData.contnet
       let imagesData = []
 
       if (req.files && req.files.length > 0) {
@@ -210,7 +212,7 @@ exports.createProduct = [
       const sellSpecData = {
         prod_id: prodId,
         spec_id: '10',
-        spec_name: spec,
+        spec_name: spec_name,
         contnet: description,
         price: price,
         cpu,
@@ -225,7 +227,6 @@ exports.createProduct = [
         publish: publishValue,
         stock: quantityValue,
       }
-
       await dbQuery('INSERT INTO sellspec SET ?', sellSpecData)
       res.json({
         success: true,
@@ -240,6 +241,7 @@ exports.createProduct = [
 
 exports.getProductsAllData = async (req, res) => {
   const u_id = req.session.member.u_id
+  // const u_id = 43
   const prodId = req.params.prod_id
   const specID = req.params.spec_id
 
@@ -288,7 +290,8 @@ exports.getProductsAllData = async (req, res) => {
   }
 }
 exports.partiallyUpdateProduct = (req, res) => {
-  const { prod_id, spec_id } = req.params
+  const { prod_id, spec_id } = req.body.sellspec[0];
+
   const updatedData = req.body
   const sellspecData = updatedData.sellspec[0]
   const sellspecFields = []
@@ -315,6 +318,7 @@ exports.partiallyUpdateProduct = (req, res) => {
     size: 'size',
     weight: 'weight',
     stock: 'stock',
+    contnet: 'contnet'
   }
 
   if (!updatedData.prod_name) {

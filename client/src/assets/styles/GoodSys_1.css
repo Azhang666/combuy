@@ -1,26 +1,35 @@
 @charset "UTF-8";
 /* The sidebar menu */
 .sidenav {
-  height: 100%;
+  height: calc(100% - 60px); /* 減去nav-top的高度 */
   width: 15%;
   position: fixed;
   z-index: 1;
+  top: 60px; /* 從nav-top的底部開始 */
   left: 0;
-  background-color: #FFEEEE;
+  background-color: #F2F2F2;
   overflow-x: hidden;
-  padding-top: 20px;
+  border-right: 1px solid #ddd;
+  transition: 0.3s;
 }
 
 .sidenav a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  font-size: 25px;
-  color: black;
+  font-size: 24px;
+  color: #333;
   display: block;
+  transition: 0.3s;
+  border-bottom: 1px solid #ddd;
 }
+
+.sidenav a:last-child {
+  border-bottom: none;
+}
+
 .sidenav a:hover {
-  color: lightgray;
-  background-color: lightslategrey;
+  color: #F2F2F2;
+  background-color: #333;
 }
 
 @media screen and (max-height: 450px) {
@@ -91,14 +100,6 @@ body {
   background-color: #DFD9D9;
 }
 
-.modal-dialog {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 80vh;
-  height: 200px;
-}
-
 .txtara,
 .conarae {
   border: 1px solid #D9D9D9;
@@ -159,6 +160,14 @@ body {
   z-index: 1;
 }
 
+.modal-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  height: 200px;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -176,6 +185,7 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  color: black;
 }
 
 .odd-row {
@@ -335,4 +345,100 @@ body {
 .enlarged-image {
   max-width: 100%;
   max-height: 80vh; /* 限制圖片高度，使其不超過視窗的80% */
+}
+
+.input-error {
+  border-color: red;
+}
+
+/* 基本樣式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+/* 常用樣式 */
+.titlefont {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.titlefont-blue {
+  color: #007BFF;
+}
+
+/* top 樣式 */
+.top2 {
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+}
+
+.top2-b10px {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.top2-r10px {
+  border-right: 1px solid #e0e0e0;
+}
+
+.top2-bgray {
+  background-color: white;
+}
+
+/* 商品列表 */
+.even-row, .odd-row {
+  padding: 15px 0;
+  transition: background-color 0.3s;
+}
+
+.even-row:hover, .odd-row:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.odd-row {
+  background-color: #fff;
+}
+
+/* 按鈕樣式 */
+.butt1 {
+  padding: 5px 15px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.butt1:hover {
+  background-color: #0056b3;
+}
+
+.btn {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-success:hover {
+  background-color: #1e7e34;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
 }/*# sourceMappingURL=GoodSys_1.css.map */

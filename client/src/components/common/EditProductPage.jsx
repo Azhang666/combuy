@@ -1,42 +1,62 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { API_ENDPOINTS } from '../contexts/constants'
-import { Dropdown, Accordion, Form } from 'react-bootstrap'
-import { Button, Modal } from 'react-bootstrap'
-
+import { Dropdown, Accordion, Form, Button, Modal } from 'react-bootstrap'
+import Swal from 'sweetalert2';
 function EditProductPage() {
-  const { id, sid } = useParams()
-  const [selectedImage, setSelectedImage] = useState(null)
-  const [showModal, setShowModal] = useState(false)
-  const [selectedImageId, setSelectedImageId] = useState(null)
-  const [showDeleteButtons, setShowDeleteButtons] = useState(false)
-  const [fileName, setFileName] = useState('')
-  const [showHint, setShowHint] = useState(false)
-  const [coverUpdated, setCoverUpdated] = useState(false)
-  const [enlargedImageSrc, setEnlargedImageSrc] = useState(null)
-  const [showImageModal, setShowImageModal] = useState(false)
-  const inputFileRef = useRef(null)
+  // =====================================
+  // State and Ref Declarations
+  // =====================================
 
+  const { id, sid } = useParams();
+  const inputFileRef = useRef(null);
+  const navigate = useNavigate();
+  // Product states
   const [productState, setProductState] = useState({
     product: { sellspec: [] },
     updatedProduct: {},
     sellSpecs: [],
     images: [],
-  })
-
-  const [categories, setCategories] = useState([])
-  const [brands, setBrands] = useState([])
-  const [error, setError] = useState([])
-  const [selectedCategory, setSelectedCategory] = useState({})
-  const [selectedBrand, setSelectedBrand] = useState({})
-  const [inputLength, setInputLength] = useState(0)
-  const [editedSpecName, setEditedSpecName] = useState('')
+  });
+  const [inputLength, setInputLength] = useState(0);
+  const [editedSpecName, setEditedSpecName] = useState('');
   const [inputPrice, setInputPrice] = useState('')
   const [inputStock, setInputStock] = useState('')
-  const [selectedTransports, setSelectedTransports] = useState([])
-  const [selectedPayments, setSelectedPayments] = useState([])
-  const [showChangeCoverModal, setShowChangeCoverModal] = useState(false)
+  // Modal and UI states
+  const [showModal, setShowModal] = useState(false);
+  const [showDeleteButtons, setShowDeleteButtons] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [showChangeCoverModal, setShowChangeCoverModal] = useState(false);
+
+  // Image states
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [fileName, setFileName] = useState('');
+  const [enlargedImageSrc, setEnlargedImageSrc] = useState(null);
+  const [coverUpdated, setCoverUpdated] = useState(false);
+  const [selectedImageId, setSelectedImageId] = useState(null);
+
+  // Drop-down data states
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState({});
+  const [selectedBrand, setSelectedBrand] = useState({});
+  const [textareaContent, setTextareaContent] = useState(
+    productState.product.sellspec && productState.product.sellspec[0]
+      ? productState.product.sellspec[0].contnet
+      : ""
+  );
+
+  const [selectedTransports, setSelectedTransports] = useState([]);
+  const [selectedPayments, setSelectedPayments] = useState([]);
+  const [error, setError] = useState([]);
+
+
+
+  // =====================================
+  // Constants
+  // =====================================
 
   const SPEC_FIELDS = [
     { key: 'cpu', label: 'CPU' },
@@ -48,20 +68,149 @@ function EditProductPage() {
     { key: 'warranty', label: 'Warranty' },
     { key: 'size', label: 'size' },
     { key: 'weight', label: 'weight' },
-  ]
-
+  ];
   const TRANSPORT_OPTIONS = [
     { id: 'all_transport', value: '2', label: '全選' },
     { id: 'mail_transport', value: '0', label: '郵寄寄送' },
     { id: 'express_transport', value: '1', label: '宅配/快遞' },
-  ]
+  ];
   const PAYMENT_OPTIONS = [
     { id: 'all_payment', value: '2', label: '全選' },
     { id: 'bank_transfer', value: '0', label: '銀行或郵局轉帳' },
     { id: 'credit_card', value: '1', label: '信用卡(一次付清)' },
-  ]
+  ];
 
-  // ... 所有您的事件處理函數和邏輯函數 ...
+  // =====================================
+  // Helper Functions
+  // =====================================
+
+  const showDeleteResult = (success) => {
+    if (success) {
+      Swal.fire({
+        title: '成功!',
+        text: '圖片已成功刪除。',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false,
+        timerProgressBar: true,
+      });
+    } else {
+      Swal.fire({
+        title: '失敗!',
+        text: '刪除圖片時出錯。',
+        icon: 'error',
+        timer: 2000,
+        showConfirmButton: false,
+        timerProgressBar: true,
+      });
+    }
+  };
+  const convertTransportToServerFormat = () => {
+    if (selectedTransports.includes('2')) {
+      return 2 // 全選
+    }
+    if (selectedTransports.includes('0') && selectedTransports.includes('1')) {
+      return 2 // 所有選項都被選中
+    }
+    if (selectedTransports.includes('0')) {
+      return 0 // 郵寄寄送
+    }
+    if (selectedTransports.includes('1')) {
+      return 1 // 宅配/快遞
+    }
+    return null // 沒有選擇任何運送方式
+  };
+  const convertPaymentToServerFormat = () => {
+    // console.log(selectedPayments);
+    // console.log(selectedPayments);
+    if (selectedPayments.includes('2')) {
+      return 2 // 全選
+    }
+    if (selectedPayments.includes('0') && selectedPayments.includes('1')) {
+      return 2 // 所有選項都被選中
+    }
+    if (selectedPayments.includes('0')) {
+      return 0 // 銀行或郵局轉帳
+    }
+    if (selectedPayments.includes('1')) {
+      return 1 // 信用卡(一次付清)
+    }
+    return null // 沒有選擇任何付款方式
+  };
+  const updateSpecName = () => {
+    if (editedSpecName && productState.sellSpecs.length > 0) {
+      const updatedSpecs = [...productState.sellSpecs]
+      updatedSpecs[0].spec_name = editedSpecName
+      return updatedSpecs
+    }
+    return productState.sellSpecs
+  };
+
+  // =====================================
+  // Event Handlers
+  // =====================================
+
+  const handleDelete = async (imgId) => {
+    const result = await Swal.fire({
+      title: '確認',
+      text: "確定要刪除此圖片嗎？",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '確定',
+      cancelButtonText: '取消'
+    });
+
+    if (result.isConfirmed) {
+      deleteImage(imgId);
+      const deleteSuccess = true;  // 假設刪除成功
+      // replace with actual delete operation and result
+
+      showDeleteResult(deleteSuccess);
+    }
+  };;
+  const handleSpecNameChange = e => {
+    setEditedSpecName(e.target.value)
+  };
+  const handleInput = e => {
+    setInputLength(e.target.value.length)
+  };
+  const handleInputChange = useCallback(
+    e => {
+      const { name, value } = e.target;
+
+      if (name === 'descriptionContent') {
+        // 更新本地 state
+        setTextareaContent(value);
+      }
+      else if (name === 'spec_name' && productState.sellSpecs.length > 0) {
+        setProductState(prevState => {
+          const updatedSpecs = [...prevState.sellSpecs];
+          updatedSpecs[0].spec_name = value;
+          return {
+            ...prevState,
+            sellSpecs: updatedSpecs,
+            updatedProduct: {
+              ...prevState.updatedProduct,
+              sellSpecs: updatedSpecs,
+            },
+          };
+        });
+      }
+      else {
+        setProductState(prevState => ({
+          ...prevState,
+          updatedProduct: { ...prevState.updatedProduct, [name]: value },
+        }));
+      }
+    }, [productState.sellSpecs]);
+  const handleCancel = () => navigate('/'); // 替換成你要跳轉的路徑
+
+  // =====================================
+  // Effects
+  // =====================================
+
   useEffect(() => {
     console.log('useEffect triggered!') // 這樣您可以看到每次useEffect被調用時的紀錄
     if (coverUpdated) {
@@ -69,7 +218,7 @@ function EditProductPage() {
 
       setCoverUpdated(false)
     }
-  }, [coverUpdated])
+  }, [coverUpdated]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -102,8 +251,41 @@ function EditProductPage() {
     }
 
     fetchData()
-  }, [id])
+  }, [id, sid]);
+  useEffect(() => {
+    const paymentFromServer = productState.product.payment
+    const transportFromServer = productState.product.transport
 
+    // 設定 selectedPayments 的初始值
+    switch (paymentFromServer) {
+      case 2:
+        setSelectedPayments(['0', '1', '2']) // 銀行或郵局轉帳、信用卡(一次付清)
+        break
+      case 0:
+        setSelectedPayments(['0']) // 銀行或郵局轉帳
+        break
+      case 1:
+        setSelectedPayments(['1']) // 信用卡(一次付清)
+        break
+      default:
+        break
+    }
+
+    // 設定 selectedTransports 的初始值
+    switch (transportFromServer) {
+      case 2:
+        setSelectedTransports(['0', '1', '2']) // 郵寄寄送、宅配/快遞
+        break
+      case 0:
+        setSelectedTransports(['0']) // 郵寄寄送
+        break
+      case 1:
+        setSelectedTransports(['1']) // 宅配/快遞
+        break
+      default:
+        break
+    }
+  }, [productState.product.payment, productState.product.transport]);
   useEffect(() => {
     const paymentFromServer = productState.product.payment
     const transportFromServer = productState.product.transport
@@ -139,99 +321,20 @@ function EditProductPage() {
     }
   }, [productState.product.payment, productState.product.transport])
 
-  const handleSpecNameChange = e => {
-    setEditedSpecName(e.target.value)
-  }
+  useEffect(() => {
+    if (productState.product.sellspec && productState.product.sellspec[0]) {
+      setTextareaContent(productState.product.sellspec[0].contnet);
+    }
+  }, [productState.product.sellspec]);
 
-  const handleInput = e => {
-    setInputLength(e.target.value.length)
-  }
+  // =====================================
+  // Render
+  // =====================================
 
-  const handleInputChange = useCallback(
-    e => {
-      const { name, value } = e.target
-      if (name === 'spec_name' && productState.sellSpecs.length > 0) {
-        setProductState(prevState => {
-          const updatedSpecs = [...prevState.sellSpecs]
-          updatedSpecs[0].spec_name = value
-          return {
-            ...prevState,
-            sellSpecs: updatedSpecs,
-            updatedProduct: {
-              ...prevState.updatedProduct,
-              sellSpecs: updatedSpecs,
-            },
-          }
-        })
-      } else {
-        setProductState(prevState => ({
-          ...prevState,
-          updatedProduct: { ...prevState.updatedProduct, [name]: value },
-        }))
-      }
-    },
-    [productState.sellSpecs]
-  )
 
-  const updateSpecName = () => {
-    if (editedSpecName && productState.sellSpecs.length > 0) {
-      const updatedSpecs = [...productState.sellSpecs]
-      updatedSpecs[0].spec_name = editedSpecName
-      return updatedSpecs
-    }
-    return productState.sellSpecs
-  }
-  const convertTransportToServerFormat = () => {
-    if (selectedTransports.includes('2')) {
-      return 2 // 全選
-    }
-    if (selectedTransports.includes('0') && selectedTransports.includes('1')) {
-      return 2 // 所有選項都被選中
-    }
-    if (selectedTransports.includes('0')) {
-      return 0 // 郵寄寄送
-    }
-    if (selectedTransports.includes('1')) {
-      return 1 // 宅配/快遞
-    }
-    return null // 沒有選擇任何運送方式
-  }
-  const convertPaymentToServerFormat = () => {
-    // console.log(selectedPayments);
-    // console.log(selectedPayments);
-    if (selectedPayments.includes('2')) {
-      return 2 // 全選
-    }
-    if (selectedPayments.includes('0') && selectedPayments.includes('1')) {
-      return 2 // 所有選項都被選中
-    }
-    if (selectedPayments.includes('0')) {
-      return 0 // 銀行或郵局轉帳
-    }
-    if (selectedPayments.includes('1')) {
-      return 1 // 信用卡(一次付清)
-    }
-    return null // 沒有選擇任何付款方式
-  }
-
-  const saveProductToServer = product => {
-    axios
-      .patch(API_ENDPOINTS.UPDATE_PRODUCT_PARTIALLY(id), product)
-      .then(() => {
-        setProductState(prevState => ({ ...prevState, product }))
-        setSelectedCategory({})
-        setSelectedBrand({})
-      })
-      .catch(error => {
-        // Use the error message from the server response or a default message
-        const errorMessage = error.response?.data?.message || 'Failed to update product.'
-        setError([errorMessage])
-      })
-  }
 
   const handleSpecChange = (specIndex, key, value) => {
-    // console.log("Handling spec change:", { specIndex, key, value });  // Add this
-    // console.log("Handling spec change:", { specIndex, key, value });  // Add this
+
     setProductState(prevState => {
       if (!Array.isArray(prevState.sellSpecs)) {
         console.error('sellSpecs is not an array:', prevState.sellSpecs)
@@ -318,6 +421,7 @@ function EditProductPage() {
       setSelectedTransports(newTransports)
     }
   }
+
   const renderProductImages = () => {
     if (!Array.isArray(productState.images)) {
       return null
@@ -364,11 +468,8 @@ function EditProductPage() {
               variant="danger"
               size="sm"
               onClick={e => {
-                e.stopPropagation() // 阻止事件冒泡
-                console.log(image.img_id)
-                if (window.confirm('確定要刪除此圖片嗎？')) {
-                  deleteImage(image.img_id)
-                }
+                e.stopPropagation(); // 阻止事件冒泡
+                handleDelete(image.img_id);
               }}
             >
               刪除
@@ -379,22 +480,31 @@ function EditProductPage() {
   }
 
   const uploadImage = async () => {
-    // console.log("uploadImage function is called");
+    const spec_id = productState.product.sellspec[0].spec_id;
+
     if (!selectedImage) {
       console.error('No image selected')
       return
     }
-    const formData = new FormData()
-    formData.append('productImage', selectedImage)
-    formData.append('prod_id', productState.product.prod_id)
-    formData.append('spec_id', productState.product.spec_id)
+
+    if (typeof spec_id === 'undefined') { // 修改了這裡
+      console.error('spec_id is not defined!')
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('productImage', selectedImage);
+    formData.append('prod_id', productState.product.prod_id);
+    formData.append('spec_id', spec_id);
 
     try {
       const response = await fetch(
         API_ENDPOINTS.UPLOAD_PRODUCT_IMAGE(
           productState.product.prod_id,
-          productState.product.spec_id
+          spec_id // 修改了這裡
         ),
+        // ... 其他代碼
+
         {
           method: 'POST',
           body: formData,
@@ -462,30 +572,47 @@ function EditProductPage() {
           imageId: selectedImageId,
         })
         if (response.status === 200) {
-          alert('封面圖更新成功！')
-          // 這裡應該重新獲取產品圖片或更新狀態，以確保視圖是最新的
+          Swal.fire({
+            icon: 'success',
+            title: '成功',
+            text: '封面圖更新成功！'
+          });
           fetchProductImages() // 假設這是用來重新獲取產品圖片的函數
         } else {
-          alert('封面圖更新失敗！')
+          Swal.fire({
+            icon: 'error',
+            title: '失敗',
+            text: '封面圖更新失敗！'
+          });
         }
       } catch (error) {
         console.error('更新封面圖失敗: ', error)
-        alert('更新封面圖失敗！')
+        Swal.fire({
+          icon: 'error',
+          title: '出錯了',
+          text: '更新封面圖失敗！'
+        });
       }
       setSelectedImageId(null) // 清空所選的圖片ID
       setShowChangeCoverModal(false) // 關閉模態框
     } else {
-      setShowHint(true) // 顯示提示
-      setTimeout(() => setShowHint(false), 5000) // 5秒後自動隱藏提示
+      Swal.fire({
+        icon: 'warning',
+        title: '提示',
+        text: '請選擇一個圖片！'
+      }).then(() => {
+        setTimeout(() => setShowHint(false), 5000) // 5秒後自動隱藏提示
+      });
     }
   }
-
   // 假設這是用來重新獲取產品圖片的函數，你可能已經有這個功能，只是我在提供的代碼中沒有看到。
   const fetchProductImages = async () => {
-    const response = await axios.get(API_ENDPOINTS.PRODUCT_BY_ID(id))
+    const response = await axios.get(API_ENDPOINTS.PRODUCT_BY_ID(id, sid
+
+    ))
     if (response.status === 200 && Array.isArray(response.data.images)) {
       setProductState({ ...productState, images: response.data.images })
-      console.log('Fetched and updated product images:', response.data.images)
+      console.log('Fetched and updated product images:', response.data)
     }
   }
 
@@ -493,12 +620,65 @@ function EditProductPage() {
     if (event.target.files.length > 0) {
       setFileName(event.target.files[0].name)
       if (event.target.files.length > 5) {
-        alert('最多只能上傳5張圖片！')
+        alert('最多只能上傳6張圖片！')
         return
       }
       // 其他處理...
     }
     setSelectedImage(event.target.files[0])
+  }
+
+
+
+  // const handleSave = async () => {
+  //   const changesSummary = generateChangesSummary();
+
+  //   const result = await Swal.fire({
+  //     title: '確認更改',
+  //     html: `以下是您的更改：<br/><br/>${changesSummary}<br/><br/>是否確定要保存？`,
+  //     icon: 'question',
+  //     showCancelButton: true,
+  //     confirmButtonText: '確定',
+  //     cancelButtonText: '取消'
+  //   });
+
+  //   if (result.isConfirmed) {
+  //     // ... 其他的保存操作 ...
+  //     saveProductToServer(productToUpdate);
+  //   }
+  // }
+
+  const saveProductToServer = product => {
+    axios
+      .patch(API_ENDPOINTS.UPDATE_PRODUCT_PARTIALLY(id), product)
+      .then(() => {
+        setProductState(prevState => ({ ...prevState, product }))
+        setSelectedCategory({})
+        setSelectedBrand({})
+
+        // 成功保存後，顯示sweetalert2提示
+        Swal.fire({
+          icon: 'success',
+          title: '儲存成功!',
+          showConfirmButton: false,
+          timer: 1500 // 顯示1.5秒後自動消失
+        }).then(() => {
+          // 這裡是跳轉的部分，跳轉到您想要的頁面
+          navigate(-1);
+        });
+      })
+      .catch(error => {
+        // Use the error message from the server response or a default message
+        const errorMessage = error.response?.data?.message || 'Failed to update product.'
+        setError([errorMessage])
+
+        // 保存失敗時，也顯示sweetalert2的提示
+        Swal.fire({
+          icon: 'error',
+          title: '儲存失敗',
+          text: errorMessage // 使用從伺服器返回的錯誤訊息
+        });
+      })
   }
 
   const handleSave = () => {
@@ -512,19 +692,45 @@ function EditProductPage() {
       updatedSpecs[0].stock = Number(inputStock)
     }
 
+    // 使用 textareaContent 更新 sellspec 的內容
+    const updatedSellSpec = productState.updatedProduct.sellspec ? [...productState.updatedProduct.sellspec] : [];
+
+    if (updatedSellSpec[0]) {
+      updatedSellSpec[0].contnet = textareaContent;
+    }
+
     const transportToUpdate = convertTransportToServerFormat()
     const paymentToUpdate = convertPaymentToServerFormat()
     const productToUpdate = {
       ...productState.updatedProduct,
       sellSpecs: updatedSpecs,
+      sellspec: updatedSellSpec,  // 使用更新後的 sellspec
       categoryId: selectedCategory.category_id || productState.product.categoryId,
       brandId: selectedBrand.brand_id || productState.product.brandId,
       transport: transportToUpdate,
       payment: paymentToUpdate,
     }
 
-    saveProductToServer(productToUpdate)
+    Swal.fire({
+      icon: 'warning', // 提示圖示
+      title: '確認更改',
+      text: '您確定要保存對商品的更改嗎？',
+      showCancelButton: true,  // 顯示取消按鈕
+      confirmButtonText: '確定', // 確認按鈕文字
+      cancelButtonText: '取消'  // 取消按鈕文字
+    }).then((result) => {
+      // 若使用者點擊“確定”，則繼續保存更改的邏輯
+      if (result.isConfirmed) {
+        saveProductToServer(productToUpdate)
+      }
+    });
+
+
   }
+
+
+
+
   if (error.length > 0) return <div>{error.join(', ')}</div>
 
   if (!productState.product) return <div>Loading...</div>
@@ -534,18 +740,20 @@ function EditProductPage() {
     setShowDeleteButtons(false)
   }
 
+
+
   return (
     <>
-      <div className="top2 top2-b10px">
+      <div className="top2 top2-b10px mt-3 top2-bgray">
         <div className="mt-3">
           <div className="titlefont ">
-            <span className="titlefont-blue">商品管理</span> / 商品編輯
+            <span className="titlefont-blue ">商品管理</span> / 商品編輯
           </div>
         </div>
       </div>
-      <div className="top2 top2-b10px incontentText mt-3 p-4">
+      <div className="top2 top2-b10px incontentText mt-3 p-4 top2-bgray">
         <div className="row">
-          <h5 className="col-2">{}</h5>
+          <h5 className="col-2">{ }</h5>
           <h5 className="col-5 ">當前商品資訊</h5>
           <h5 className="col-5 ">編輯商品資訊</h5>
         </div>
@@ -748,14 +956,12 @@ function EditProductPage() {
             <textarea
               className="form-control txtara"
               rows={4}
-              value={
-                productState.product.sellspec &&
-                productState.product.sellspec[0] &&
-                productState.product.sellspec[0].contnet
-              }
+              value={textareaContent}
               onChange={handleInputChange}
-              name="description"
+              name="descriptionContent"
             />
+
+
           </div>
         </div>
 
@@ -951,6 +1157,7 @@ function EditProductPage() {
       </div>
 
       <nav className="gray2 conarae d-flex justify-content-end">
+        <button style={{ marginRight: '16px' }} className="btn btn-danger m-1" onClick={handleCancel}>取消</button>
         <button onClick={handleSave} className="btn btn-primary m-1">
           保存更改
         </button>

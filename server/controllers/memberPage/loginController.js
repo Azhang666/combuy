@@ -20,8 +20,10 @@ const LoginController = {
     if (result.err == 0) {
       req.session.member = result.data
     }
+
     console.log(req.session)
     res.end(JSON.stringify(result))
+
   },
   logoutAPI: (req, res) => {
     res.setHeader('Content-type', 'text/html;charset=utf-8')
@@ -30,6 +32,17 @@ const LoginController = {
     delete req.session.member
     res.end(JSON.stringify(result))
   },
+
+  getCurrentUser: (req, res) => {
+    if (req.session.member) {
+        res.json(req.session.member);
+    } else {
+        res.status(401).json({ error: 'Not logged in' });
+    }
+  }
+};
+module.exports = LoginController;
+
   forgetPasswordSend: async (req, res) => {
     const result = await LoginModel.forgetPasswordSend(req.body)
     res.render('member/message', {
@@ -118,3 +131,4 @@ const LoginController = {
   },
 }
 module.exports = LoginController
+

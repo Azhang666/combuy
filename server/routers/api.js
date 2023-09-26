@@ -21,6 +21,7 @@ router.get("/", function (req, res) {
 
 router.post("/login", bp_uncode, loginController.loginAPI);
 router.get("/logout", login_api, loginController.logoutAPI);
+router.get('/current-user', loginController.getCurrentUser);
 
 const register = require("./api/register");
 router.use("/register", bp_uncode, register);
@@ -36,5 +37,6 @@ router.use("/changeProduct", product);
 
 const notification = require("./api/notification");
 router.use("/notification", notification);
+
 
 module.exports = router;

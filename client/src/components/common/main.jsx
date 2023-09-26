@@ -5,6 +5,8 @@ import { API_ENDPOINTS } from '../contexts/constants'
 import { Link } from 'react-router-dom'
 function Main() {
   const [product, setProduct] = useState(null)
+  const notPublishedProducts = product ? product.filter(prod => prod.publish === 1) : [];
+
   console.log(product)
 
   const fetchProducts = () => {
@@ -26,17 +28,18 @@ function Main() {
 
   return (
     <div>
-      <div className="top2 top2-b10px">
-        <div className="mt-3">
+      <div className="top2 top2-b10px mt-3 top2-bgray">
+        <div >
           <div className="titlefont ">
             <span className="titlefont-blue">商品管理</span> / 商品列表
           </div>
         </div>
       </div>
-      <div className="top2 top2-b10px mt-4">
+      <div className="top2 top2-b10px mt-4 top2-bgray">
         <div className="col-12 gray1 titlefont-blue titlefont ">商品搜尋</div>
-        <div className="col-12 titlefont">
-          名稱: <input type="text" className="me-3 top2-b10px" />
+        <div className="col-12 titlefont d-flex align-items-center">
+          名稱: 
+          <input type="text" className="form-control me-3 ml-2 ms-1" style={{ width: 'auto' }} />
           <button className="butt1"> 搜尋</button>
         </div>
       </div>
@@ -50,44 +53,52 @@ function Main() {
           <div className="col-2 titlefont">狀態</div>
         </div>
       </div>
-      <div className="top2 top2-bgray">
-        {product.map((prodItem, index) => (
-          <div key={index} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
-            <div className="row text-center d-flex align-items-center">
-              <div className="col-2 titlefont">{index + 1}</div>
-              <div className="col-2 titlefont">
-                {prodItem.prod_name}
-                <br />
-                {prodItem.spec_name}
-              </div>
-              <img
-                src={`/public${API_ENDPOINTS.LOCALHOST}/${prodItem.img_src}`}
-                className="col-2 titlefont"
-                alt=""
-              />
-              <div className="col-2 titlefont">{'NT$ ' + prodItem.price.toLocaleString()}</div>
-              <div className="col-2 titlefont">{prodItem.stock.toLocaleString()}</div>
-              <div className="col-2 titlefont">
-                <Link
-                  to={`/products/edit/${prodItem.prod_id}/${prodItem.spec_id}`}
-                  className="btn btn-success m-1"
-                >
-                  修改
-                </Link>
-                <div className="btn btn-primary delData1">
-                  <MainButton
-                    productId={prodItem.prod_id}
-                    specId={prodItem.spec_id}
-                    fetchProducts={fetchProducts}
-                  />
+      <div className="top2 top2-bgray ">
+        {notPublishedProducts.length === 0 ? (
+          <div className="row text-center d-flex align-items-center">
+            <b className="col-12 titlefont">目前沒有上架商品</b>
+          </div>
+        ) : (
+          notPublishedProducts.map((prodItem, index) => (
+            <div key={index} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
+              <div className="row text-center d-flex align-items-center">
+                <div className="col-2 titlefont">{index + 1}</div>
+                <div className="col-2 titlefont">
+                  {prodItem.prod_name}
+                  <br />
+                  {prodItem.spec_name}
+                </div>
+                <img
+                  src={`/public${API_ENDPOINTS.LOCALHOST}/${prodItem.img_src}`}
+                  className="col-2 titlefont"
+                  alt=""
+                />
+                <div className="col-2 titlefont">{'NT$ ' + prodItem.price.toLocaleString()}</div>
+                <div className="col-2 titlefont">{prodItem.stock.toLocaleString()}</div>
+                <div className="col-2 titlefont">
+                  <Link
+                    to={`/products/edit/${prodItem.prod_id}/${prodItem.spec_id}`}
+                    className="btn btn-success m-1"
+                  >
+                    修改
+                  </Link>
+                  <div className="btn btn-danger">
+                    <MainButton
+                      productId={prodItem.prod_id}
+                      specId={prodItem.spec_id}
+                      fetchProducts={fetchProducts}
+                      productName = {prodItem.prod_name}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
-  )
+  );
+  
 }
 
 export default Main
