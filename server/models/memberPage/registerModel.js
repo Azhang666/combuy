@@ -8,6 +8,7 @@ const {
   celphoneVerify,
   mailVerify,
 } = require('../../lib/dataVerify')
+const { checkAccMail } = require('../../config/googleMail')
 
 const RegisterModel = {
   registerSucRender: async acc => {
@@ -112,22 +113,7 @@ const RegisterModel = {
 
     try {
       const response1 = await RegisterModel.checkAccountDuplicate(acc)
-
-      if (response1[0].count == 0) {
-        sql = 'INSERT INTO user(rights,acc,pwd,name,phone,email,birth) VALUES(?,?,?,?,?,?,?);'
-        const result = await conn.queryAsync(sql, [
-          right,
-          acc,
-          hashPwd,
-          name,
-          phone,
-          mail,
-          year + '-' + month + '-' + day,
-        ])
-        console.log(result)
-        return new Success('OK')
-        // return new Success(result)
-      } else {
+      if (response1[0].count != 0) {
         errorInputs.push({
           input: 'acc',
           text: '輸入 8 - 20 字，並至少含有一個大寫英文、小寫英文、數字',
@@ -136,6 +122,33 @@ const RegisterModel = {
         return new Error(errorInputs)
         // return new Error('duplicateAcc')
       }
+
+      sql1 = 'SELECT * FROM user WHERE user.email = ? '
+      const result1 = await conn.queryAsync(sql1, [mail])
+      if (result1.length != 0) {
+        errorInputs.push({
+          input: 'mail',
+          text: '此信箱已被使用',
+        })
+
+        return new Error(errorInputs)
+      }
+
+      sql2 = 'INSERT INTO user(rights,acc,pwd,name,phone,email,birth) VALUES(?,?,?,?,?,?,?);'
+      const result2 = await conn.queryAsync(sql2, [
+        right,
+        acc,
+        hashPwd,
+        name,
+        phone,
+        mail,
+        year + '-' + month + '-' + day,
+      ])
+
+      checkAccMail(result2.insertId, mail)
+
+      return new Success('OK')
+      // return new Success(result)
     } catch (err) {
       throw err
       return new Error(err)

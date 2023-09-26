@@ -1,6 +1,8 @@
 const conn = require('../config/db')
 const { MemberData } = require('../config/user_data')
 const { Success, Error } = require('../config/response')
+const GoogleMail = require('../config/googleMail')
+
 const AuthModel = {
   google: async data => {
     try {
@@ -16,6 +18,7 @@ const AuthModel = {
           result[0].google_auth_mail || result[0].email,
           true
         )
+        GoogleMail.loginMail(result[0].email, result[0].verified, true)
         return new Success({ type: 'login', member_data: member_data })
       } else if (result.length == 0) {
         sql =

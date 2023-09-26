@@ -79,6 +79,9 @@ app.use('/register', notlogin_render, register)
 const auth = require('./routers/auth/auth')
 app.use('/auth', auth)
 
+const verify = require('./routers/verify/verify')
+app.use('/verify', verify)
+
 const mail = require('./routers/mail/mail')
 app.use('/mail', mail)
 

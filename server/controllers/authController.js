@@ -1,7 +1,6 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const AuthModel = require('../models/AuthModel')
-const GoogleMail = require('../config/googleMail')
 
 const AuthController = {
   googleAuth: async (req, res, next) => {
@@ -19,7 +18,6 @@ const AuthController = {
       const result = await AuthModel.google(req.user)
       if (result.err == 0) {
         req.session.member = result.data.member_data
-        GoogleMail.loginMail(req)
         res.render('member/message', {
           title: '會員登入',
           setting: req.session.setting,

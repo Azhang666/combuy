@@ -50,7 +50,8 @@ $(document).ready(function () {
       }
     }
 
-    var result = [...data, serializedCheckBox[0], ...serializedRadio]
+    // var result = [...data, serializedCheckBox[0], ...serializedRadio]
+    var result = [...data, serializedCheckBox[0]]
 
     var values = toJson(result)
     try {
