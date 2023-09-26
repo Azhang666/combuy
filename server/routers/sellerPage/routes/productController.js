@@ -240,8 +240,8 @@ exports.createProduct = [
 ]
 
 exports.getProductsAllData = async (req, res) => {
-  // const u_id = req.session.member.u_id
-  const u_id = 43
+  const u_id = req.session.member.u_id
+  // const u_id = 43
   const prodId = req.params.prod_id
   const specID = req.params.spec_id
 
