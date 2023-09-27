@@ -33,6 +33,8 @@ const LoginController = {
   },
 
   getCurrentUser: (req, res) => {
+    console.log('req.session_member',req.session.member);
+    
     if (req.session.member) {
       res.json(req.session.member)
     } else {
