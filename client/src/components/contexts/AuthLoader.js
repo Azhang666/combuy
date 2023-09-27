@@ -55,8 +55,8 @@ function AuthLoader({ onAuthenticated }) {
                                 setTimeout(() => {
                                     window.location.href = 'http://localhost:2407/login';
                                 }, 3000)
-                            }; // 這裡我設置為3秒後跳轉，你可以根據需要調整
-                        });;
+                            } 
+                        })
                     }
                 } else {
                     setIsAuthenticated(false);
@@ -75,7 +75,10 @@ function AuthLoader({ onAuthenticated }) {
                             setTimeout(() => {
                                 window.location.href = 'http://localhost:2407/login';
                             }, 3000)
-                        }; // 這裡我設置為3秒後跳轉，你可以根據需要調整
+                        }else if (result.dismiss === Swal.DismissReason.cancel) {
+                            // 如果用戶點擊"取消"，則重定向到指定的頁面。
+                            window.location.href = 'http://localhost:2407/';
+                        } // 這裡我設置為3秒後跳轉，你可以根據需要調整
                     });
                 }
             })
