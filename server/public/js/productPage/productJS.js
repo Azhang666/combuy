@@ -129,15 +129,20 @@ $(document).ready(function () {
       });
     }
     //req addTime product
-    getProdData(
-      {
+    $.ajax({
+      type: "get",
+      url: "/api/changeProduct",
+      data: {
         getBrand: $(this).attr("data-brand"),
         getUpdateTime: addTimeIsClick,
       },
-      false,
-      true,
-      true
-    );
+      success: async function (response) {
+        await $(".productBox").remove();
+        await $(".contral-product-page").remove();
+        await $(".productSlecet").after(`${response}`);
+        addTimeIsClick > 0 ? addTimeIsClick-- : addTimeIsClick++;
+      },
+    });
   });
 
   //req PriceDesc product & PriceDesc product button change img
@@ -156,14 +161,20 @@ $(document).ready(function () {
       });
     }
     //req PriceDesc product
-    getProdData(
-      {
+    $.ajax({
+      type: "get",
+      url: "/api/changeProduct",
+      data: {
+        getBrand: $(this).attr("data-brand"),
         getPriceDesc: priceDescIsClick,
       },
-      true,
-      false,
-      false
-    );
+      success: async function (response) {
+        await $(".productBox").remove();
+        await $(".contral-product-page").remove();
+        await $(".productSlecet").after(`${response}`);
+        priceDescIsClick > 0 ? priceDescIsClick-- : priceDescIsClick++;
+      },
+    });
   });
   //req PriceRange product
   $("input[pattern='[0-9]{7}']").on("keypress", function (e) {
@@ -172,8 +183,10 @@ $(document).ready(function () {
     }
   });
   $("input[pattern='[0-9]{7}']").keyup(function () {
-    getProdData(
-      {
+    $.ajax({
+      type: "get",
+      url: "/api/changeProduct",
+      data: {
         getBrand: $(this).attr("data-brand"),
         getPriceRange: {
           form: $("input[name='priceFrom']").val()
@@ -184,10 +197,12 @@ $(document).ready(function () {
             : 0,
         },
       },
-      false,
-      false,
-      true
-    );
+      success: async function (response) {
+        await $(".productBox").remove();
+        await $(".contral-product-page").remove();
+        await $(".productSlecet").after(`${response}`);
+      },
+    });
   });
   //req productItemPage & ctrl product page css
   $("body").on("click", ".changePage", async function () {
@@ -195,28 +210,35 @@ $(document).ready(function () {
     $(".contral-product-page>button").removeClass("active");
     $(this).addClass("active");
     //req productItemPage
-    getProdData(
-      {
+    $.ajax({
+      type: "get",
+      url: "/api/changeProduct",
+      data: {
         getBrand: $(this).attr("data-brand"),
         prodItemPage: $(this).text(),
       },
-      false,
-      false,
-      false
-    );
+      success: async function (response) {
+        await $(".productBox").remove();
+        await $(".productSlecet").after(`${response}`);
+      },
+    });
   });
   //req productSelecet tag
   $("select[name='selectItem']").on("change", async function () {
     //req prodData
-    getProdData(
-      {
+    await $.ajax({
+      type: "get",
+      url: "/api/changeProduct",
+      data: {
         getBrand: $(this).attr("data-brand"),
         prodSelTag: $(this).val(),
       },
-      false,
-      false,
-      true
-    );
+      success: async function (response) {
+        await $(".productBox").remove();
+        await $(".contral-product-page").remove();
+        await $(".productSlecet").after(`${response}`);
+      },
+    });
   });
   //req product comparison
   if (JSON.parse(localStorage.getItem("product")) == null) {

@@ -1,0 +1,21 @@
+# GOOGLE mail
+GMAIL_USER=aapplcations@gmail.com
+GMAIL_PASS=uighwbpqcyjxgzyo
+
+# GOOGLE mail auth 2.0
+GOOGLE_MAIL_CLIENT_ID=915875868213-8qdvmkhugjstknj5sbacqjj97fmtf0bc.apps.googleusercontent.com
+GOOGLE_MAIL_CLIENT_SECRET=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
+GOOGLE_MAIL_CALLBACKURL=http://localhost:2407/mail/google/callback
+
+# GOOGLE auth 2.0
+GOOGLE_CILENTID=508454788644-m7pdnn7oe7r213qkk0kk3j9d316043lm.apps.googleusercontent.com
+GOOGLE_CLIENTSECRET=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
+GOOGLE_CALLBACKURL=http://localhost:2407/auth/google/callback
+
+# FACEBOOK auth
+FACEBOOK_CILENTID=720774106540413
+FACEBOOK_CLIENTSECRET=658cd1546c2a4bc15f34080d70feea32
+FACEBOOK_CALLBACKURL=http://localhost:2407/auth/facebook/callback
+
+#jwt token key
+JWT_TOKEN_KEY=ComBuy_JWT
