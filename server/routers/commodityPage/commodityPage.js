@@ -53,7 +53,7 @@ router.get('/:prodId/:specId', async (req, res) => {
       [prodId]
     )
     var priceData = await queryDatabase('SELECT price, stock FROM sellspec WHERE prod_id = ? AND spec_id = ?', [
-      prodId,specId
+      prodId, specId
     ])
     var totalCountData = await queryDatabase('SELECT COUNT(*) AS COUNT FROM productimg')
     var totalCount = totalCountData[0].COUNT
@@ -62,7 +62,7 @@ router.get('/:prodId/:specId', async (req, res) => {
     )
     var commentData = await queryDatabase(
       'SELECT vw_comment.comment, vw_comment.comment_grade, vw_comment.comment_time, vw_comment.name, vw_comment.spec_name,user.photo FROM vw_comment JOIN user ON vw_comment.user_id = user.user_id WHERE prod_id = ? AND spec_id = ? AND comment_time IS NOT null',
-      [prodId,specId]
+      [prodId, specId]
     )
     commentData.forEach(comment => {
       comment.comment_time = new Date(comment.comment_time).toLocaleString()
@@ -88,7 +88,11 @@ router.get('/:prodId/:specId', async (req, res) => {
       date.order_id = String(date.order_id).padStart(8, '0')
     })
 
-
+    // 顯示tag
+    var tagData = await queryDatabase(
+      'SELECT tag.content FROM product_tag JOIN tag ON product_tag.tag = tag.tag WHERE product_tag.prod_id = ? ',
+      [prodId]
+    )
 
     // 排列相關產品
     // 使用 Promise.all 處理所有資料庫的查詢
@@ -102,7 +106,7 @@ router.get('/:prodId/:specId', async (req, res) => {
           [prodId]
         )
         var productPriceData = await queryDatabase('SELECT price FROM sellspec WHERE prod_id = ? AND spec_id = ?', [
-          prodId,specId
+          prodId, specId
         ])
         var productSpecname = await queryDatabase(
           'SELECT spec_name FROM sellspec WHERE prod_id =? AND spec_id = ?',
@@ -150,6 +154,7 @@ router.get('/:prodId/:specId', async (req, res) => {
       setting: req.session.setting,
       countData,
       remainingStock,
+      tagData
     })
   } catch (err) {
     console.error('Error:', err)
