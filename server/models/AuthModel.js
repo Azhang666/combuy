@@ -71,6 +71,7 @@ const AuthModel = {
           //   'UPDATE user SET 	verified= 0,	google_auth_id = ? ,google_auth_mail = ? WHERE user_id = ? '
           // const result2 = await conn.queryAsync(sql2, [null, null, uid])
           // return new Success('unbind')
+          return new Success('')
         } else {
           return new Error('cantuse')
         }
@@ -118,6 +119,30 @@ const AuthModel = {
         return new Error({})
       }
     } catch (err) {
+      console.log(err)
+    }
+  },
+  facebookBind: async (uid, data) => {
+    console.log('bind')
+    try {
+      sql1 = 'SELECT * FROM user WHERE facebook_auth_id = ? '
+      const result1 = await conn.queryAsync(sql1, [data.id])
+
+      if (result1.length == 0) {
+        // 綁定
+        sql2 =
+          'UPDATE user SET 	verified = 1,	facebook_auth_id = ? ,facebook_auth_mail = ? WHERE user_id = ? '
+        const result2 = await conn.queryAsync(sql2, [data.id, data.emails[0].value, uid])
+        return new Success('bind')
+      } else {
+        if (result1[0].user_id == uid) {
+          return new Success('')
+        } else {
+          return new Error('cantuse')
+        }
+      }
+    } catch (err) {
+      throw err
       console.log(err)
     }
   },

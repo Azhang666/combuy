@@ -34,14 +34,18 @@ const AuthController = {
     }
   },
   facebookAuth: async (req, res, next) => {
+    console.log(req.user)
     if (req.user == undefined) {
       res.redirect('/')
       return
     }
     if (req.session.member) {
-      //
+      console.log('bind')
+      const result = await AuthModel.facebookBind(req.session.member.u_id, req.user)
+      res.redirect(`/member/data?p=FACEBOOK&r=${result.message}`)
     } else {
       const result = await AuthModel.facebook(req.user)
+      console.log(result)
       if (result.err == 0) {
         req.session.member = result.data.member_data
         res.render('member/message', {
