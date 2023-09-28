@@ -13,7 +13,7 @@ function AuthLoader({ onAuthenticated }) {
             if (apiCallCompleted) {
                 setIsLoading(false);
             }
-        }, 1000);
+        }, 100);
         return () => clearTimeout(timer);
     }, [apiCallCompleted]);
 

@@ -321,7 +321,7 @@ function AddProduct() {
                     <button
                         className="btn btn-success mt-1"
                         onClick={() => handleSubmit(false)}
-                        type="button"  // 注意：這裡我們改為"type=button"，因為我們希望通過處理器提交表格
+                        type="button"  
                     >
                         {SAVE.SAVE}
                     </button>
@@ -330,7 +330,7 @@ function AddProduct() {
                         style={{ marginLeft: '16px' }}
                         className="btn btn-primary mt-1"
                         onClick={() => handleSubmit(true)}
-                        type="button"  // 同上，改為 "type=button"
+                        type="button"  
                     >
                         {SAVE.SAVEANDPUBLISH}
                     </button>

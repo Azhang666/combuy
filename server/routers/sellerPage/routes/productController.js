@@ -237,6 +237,9 @@ exports.createProduct = [
   },
 ]
 
+
+
+
 exports.getProductsAllData = async (req, res) => {
   const u_id = req.session.member.u_id
   // const u_id = 43
