@@ -76,6 +76,7 @@ exports.changeProduct = (req, res) => {
               `productPage/chageProduct.ejs`,
               {
                 product: productData,
+                randomProd: false,
               },
               (err, html) => standardResponse(err, html, res)
             );
@@ -86,6 +87,7 @@ exports.changeProduct = (req, res) => {
                 getUserBrand: getBrand,
                 product: productData,
                 lastPage: lastPage,
+                randomProd: false,
               },
               (err, html) => standardResponse(err, html, res)
             );
