@@ -39,7 +39,6 @@ function AddProduct() {
     });
 
     // Callbacks
-    
 
     const handleSubmit = (shouldPublish) => {
         Swal.fire({
@@ -53,26 +52,22 @@ function AddProduct() {
             if (result.isConfirmed) {
                 formik.setFieldValue('shouldPublish', shouldPublish);
                 formik.submitForm().then(() => {
-                    // 在此檢查formik的狀態或錯誤
                     if (formik.isValidating || formik.isSubmitting) {
-                        // 仍在驗證或提交
                         return;
                     }
-    
                     if (Object.keys(formik.errors).length > 0) {
-                        // 表單有錯誤
+
                         Swal.fire({
                             icon: 'error',
                             title: '提交失敗',
                             text: '尚有商品資訊未填齊'
                         });
                     }
-                    // 如果有其他需要檢查的條件，也可以在此添加
                 });
             }
         });
     }
-    
+
 
     const handleFilesSelect = useCallback((selectedFiles) => {
         setFiles(selectedFiles);
