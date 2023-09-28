@@ -1,53 +1,61 @@
 //req herder select & herder select display block
-$('input[name="search"]').on('keyup', function () {
+$('input[name="search"]').on("keyup", function () {
   //herder select display block
-  $('#search-result').css('display', 'block')
+  $("#search-result").css("display", "block");
   //req herder select
   $.ajax({
-    type: 'get',
-    url: '/api/changeProduct/search',
+    type: "get",
+    url: "/api/changeProduct/search",
     data: {
       search: $(this).val(),
     },
     success: async function (response) {
-      let result = ``
-      response.forEach(prod => {
-        result += `<li><a href="/commodity/${prod.prod_id}/${prod.spec_id}">${prod.prod_name}</a></li>`
-      })
+      let result = ``;
+      response.forEach((prod) => {
+        result += `<li><a href="/commodity/${prod.prod_id}/${prod.spec_id}">${prod.prod_name}</a></li>`;
+      });
 
-      result == '' ? (result = '<li><p>搜尋無結果</p></li>') : (result = result)
-      $('#search-result>ul').html(result)
+      result == ""
+        ? (result = "<li><p>搜尋無結果</p></li>")
+        : (result = result);
+      $("#search-result>ul").html(result);
     },
-  })
-})
-$('body').on('click', function () {
-  $('#search-result').css('display', 'none')
-})
+  });
+});
+$("body").on("click", function () {
+  $("#search-result").css("display", "none");
+});
 
 // 熱銷商品
 $.ajax({
-  type: 'get',
-  url: '/fontPage/getHotIndexProd',
+  type: "get",
+  url: "/fontPage/getHotIndexProd",
   success: function (res) {
-    var itemData = res
-    var itemsHtml = ''
-    var globalProdId = []
-    var globalSpecId = []
+    var itemData = res;
+    var itemsHtml = "";
+    var globalProdId = [];
+    var globalSpecId = [];
     for (var i = 0; i < itemData.length; i++) {
-      globalProdId.push(itemData[i].prod_id)
-      globalSpecId.push(itemData[i].spec_id)
-      var item = itemData[i]
+      globalProdId.push(itemData[i].prod_id);
+      globalSpecId.push(itemData[i].spec_id);
+      var item = itemData[i];
       itemsHtml += `
           <div class="card-item col-3">
-            <a style="color: black;
-            text-decoration: none;" href="/commodity/${item.prod_id}/${item.spec_id}">
+            <a style="color: black; display:block;
+            text-decoration: none;" href="/commodity/${item.prod_id}/${
+        item.spec_id
+      }">
 
             <div class="card-img">
               <img src="./public${item.img_src}" alt="">
             </div>
-            <div class="card-title">
-              <p id="${item.prod_id}" class="prod_name">${item.prod_name}</p>
-              <p id="${item.spec_id}" class="spec_name">${item.spec_name}</p>
+            <div style="align-items: start;" class="card-title">
+              <p style="height:50px;font-size:20px;margin-bottom:0px " id="${
+                item.prod_id
+              }" class="prod_name">${item.prod_name}</p>
+              <p style="font-size:18px;" id="${
+                item.spec_id
+              }" class="spec_name">${item.spec_name}</p>
                 <div class="card-text">
                   <div class="card-price">
                     <p>NT ${item.price.toLocaleString()}</p>
@@ -89,25 +97,27 @@ $.ajax({
             </div>
           </a>
         </div>
-      `
+      `;
     }
-    $('.card-item-wrap').html(itemsHtml)
+    $(".card-item-wrap").html(itemsHtml);
   },
-})
+});
 
 // 開學季學生主打
 $.ajax({
-  type: 'get',
-  url: '/fontPage/getStudentIndexProd',
+  type: "get",
+  url: "/fontPage/getStudentIndexProd",
   success: function (res) {
-    var itemData = res
-    var itemsHtml = ''
+    var itemData = res;
+    var itemsHtml = "";
     for (var i = 0; i < itemData.length; i++) {
-      var item = itemData[i]
+      var item = itemData[i];
       itemsHtml += `
           <div class="card-item col-4">
             <a style="color: black;
-            text-decoration: none;" class="card"  href="/commodity/${item.prod_id}/${item.spec_id}">
+            text-decoration: none;" class="card"  href="/commodity/${
+              item.prod_id
+            }/${item.spec_id}">
               <h5 id="${item.prod_id}">${item.prod_name}</h5>
               <div class="frame">
                   <div class="text">
@@ -152,25 +162,27 @@ $.ajax({
             </div>
           </a>
         </div>
-      `
-      $('.card-item-wrap2').html(itemsHtml)
+      `;
+      $(".card-item-wrap2").html(itemsHtml);
     }
   },
-})
+});
 
 // 電競機
 $.ajax({
-  type: 'get',
-  url: '/fontPage/getGamingIndexProd',
+  type: "get",
+  url: "/fontPage/getGamingIndexProd",
   success: function (res) {
-    var itemData = res
-    var itemsHtml = ''
+    var itemData = res;
+    var itemsHtml = "";
     for (var i = 0; i < itemData.length; i++) {
-      var item = itemData[i]
+      var item = itemData[i];
       itemsHtml += `
           <div class="card-item col-4">
             <a style="color: black;
-            text-decoration: none;" class="card"  href="/commodity/${item.prod_id}/${item.spec_id}">
+            text-decoration: none;" class="card"  href="/commodity/${
+              item.prod_id
+            }/${item.spec_id}">
               <h5 id="${item.prod_id}">${item.prod_name}</h5>
               <div class="frame">
                   <div class="text">
@@ -215,133 +227,149 @@ $.ajax({
             </div>
           </a>
         </div>
-      `
+      `;
     }
-    $('.card-item-wrap3').html(itemsHtml)
+    $(".card-item-wrap3").html(itemsHtml);
   },
-})
+});
 
 // 渲染加入最愛的商品
 $(document).ready(function () {
   $.ajax({
-    type: 'get',
-    url: '/fontPage/getFavoriteProd',
+    type: "get",
+    url: "/fontPage/getFavoriteProd",
     success: function (res) {
       for (var i = 0; i < res.length; i++) {
-        var favoriteProdId = res[i].prod_id
-        var favoriteSpecId = res[i].spec_id
+        var favoriteProdId = res[i].prod_id;
+        var favoriteSpecId = res[i].spec_id;
         var $matchingItem = $(
-          '.favorite[data-prod-id=' + favoriteProdId + '][data-spec-id=' + favoriteSpecId + ']'
-        )
-        $matchingItem.find('.heart-icon').css('fill', 'red')
+          ".favorite[data-prod-id=" +
+            favoriteProdId +
+            "][data-spec-id=" +
+            favoriteSpecId +
+            "]"
+        );
+        $matchingItem.find(".heart-icon").css("fill", "red");
       }
     },
-  })
-})
+  });
+});
 
 // 渲染加入購物車的商品
 $(document).ready(function () {
   $.ajax({
-    type: 'get',
-    url: '/fontPage/getCartProd',
+    type: "get",
+    url: "/fontPage/getCartProd",
     success: function (res) {
       for (var i = 0; i < res.length; i++) {
-        var favoriteProdId = res[i].prod_id
-        var favoriteSpecId = res[i].spec_id
+        var favoriteProdId = res[i].prod_id;
+        var favoriteSpecId = res[i].spec_id;
         var $matchingItem = $(
-          '.cart[data-prod-id=' + favoriteProdId + '][data-spec-id=' + favoriteSpecId + ']'
-        )
-        $matchingItem.find('svg').css('fill', 'gray')
+          ".cart[data-prod-id=" +
+            favoriteProdId +
+            "][data-spec-id=" +
+            favoriteSpecId +
+            "]"
+        );
+        $matchingItem.find("svg").css("fill", "gray");
       }
     },
-  })
-})
+  });
+});
 
 // 收藏
-$('.card-item-wrap, .card-item-wrap2, .card-item-wrap3').on(
-  'click',
-  '.favorite',
+$(".card-item-wrap, .card-item-wrap2, .card-item-wrap3").on(
+  "click",
+  ".favorite",
   async function (e) {
-    e.preventDefault()
-    const icon = $(this).find('svg')
+    e.preventDefault();
+    const icon = $(this).find("svg");
 
     try {
       const res = await $.ajax({
-        type: 'post',
-        url: '/api/member/collectProd',
+        type: "post",
+        url: "/api/member/collectProd",
         data: {
-          prod_id: $(this).data('prod-id'),
-          spec_id: $(this).data('spec-id'),
+          prod_id: $(this).data("prod-id"),
+          spec_id: $(this).data("spec-id"),
         },
-        dataType: 'json',
-      })
-      console.log(res)
+        dataType: "json",
+      });
+      console.log(res);
       if (res.err == 0) {
         if (res.data.type) {
-          icon.css('fill', 'red')
+          icon.css("fill", "red");
         } else {
-          icon.css('fill', 'none')
+          icon.css("fill", "none");
         }
       } else {
-        alert('請先登入再收藏')
-        location.href = '/login'
+        alert("請先登入再收藏");
+        location.href = "/login";
       }
     } catch (err) {
-      throw err
+      throw err;
     }
   }
-)
+);
 // 購物車
-$('.card-item-wrap, .card-item-wrap2, .card-item-wrap3').on('click', '.cart', async function (e) {
-  e.preventDefault()
-  const icon = $(this).find('svg')
-  try {
-    const res = await $.ajax({
-      type: 'post',
-      url: '/api/member/cartProd',
-      data: {
-        prod_id: $(this).data('prod-id'),
-        spec_id: $(this).data('spec-id'),
-      },
-      dataType: 'json',
-    })
+$(".card-item-wrap, .card-item-wrap2, .card-item-wrap3").on(
+  "click",
+  ".cart",
+  async function (e) {
+    e.preventDefault();
+    const icon = $(this).find("svg");
+    try {
+      const res = await $.ajax({
+        type: "post",
+        url: "/api/member/cartProd",
+        data: {
+          prod_id: $(this).data("prod-id"),
+          spec_id: $(this).data("spec-id"),
+        },
+        dataType: "json",
+      });
 
-    if (res.err == 0) {
-      if (res.data.type) {
-        icon.css('fill', 'gray')
+      if (res.err == 0) {
+        if (res.data.type) {
+          icon.css("fill", "gray");
+        } else {
+          icon.css("fill", "none");
+        }
       } else {
-        icon.css('fill', 'none')
+        alert("請先登入再加入購物車");
+        location.href = "/login";
       }
-    } else {
-      alert('請先登入再加入購物車')
-      location.href = '/login'
+    } catch (err) {
+      throw err;
     }
-  } catch (err) {
-    throw err
   }
-})
+);
 $(document).ready(function () {
   //top-screen-button
   function blkTopScrBtn(elem) {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20 || elem > 20) {
-      $('#topScreenBtn').css('display', 'block')
+    if (
+      document.body.scrollTop > 20 ||
+      document.documentElement.scrollTop > 20 ||
+      elem > 20
+    ) {
+      $("#topScreenBtn").css("display", "block");
     } else {
-      $('#topScreenBtn').css('display', 'none')
+      $("#topScreenBtn").css("display", "none");
     }
   }
   function screenTop() {
-    let [productScreen, elem] = document.getElementsByClassName('info')
-    document.body.scrollTop = 0
-    document.documentElement.scrollTop = 0
-    productScreen.scrollTop = 0
+    let [productScreen, elem] = document.getElementsByClassName("info");
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    productScreen.scrollTop = 0;
   }
-  $('.info').on('scroll', function (e) {
-    blkTopScrBtn(this.scrollTop)
-  })
-  $(window).on('scroll', function () {
-    blkTopScrBtn()
-  })
-  $('#topScreenBtn').click(function () {
-    screenTop()
-  })
-})
+  $(".info").on("scroll", function (e) {
+    blkTopScrBtn(this.scrollTop);
+  });
+  $(window).on("scroll", function () {
+    blkTopScrBtn();
+  });
+  $("#topScreenBtn").click(function () {
+    screenTop();
+  });
+});

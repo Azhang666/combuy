@@ -43,6 +43,7 @@ exports.ctrlProdPage = (req, res) => {
               lastPage: lastPage,
               userId: req.session.member ? req.session.member.u_id : null,
               setting: req.session.setting,
+              randomProd: true,
             });
           }
         );

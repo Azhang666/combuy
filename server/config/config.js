@@ -4,7 +4,7 @@ const Setting = {
     user: 'root',
     password: 'root',
     database: 'combuy',
-    port: 3306,
+    port: 3307,
     multipleStatements: true,
   },
 }
