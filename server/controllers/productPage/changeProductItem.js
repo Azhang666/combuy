@@ -14,7 +14,6 @@ exports.changeProduct = (req, res) => {
   let productItem = 12;
   let offset = (prodItemPage - 1) * productItem;
   //ctrl req brand
-  req.query.getBrand ? false : req.query.getBrand;
   if (req.query.getBrand) {
     getBrand = Number(req.query.getBrand);
   }
@@ -77,6 +76,7 @@ exports.changeProduct = (req, res) => {
               `productPage/chageProduct.ejs`,
               {
                 product: productData,
+                randomProd: false,
               },
               (err, html) => standardResponse(err, html, res)
             );
@@ -87,6 +87,7 @@ exports.changeProduct = (req, res) => {
                 getUserBrand: getBrand,
                 product: productData,
                 lastPage: lastPage,
+                randomProd: false,
               },
               (err, html) => standardResponse(err, html, res)
             );

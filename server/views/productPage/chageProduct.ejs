@@ -3,7 +3,12 @@
   <div class="col-12 mb-5 pb-5">
     <p class="text-center mb-5 pb-4">查無資料</p>
   </div>
-  <% } %> <% for( let i = 0; i < product.length; i++ ) {%>
+  <% } %> <% function shuffle(array) { let currentIndex = array.length,
+  randomIndex; while (currentIndex > 0) { randomIndex = Math.floor(Math.random()
+  * currentIndex); currentIndex--; [array[currentIndex], array[randomIndex]] = [
+  array[randomIndex], array[currentIndex], ]; } return array; }
+  if(randomProd){shuffle(product);} %> <% for( let i = 0; i < product.length;
+  i++ ) {%>
   <div class="col-12 col-md-6 col-lg-6 col-xl-4 col-xxl-3 p-3">
     <a
       style="text-decoration: none; color: black"
@@ -14,8 +19,8 @@
       <div
         class="product"
         style="
-          height: 400px;
-
+          box-shadow: 10px 10px rgba(116, 116, 116, 0.171);
+          height: 420px;
           border-radius: 10px;
           padding-bottom: 16px;
           background-color: white;

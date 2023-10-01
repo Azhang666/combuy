@@ -25,7 +25,7 @@ function CategoryMenu({ onCategorySelect, onBrandSelect, formikErrors, formikTou
             }
         } catch (error) {
             console.error('Error fetching main categories:', error);
-            // TODO: Provide feedback to the user here if needed
+           
         }
     };
 
@@ -56,23 +56,20 @@ function CategoryMenu({ onCategorySelect, onBrandSelect, formikErrors, formikTou
         if (categoryName === LAPTOP_CATEGORY) {
             console.log("筆電的categoryId是:", categoryId);
             fetchBrands();
-            // props.onSelectProduct(LAPTOP_CATEGORY); // 删除或修改此行
-            onCategorySelect(categoryName, categoryId); // 修改此行
+           
+            onCategorySelect(categoryName, categoryId);
         } else {
-            onCategorySelect(null, null); // 修改此行
+            onCategorySelect(null, null); 
         }
     };
 
 
     const handleBrandClick = (brandId, brandName) => {
-        onBrandSelect(brandId); // 修改此行
+        onBrandSelect(brandId);
         setSelectedBrand(brandName);
         setShowCategories(false);
         console.log(brandId);
     };
-
-
-
     return (
         <>
 

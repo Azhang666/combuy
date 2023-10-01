@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
   PRODUCT_BY_ID: (id, sid) => `${BASE_URL}/getProductsAllData/${id}/${sid}`,
   CREATE_PRODUCT: `${BASE_URL}/createProduct`,
   CATEGORY: `${BASE_URL}/category`,
+  TAG: `${BASE_URL}/tag`,
   BRAND: `${BASE_URL}/brand`,
   DOWN: `${BASE_URL}/down`,
   DOWN_API: `${BASE_URL}/downproducts`,
