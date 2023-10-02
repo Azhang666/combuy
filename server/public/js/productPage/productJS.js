@@ -1,3 +1,86 @@
+//myalert
+let getAlertGroupShop = document.querySelector(".alertGroup");
+class AlertGroup {
+  constructor(changeClass, text) {
+    this.changeClass = changeClass;
+    this.text = text;
+  }
+  //alertGroup (("default","danger","info","success"),("meseege"))
+  alertOfReload() {
+    let setDiv = document.createElement("div");
+    setDiv.classList.add(this.changeClass);
+    setDiv.innerHTML = `<p
+  class="closebtn"
+  onclick="this.parentElement.parentElement.style.display='none';
+  this.parentElement.remove();
+  location.reload();"
+>
+  &times;
+</p>
+<p class="alert-text">${this.text}</p>`;
+    getAlertGroupShop.appendChild(setDiv);
+    getAlertGroupShop.style.display = "block";
+  }
+  alertOfNoReload() {
+    let setDiv = document.createElement("div");
+    setDiv.classList.add(this.changeClass);
+    setDiv.innerHTML = `<p
+    class="closebtn"
+    onclick="this.parentElement.parentElement.style.display='none';
+    this.parentElement.remove();"
+  >
+    &times;
+  </p>
+  <p class="alert-text">${this.text}</p>`;
+    getAlertGroupShop.appendChild(setDiv);
+    getAlertGroupShop.style.display = "block";
+  }
+  alertInTheIndex() {
+    let setDiv = document.createElement("div");
+    setDiv.classList.add(this.changeClass);
+    setDiv.innerHTML = `<p
+    class="closebtn"
+    onclick="this.parentElement.parentElement.style.display='none';
+    this.parentElement.remove();
+    location.href='/index.html';"
+  >
+    &times;
+  </p>
+  <p class="alert-text">${this.text}</p>`;
+    getAlertGroupShop.appendChild(setDiv);
+    getAlertGroupShop.style.display = "block";
+  }
+  alertInTheProduct() {
+    let setDiv = document.createElement("div");
+    setDiv.classList.add(this.changeClass);
+    setDiv.innerHTML = `<p
+    class="closebtn"
+    onclick="this.parentElement.parentElement.style.display='none';
+    this.parentElement.remove();
+    location.href='/product.html';"
+  >
+    &times;
+  </p>
+  <p class="alert-text">${this.text}</p>`;
+    getAlertGroupShop.appendChild(setDiv);
+    getAlertGroupShop.style.display = "block";
+  }
+  alertForCheckOut() {
+    let setDiv = document.createElement("div");
+    setDiv.classList.add(this.changeClass);
+    setDiv.innerHTML = `<p
+    class="closebtn"
+    onclick="this.parentElement.parentElement.style.display='none';
+    this.parentElement.remove();
+    location.href='/product.html';"
+  >
+    &times;
+  </p>
+  <p class="alert-text">${this.text}</p>`;
+    getAlertGroupShop.appendChild(setDiv);
+    getAlertGroupShop.style.display = "block";
+  }
+}
 $(document).ready(function () {
   //change header navber sun and moon
   $(".slider").on("click ", function () {
@@ -294,10 +377,10 @@ $(document).ready(function () {
         }
         //display btn
         $("#watchComparison").css("display", "block");
-        alert("添加成功");
+        new AlertGroup("success", "成功加入到比較!").alertOfNoReload();
       },
       error: function (error) {
-        alert("添加失敗");
+        new AlertGroup("danger", "無法加入!").alertOfNoReload();
       },
     });
   });
