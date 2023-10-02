@@ -44,7 +44,7 @@
           <p><b>
               <%= data[0].spec_name %>
             </b></p>
-          <h4 class="dollar"><strong>NT <%= priceData[0].price %></strong></h4>
+          <h4 class="dollar"><strong>NT <%= priceData[0].price.toLocaleString()%></strong></h4>
           <% for(var i=0; i < tagData.length; i++){ %>
             <span type="button" class="btn btn-outline-secondary">
               <%= tagData[i].content %>
@@ -58,6 +58,9 @@
                 %>
 
                 <ul>
+                  <%if(data[0].cpu==""){%>
+                   <p class="mt-3"></p>
+                  <%}else{%>
                   <li class="mt-3">
                     <%= truncateListItemText(data[0].cpu, 40) %>
                   </li>
@@ -67,6 +70,7 @@
                   <li>
                     <%= truncateListItemText(data[0].ram, 50) %>
                   </li>
+                  <%}%>
                 </ul>
 
 
